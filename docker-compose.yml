@@ -5,116 +5,110 @@ services:
     container_name: web.client
     build:
       context: .
-      dockerfile: Web/ClientApp/Dockerfile
+      dockerfile: HW_6_6/Web/EShop/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5000
+      - ASPNETCORE_URLS=http://+:3000
+      - Authorization__Authority=http://www.alevelwebsite.com:5003
+      - Api__CatalogUrl=http://www.alevelwebsite.com:5001/api/v1
+      - Api__BasketUrl=http://www.alevelwebsite.com:5002/api/v1
+      - Api__IdentityUrl=http://www.alevelwebsite.com:5003
+      - Api__CallbackUrl=http://www.alevelwebsite.com:3000
+      - Api__RedirectUri=http://www.alevelwebsite.com:3000/signin-oidc
+      - Api__PostLogoutRedirectUri=http://www.alevelwebsite.com:3000/signout-callback-oidc
     depends_on:
       - api.catalog
-      - identityserver
+      - api.basket
+      - server.identity
     ports:
-      - 5000:5000
-       
-  web.admin:
-    container_name: web.admin
-    build:
-      context: .
-      dockerfile: Web/AdminApp/Dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5001
-    depends_on:
-      - api.catalog
-      - identityserver
-    ports:
-      - 5001:5001
- 
+      - 3000:3000
+  
   api.catalog:
     container_name: api.catalog
     build:
       context: .
-      dockerfile: Services/Catalog/Catalog.Host/Dockerfile
+      dockerfile: HW_6_6/Catalog/Catalog.Host/Dockerfile
     environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://+:5002
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5001
+      - Authorization__Authority=http://www.alevelwebsite.com:5003
+      - BaseUrl=http://www.alevelwebsite.com:5001
+      - ConnectionStrings__DefaultConnection=server=www.alevelwebsite.com;port=5433;database=catalog;uid=postgres;password=postgrespw
     depends_on:
-        - postgres
+      - postgres
     ports:
-        - 5002:5002
+      - 5001:5001
 
   api.basket:
     container_name: api.basket
     build:
       context: .
-      dockerfile: Services/Basket/Basket.Host/Dockerfile
-    environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://+:5003
-    depends_on:
-        - redis
-    ports:
-        - 5003:5003
-
-  api.order:
-    container_name: api.order
-    build:
-      context: .
-      dockerfile: Services/Order/Order.Host/Dockerfile
-    environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://+:5004
-    depends_on:
-        - redis
-    ports:
-        - 5004:5004
-
-  identityserver:
-    container_name: identityserver
-    build:
-      context: .
-      dockerfile: Services/Identity/Identity.Server/Dockerfile
+      dockerfile: HW_6_6/Basket/Basket.Host/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5002
+      - Authorization__Authority=http://www.alevelwebsite.com:5003
+      - BaseUrl=http://www.alevelwebsite.com:5002
+      - Redis__Host=www.alevelwebsite.com:6380
+      - Redis__CacheTimeout=00:00:10
+    depends_on:
+      - redis
     ports:
-      - 5005:5005
+      - 5002:5002
+
+  server.identity:
+    container_name: server.identity
+    build:
+      context: .
+      dockerfile: HW_6_6/Identity/IdentityServer/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5003
+      - WebClientUrl=http://www.alevelwebsite.com:3000
+      - CatalogUrl=http://www.alevelwebsite.com:5001
+      - BasketUrl=http://www.alevelwebsite.com:5002
+      - ConnectionStrings__DefaultConnection=server=www.alevelwebsite.com;port=5433;database=eshopidentity;uid=postgres;password=postgrespw
+    depends_on:
+      - postgres
+    ports:
+      - 5003:5003
 
   pgadmin4:
     container_name: pgadmin
     image: dpage/pgadmin4
     environment:
-        - PGADMIN_DEFAULT_EMAIL=user@mail.com
-        - PGADMIN_DEFAULT_PASSWORD=postgres
+      - PGADMIN_DEFAULT_EMAIL=user@mail.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
     depends_on:
-        - postgres
+      - postgres
     ports:
-        - 8001:80
+      - 8001:80
 
   postgres:
     container_name: postgres
     image: postgres
     environment:
-        - POSTGRES_PASSWORD=postgrespw
+      - POSTGRES_PASSWORD=postgrespw
     ports:
-        - 5433:5432
+      - 5433:5432
 
   redis:
     container_name: redis
-    image: redis
+    image: redis:latest
     ports:
-        - 6380:6379
+      - 6380:6379
 
   nginx:
     container_name: nginx
     image: nginx:latest
     ports:
-        - 80:80
-    volumes:
-      - ./Proxy/gateway/nginx/conf.d:/etc/nginx/conf.d
-      - ./Proxy/assets:/var/www/assets
+      - 80:80
     restart: always
+    volumes:
+      - ./HW_6_6/Proxy/gateway/nginx/conf.d:/etc/nginx/conf.d
+      - ./HW_6_6/Proxy/assets:/var/www/assets
 
-networks:    
+networks:
   default:
     driver: bridge
     internal: false

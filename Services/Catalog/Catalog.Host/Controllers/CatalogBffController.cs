@@ -1,6 +1,8 @@
 ﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helpers;
+using Infrastructure.Identity;
 using Catalog.Host.Models.DTOs;
 using Catalog.Host.Models.Requests;
 using Catalog.Host.Models.Responses;
@@ -9,6 +11,7 @@ using Catalog.Host.Services.Interfaces;
 namespace Catalog.Host.Controllers;
 
 [ApiController]
+[Authorize(Policy = AuthPolicy.AllowEndUserPolicy)]
 [Route(ComponentDefaults.DefaultRouteV1)]
 public sealed class CatalogBffController : ControllerBase
 {
@@ -27,6 +30,7 @@ public sealed class CatalogBffController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(PaginatedResponse<CatalogItemDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> Items([FromQuery] PaginatedItemRequest request)
@@ -37,6 +41,7 @@ public sealed class CatalogBffController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [AllowAnonymous]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(CatalogItemDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -53,6 +58,7 @@ public sealed class CatalogBffController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(PaginatedResponse<CatalogBrandDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> Brands()
@@ -63,6 +69,7 @@ public sealed class CatalogBffController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [AllowAnonymous]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(CatalogBrandDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -79,6 +86,7 @@ public sealed class CatalogBffController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(PaginatedResponse<CatalogTypeDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> Types()
@@ -89,6 +97,7 @@ public sealed class CatalogBffController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [AllowAnonymous]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(CatalogTypeDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

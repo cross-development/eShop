@@ -13,7 +13,7 @@ public class MappingProfile : Profile
         CreateMap<CatalogItem, CatalogItemDto>()
             .ForMember("PictureUrl", options =>
                 options.MapFrom<CatalogItemPictureResolver, string>(catalogItem => catalogItem.PictureFileName));
-        
+
         CreateMap<AddBrandRequest, CatalogBrand>();
         CreateMap<CatalogBrand, CatalogBrandDto>();
 

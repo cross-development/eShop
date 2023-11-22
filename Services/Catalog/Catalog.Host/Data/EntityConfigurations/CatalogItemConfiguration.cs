@@ -21,7 +21,7 @@ public sealed class CatalogItemConfiguration : IEntityTypeConfiguration<CatalogI
         builder.Property(catalogItem => catalogItem.Description)
             .HasMaxLength(200)
             .IsRequired();
-        
+
         builder.Property(catalogItem => catalogItem.Price)
             .IsRequired();
 

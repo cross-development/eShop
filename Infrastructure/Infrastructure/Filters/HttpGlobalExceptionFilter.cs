@@ -33,10 +33,7 @@ public class HttpGlobalExceptionFilter : IExceptionFilter
         }
         else
         {
-            _logger.LogError(
-                new EventId(context.Exception.HResult),
-                context.Exception,
-                context.Exception.Message);
+            _logger.LogError(new EventId(context.Exception.HResult), context.Exception, context.Exception.Message);
         }
     }
 }

@@ -8,10 +8,14 @@
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.13" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Routing.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
+		<PackageReference Include="Microsoft.OpenApi" Version="1.6.10" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -19,6 +23,9 @@
 		<Folder Include="Exceptions\" />
 		<Folder Include="Filters\" />
 		<Folder Include="Helpers\" />
+		<Folder Include="Configuration\" />
+		<Folder Include="Extensions\" />
+		<Folder Include="Identity\" />
 		<Folder Include="Services\" />
 	</ItemGroup>
 

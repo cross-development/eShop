@@ -26,7 +26,7 @@ public sealed class CatalogTypeRepository : BaseRepository<CatalogType>, ICatalo
 
     public override async Task<CatalogType> GetByIdAsync(int id)
     {
-       return await _dbContext.CatalogTypes
+        return await _dbContext.CatalogTypes
             .Include(type => type.CatalogItems)
             .FirstOrDefaultAsync(item => item.Id == id);
     }

@@ -77,6 +77,6 @@ public sealed class CatalogTypeService : BaseDataService<ApplicationDbContext>, 
 
     public async Task<bool> DeleteCatalogTypeAsync(CatalogType catalogType)
     {
-        return await ExecuteSafeAsync( () => _catalogTypeRepository.DeleteAsync(catalogType));
+        return await ExecuteSafeAsync(() => _catalogTypeRepository.DeleteAsync(catalogType));
     }
 }

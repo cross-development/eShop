@@ -1,6 +1,8 @@
 ﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helpers;
+using Infrastructure.Identity;
 using Catalog.Host.Models.Requests;
 using Catalog.Host.Models.Responses;
 using Catalog.Host.Services.Interfaces;
@@ -8,6 +10,8 @@ using Catalog.Host.Services.Interfaces;
 namespace Catalog.Host.Controllers;
 
 [ApiController]
+[Authorize(Policy = AuthPolicy.AllowClientPolicy)]
+[Scope(AuthScope.CatalogApi)]
 [Route(ComponentDefaults.DefaultRouteV1)]
 public sealed class CatalogTypeController : ControllerBase
 {
