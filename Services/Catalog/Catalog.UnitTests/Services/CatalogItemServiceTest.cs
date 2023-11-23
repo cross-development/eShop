@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Moq;
-
-namespace Catalog.UnitTests.Services;
+﻿namespace Catalog.UnitTests.Services;
 
 public class CatalogItemServiceTest
 {

@@ -1,6 +1,4 @@
-﻿using Moq;
-
-namespace Catalog.UnitTests.Services;
+﻿namespace Catalog.UnitTests.Services;
 
 public class CatalogTypeServiceTest
 {

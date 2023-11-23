@@ -1,10 +1,10 @@
 ﻿using System.Security.Claims;
-using IdentityModel;
-using IdentityServer.Data;
-using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using IdentityModel;
+using IdentityServer.Data;
+using IdentityServer.Models;
 
 namespace IdentityServer;
 
@@ -21,6 +21,8 @@ public class SeedData
 
         if (userMgr.Users.Any())
         {
+            Log.Information("There is no need for seeding database because its already has some users.");
+
             return;
         }
 
@@ -42,8 +44,12 @@ public class SeedData
                 throw new Exception(result.Errors.First().Description);
             }
 
-            result = userMgr.AddClaimsAsync(alice, new Claim[]{
+            result = userMgr.AddClaimsAsync(alice, new Claim[]
+            {
                 new Claim(JwtClaimTypes.Name, "Alice Smith"),
+                new Claim(JwtClaimTypes.GivenName, "Alice"),
+                new Claim(JwtClaimTypes.FamilyName, "Smith"),
+                new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
             }).Result;
 
             if (!result.Succeeded)
@@ -76,8 +82,12 @@ public class SeedData
                 throw new Exception(result.Errors.First().Description);
             }
 
-            result = userMgr.AddClaimsAsync(bob, new Claim[]{
+            result = userMgr.AddClaimsAsync(bob, new Claim[]
+            {
                 new Claim(JwtClaimTypes.Name, "Bob Smith"),
+                new Claim(JwtClaimTypes.GivenName, "Bob"),
+                new Claim(JwtClaimTypes.FamilyName, "Smith"),
+                new Claim(JwtClaimTypes.WebSite, "http://bob.com")
             }).Result;
 
             if (!result.Succeeded)

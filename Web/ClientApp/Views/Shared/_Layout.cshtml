@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - eShop</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+
+<body>
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow">
+            <div class="container">
+                <div class="row w-100">
+                    <div class="col-lg-7 col-md-6 col-12">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+                            <img alt="header logo" height="38px" src="~/images/brand.png" />
+                        </a>
+                    </div>
+
+                    <div class="col-lg-5 col-md-6 col-xs-12">
+                        @await Html.PartialAsync("_AuthMenu")
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="flex-grow-1">
+        @RenderBody()
+    </main>
+
+    <footer class="border-top footer bg-dark pt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+                        <img alt="footer logo" src="~/images/brand_dark.png" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-3">
+                <div class="col-auto">
+                    <p class="mb-0 text-muted lh-lg">&copy; @DateTime.Now.Year - eShop</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

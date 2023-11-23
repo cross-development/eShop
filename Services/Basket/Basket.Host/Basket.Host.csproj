@@ -16,11 +16,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\Infrastructure\Infrastructure\Infrastructure.csproj" />
+		<ProjectReference Include="..\..\..\Infrastructure\Infrastructure\Infrastructure.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Models\Requests\" />
+		<Folder Include="Models\Requests\" />
 	</ItemGroup>
 
 </Project>

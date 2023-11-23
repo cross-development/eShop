@@ -24,7 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Basket.Host\Basket.Host.csproj" />
+		<ProjectReference Include="..\Basket.Host\Basket.Host.csproj" />
 	</ItemGroup>
 
 </Project>

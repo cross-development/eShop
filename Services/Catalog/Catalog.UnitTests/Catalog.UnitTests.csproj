@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>disable</Nullable>
+		<Nullable>enable</Nullable>
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
 	</PropertyGroup>
@@ -24,11 +24,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Catalog.Host\Catalog.Host.csproj" />
+		<ProjectReference Include="..\Catalog.Host\Catalog.Host.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Services\" />
+		<Folder Include="Services\" />
 	</ItemGroup>
 
 </Project>

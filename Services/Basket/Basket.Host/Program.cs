@@ -7,7 +7,6 @@ using Infrastructure.Extensions;
 using Basket.Host.Services;
 using Basket.Host.Services.Interfaces;
 using Basket.Host.Configurations;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -5,14 +5,14 @@ services:
     container_name: web.client
     build:
       context: .
-      dockerfile: HW_6_6/Web/EShop/Dockerfile
+      dockerfile: ./Web/ClientApp/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:3000
-      - Authorization__Authority=http://www.alevelwebsite.com:5003
+      - Authorization__Authority=http://www.alevelwebsite.com:5004
       - Api__CatalogUrl=http://www.alevelwebsite.com:5001/api/v1
       - Api__BasketUrl=http://www.alevelwebsite.com:5002/api/v1
-      - Api__IdentityUrl=http://www.alevelwebsite.com:5003
+      - Api__IdentityUrl=http://www.alevelwebsite.com:5004
       - Api__CallbackUrl=http://www.alevelwebsite.com:3000
       - Api__RedirectUri=http://www.alevelwebsite.com:3000/signin-oidc
       - Api__PostLogoutRedirectUri=http://www.alevelwebsite.com:3000/signout-callback-oidc
@@ -27,11 +27,11 @@ services:
     container_name: api.catalog
     build:
       context: .
-      dockerfile: HW_6_6/Catalog/Catalog.Host/Dockerfile
+      dockerfile: ./Services/Catalog/Catalog.Host/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5001
-      - Authorization__Authority=http://www.alevelwebsite.com:5003
+      - Authorization__Authority=http://www.alevelwebsite.com:5004
       - BaseUrl=http://www.alevelwebsite.com:5001
       - ConnectionStrings__DefaultConnection=server=www.alevelwebsite.com;port=5433;database=catalog;uid=postgres;password=postgrespw
     depends_on:
@@ -43,11 +43,11 @@ services:
     container_name: api.basket
     build:
       context: .
-      dockerfile: HW_6_6/Basket/Basket.Host/Dockerfile
+      dockerfile: ./Services/Basket/Basket.Host/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5002
-      - Authorization__Authority=http://www.alevelwebsite.com:5003
+      - Authorization__Authority=http://www.alevelwebsite.com:5004
       - BaseUrl=http://www.alevelwebsite.com:5002
       - Redis__Host=www.alevelwebsite.com:6380
       - Redis__CacheTimeout=00:00:10
@@ -56,14 +56,30 @@ services:
     ports:
       - 5002:5002
 
+  api.order:
+    container_name: api.order
+    build:
+      context: .
+      dockerfile: ./Services/Order/Order.Host/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5003
+      - Authorization__Authority=http://www.alevelwebsite.com:5004
+      - BaseUrl=http://www.alevelwebsite.com:5003
+      - ConnectionStrings__DefaultConnection=server=www.alevelwebsite.com;port=5433;database=order;uid=postgres;password=postgrespw
+    depends_on:
+      - postgres
+    ports:
+      - 5003:5003
+
   server.identity:
     container_name: server.identity
     build:
       context: .
-      dockerfile: HW_6_6/Identity/IdentityServer/Dockerfile
+      dockerfile: ./Services/Identity/IdentityServer/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5003
+      - ASPNETCORE_URLS=http://+:5004
       - WebClientUrl=http://www.alevelwebsite.com:3000
       - CatalogUrl=http://www.alevelwebsite.com:5001
       - BasketUrl=http://www.alevelwebsite.com:5002
@@ -71,7 +87,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - 5003:5003
+      - 5004:5004
 
   pgadmin4:
     container_name: pgadmin
@@ -105,8 +121,8 @@ services:
       - 80:80
     restart: always
     volumes:
-      - ./HW_6_6/Proxy/gateway/nginx/conf.d:/etc/nginx/conf.d
-      - ./HW_6_6/Proxy/assets:/var/www/assets
+      - ./Proxy/gateway/nginx/conf.d:/etc/nginx/conf.d
+      - ./Proxy/assets:/var/www/assets
 
 networks:
   default:
