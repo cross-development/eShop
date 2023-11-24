@@ -12,6 +12,7 @@ services:
       - Authorization__Authority=http://www.alevelwebsite.com:5004
       - Api__CatalogUrl=http://www.alevelwebsite.com:5001/api/v1
       - Api__BasketUrl=http://www.alevelwebsite.com:5002/api/v1
+      - Api__OrderUrl=http://www.alevelwebsite.com:5003/api/v1
       - Api__IdentityUrl=http://www.alevelwebsite.com:5004
       - Api__CallbackUrl=http://www.alevelwebsite.com:3000
       - Api__RedirectUri=http://www.alevelwebsite.com:3000/signin-oidc
@@ -19,6 +20,7 @@ services:
     depends_on:
       - api.catalog
       - api.basket
+      - api.order
       - server.identity
     ports:
       - 3000:3000
@@ -83,7 +85,8 @@ services:
       - WebClientUrl=http://www.alevelwebsite.com:3000
       - CatalogUrl=http://www.alevelwebsite.com:5001
       - BasketUrl=http://www.alevelwebsite.com:5002
-      - ConnectionStrings__DefaultConnection=server=www.alevelwebsite.com;port=5433;database=eshopidentity;uid=postgres;password=postgrespw
+      - OrderUrl=http://www.alevelwebsite.com:5003
+      - ConnectionStrings__DefaultConnection=server=www.alevelwebsite.com;port=5433;database=identity;uid=postgres;password=postgrespw
     depends_on:
       - postgres
     ports:

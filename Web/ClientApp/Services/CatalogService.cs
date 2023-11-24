@@ -1,11 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ClientApp.Configurations;
 using ClientApp.DTOs.Requests;
 using ClientApp.DTOs.Responses;
+using ClientApp.Configurations;
 using ClientApp.Services.Interfaces;
-using ClientApp.Services;
-using Microsoft.Extensions.Configuration;
 
 namespace ClientApp.Services;
 

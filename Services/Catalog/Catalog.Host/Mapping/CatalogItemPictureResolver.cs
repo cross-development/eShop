@@ -8,9 +8,9 @@ namespace Catalog.Host.Mapping;
 
 public class CatalogItemPictureResolver : IMemberValueResolver<CatalogItem, CatalogItemDto, string, object>
 {
-    private readonly CatalogConfiguration _config;
+    private readonly ApiConfiguration _config;
 
-    public CatalogItemPictureResolver(IOptions<CatalogConfiguration> config)
+    public CatalogItemPictureResolver(IOptions<ApiConfiguration> config)
     {
         _config = config.Value;
     }

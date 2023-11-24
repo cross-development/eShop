@@ -1,11 +1,9 @@
 ﻿using System.Net.Mime;
 using System.Text;
 using System.Web;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication;
 using Newtonsoft.Json;
 using IdentityModel.Client;
-using ClientApp.Configurations;
 using ClientApp.Services.Interfaces;
 
 namespace ClientApp.Services;

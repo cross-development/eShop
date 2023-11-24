@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Infrastructure.Identity;
 using Infrastructure.Extensions;
 using ClientApp.Configurations;
 using ClientApp.Models;
 using ClientApp.Services;
 using ClientApp.Services.Interfaces;
-using Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +15,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 
 builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = OpenIdConnectDefaults.AuthenticationScheme;
-})
+    {
+        options.DefaultScheme = OpenIdConnectDefaults.AuthenticationScheme;
+    })
     .AddCookie(options =>
     {
         options.ExpireTimeSpan = TimeSpan.FromMinutes(configuration.GetValue("SessionCookieLifetimeMinutes", 60));

@@ -6,6 +6,8 @@ public sealed class ApiConfiguration
 
     public string CatalogPath { get; set; }
 
+    public string OrderPath { get; set; }
+
     public int SessionCookieLifetimeMinutes { get; set; }
 
     public string CallbackUrl { get; set; }

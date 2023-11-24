@@ -8,7 +8,6 @@ using Catalog.Host.Models.Requests;
 using Catalog.Host.Models.Responses;
 using Catalog.Host.Services.Interfaces;
 using Catalog.Host.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Host.Services;
 

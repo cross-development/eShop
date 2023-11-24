@@ -7,4 +7,6 @@ public sealed class ApiConfiguration
     public string CatalogUrl { get; set; }
 
     public string BasketUrl { get; set; }
+    
+    public string OrderUrl { get; set; }
 }

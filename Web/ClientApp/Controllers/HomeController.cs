@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ClientApp.DTOs.Requests;
 using ClientApp.Services.Interfaces;
-using ClientApp.ViewModels.CommonViewModels;
 using ClientApp.ViewModels.HomeViewModels;
+using ClientApp.ViewModels.CommonViewModels;
 
 namespace ClientApp.Controllers;
 

@@ -13,7 +13,6 @@ using Catalog.Host.Repositories;
 using Catalog.Host.Repositories.Interfaces;
 using Catalog.Host.Services;
 using Catalog.Host.Services.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,7 +58,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.AddBaseConfiguration();
-builder.Services.Configure<CatalogConfiguration>(configuration.GetSection("Api"));
+builder.Services.Configure<ApiConfiguration>(configuration.GetSection("Api"));
 
 builder.Services.AddAuthorization(configuration);
 

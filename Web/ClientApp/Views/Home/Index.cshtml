@@ -11,7 +11,7 @@
     <img alt="catalog hero"
          src="~/images/main_banner.png"
          class="w-100"
-         style="height: 260px; object-fit: cover" />
+         style="height: 260px; object-fit: cover"/>
 </section>
 
 @*Filters section*@
@@ -34,7 +34,7 @@
 
             <div class="col-auto">
                 <button class="btn btn-primary btn-sm px-3">
-                    <img alt="submit icon" width="28" height="28" src="~/images/arrow-right.svg" />
+                    <img alt="submit icon" width="28" height="28" src="~/images/arrow-right.svg"/>
                 </button>
             </div>
         </form>
@@ -55,7 +55,7 @@
                                  height="320"
                                  alt="@item.Name thumbnail"
                                  src="@item.PictureUrl"
-                                 class="bd-placeholder-img card-img-top" />
+                                 class="bd-placeholder-img card-img-top"/>
 
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
@@ -82,7 +82,7 @@
 
             @if (Model.PaginationViewModel.TotalItems > Model.PaginationViewModel.ItemsPerPage)
             {
-                <partial name="_Pagination" for="PaginationViewModel" />
+                <partial name="_Pagination" for="PaginationViewModel"/>
             }
         }
         else
