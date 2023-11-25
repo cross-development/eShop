@@ -21,11 +21,15 @@ public static class Config
             },
             new ApiResource(AuthResource.CatalogApi, "Catalog API")
             {
-                Scopes = { AuthScope.CatalogApi }
+                Scopes = { AuthScope.CatalogApiItems, AuthScope.CatalogApiBrands, AuthScope.CatalogApiTypes }
             },
             new ApiResource(AuthResource.BasketApi, "Basket API")
             {
                 Scopes = { AuthScope.BasketApi }
+            },
+            new ApiResource(AuthResource.OrderApi, "Order API")
+            {
+                Scopes = { AuthScope.OrderApi }
             }
         };
 
@@ -33,8 +37,11 @@ public static class Config
         new ApiScope[]
         {
             new ApiScope(AuthScope.WebClient, "Web client full access"),
-            new ApiScope(AuthScope.CatalogApi, "Catalog api full access"),
+            new ApiScope(AuthScope.CatalogApiItems, "Catalog api (items) full access"),
+            new ApiScope(AuthScope.CatalogApiBrands, "Catalog api (brands) full access"),
+            new ApiScope(AuthScope.CatalogApiTypes, "Catalog api (types) full access"),
             new ApiScope(AuthScope.BasketApi, "Basket api full access"),
+            new ApiScope(AuthScope.OrderApi, "Order api full access"),
         };
 
     public static IEnumerable<Client> Clients(ConfigurationManager configuration) =>
@@ -66,7 +73,13 @@ public static class Config
                 AllowAccessTokensViaBrowser = true,
                 RedirectUris = { $"{configuration["Api:CatalogUrl"]}/swagger/oauth2-redirect.html" },
                 PostLogoutRedirectUris = { $"{configuration["Api:CatalogUrl"]}/swagger/" },
-                AllowedScopes = { AuthScope.WebClient, AuthScope.CatalogApi }
+                AllowedScopes =
+                {
+                    AuthScope.WebClient,
+                    AuthScope.CatalogApiTypes,
+                    AuthScope.CatalogApiItems,
+                    AuthScope.CatalogApiBrands
+                }
             },
             new Client
             {
@@ -83,6 +96,22 @@ public static class Config
                 RedirectUris = { $"{configuration["Api:BasketUrl"]}/swagger/oauth2-redirect.html" },
                 PostLogoutRedirectUris = { $"{configuration["Api:BasketUrl"]}/swagger/" },
                 AllowedScopes = { AuthScope.WebClient, AuthScope.BasketApi }
+            },
+            new Client
+            {
+                ClientId = "order_api",
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                ClientSecrets = { new Secret("secret".Sha256()) },
+            },
+            new Client
+            {
+                ClientId = "order_swagger_ui",
+                ClientName = "Order Swagger UI",
+                AllowedGrantTypes = GrantTypes.Implicit,
+                AllowAccessTokensViaBrowser = true,
+                RedirectUris = { $"{configuration["Api:OrderUrl"]}/swagger/oauth2-redirect.html" },
+                PostLogoutRedirectUris = { $"{configuration["Api:OrderUrl"]}/swagger/" },
+                AllowedScopes = { AuthScope.WebClient, AuthScope.OrderApi }
             },
         };
 }

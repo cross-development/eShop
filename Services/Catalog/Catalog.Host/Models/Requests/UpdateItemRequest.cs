@@ -10,7 +10,7 @@ public sealed class UpdateItemRequest
     [MaxLength(200, ErrorMessage = "The product description should be 200 characters or less")]
     public string Description { get; set; }
 
-    [Range(1, int.MaxValue, ErrorMessage = "The product price should be greater than 1")]
+    [Range(1, int.MaxValue, ErrorMessage = "The product price should be equal to or greater than 1")]
     public decimal? Price { get; set; }
 
     public string PictureFileName { get; set; }

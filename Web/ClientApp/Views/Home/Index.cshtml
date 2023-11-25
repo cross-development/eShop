@@ -11,7 +11,7 @@
     <img alt="catalog hero"
          src="~/images/main_banner.png"
          class="w-100"
-         style="height: 260px; object-fit: cover"/>
+         style="height: 260px; object-fit: cover" />
 </section>
 
 @*Filters section*@
@@ -33,8 +33,8 @@
             </div>
 
             <div class="col-auto">
-                <button class="btn btn-primary btn-sm px-3">
-                    <img alt="submit icon" width="28" height="28" src="~/images/arrow-right.svg"/>
+                <button class="btn btn-primary btn-sm px-3 py-2">
+                    <i class="d-flex fs-5 bi bi-search"></i>
                 </button>
             </div>
         </form>
@@ -55,10 +55,10 @@
                                  height="320"
                                  alt="@item.Name thumbnail"
                                  src="@item.PictureUrl"
-                                 class="bd-placeholder-img card-img-top"/>
+                                 class="bd-placeholder-img card-img-top" />
 
                             <div class="card-body">
-                                <div class="d-flex flex-row justify-content-between">
+                                <div class="d-flex justify-content-between">
                                     <h5 class="card-title">@item.Name</h5>
 
                                     <p class="card-text">$@item.Price.ToString("N2")</p>
@@ -71,8 +71,27 @@
                                     }
                                     else
                                     {
-                                        <span class="badge bg-success">Available on stock</span>
+                                        <span class="badge bg-secondary">Available on stock</span>
                                     }
+                                </div>
+
+                                <div class="d-flex justify-content-end mt-3">
+                                    <a type="button"
+                                       asp-controller="Home"
+                                       asp-action="Details"
+                                       asp-route-id="@item.Id"
+                                       class="d-flex align-items-center btn btn-sm btn-primary me-2">
+                                        <i class="d-flex bi bi-arrow-down-left-square me-2"></i>
+
+                                        View
+                                    </a>
+
+                                    <a type="button"
+                                       class="d-flex align-items-center btn btn-sm btn-success">
+                                        <i class="d-flex bi bi-bag-plus me-2"></i>
+
+                                        Add to Cart
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +101,7 @@
 
             @if (Model.PaginationViewModel.TotalItems > Model.PaginationViewModel.ItemsPerPage)
             {
-                <partial name="_Pagination" for="PaginationViewModel"/>
+                <partial name="_Pagination" for="PaginationViewModel" />
             }
         }
         else

@@ -28,6 +28,15 @@ public sealed class CatalogService : ICatalogService
         return result;
     }
 
+    public async Task<ItemResponseDto> GetCatalogItemById(int id)
+    {
+        var result = await _httpClientService.SendAsync<ItemResponseDto>(
+            $"{_apiOptions.CatalogUrl}{_apiOptions.CatalogPath}/items/{id}",
+            HttpMethod.Get);
+
+        return result;
+    }
+
     public async Task<IEnumerable<SelectListItem>> GetBrands()
     {
         var result = await _httpClientService.SendAsync<BrandResponseDto>(

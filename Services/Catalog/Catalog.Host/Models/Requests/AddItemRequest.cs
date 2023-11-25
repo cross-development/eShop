@@ -13,7 +13,7 @@ public sealed class AddItemRequest
     public string Description { get; set; }
 
     [Required]
-    [Range(1, int.MaxValue, ErrorMessage = "The product price should be greater than 1")]
+    [Range(1, int.MaxValue, ErrorMessage = "The product price should be equal to or greater than 1")]
     public decimal Price { get; set; }
 
     [Required]
@@ -23,9 +23,11 @@ public sealed class AddItemRequest
     [Range(0, int.MaxValue, ErrorMessage = "The amount of products on stock should not be less than 0")]
     public int AvailableStock { get; set; }
 
-    [Required(ErrorMessage = "Please provide a valid category type id")]
+    [Required]
+    [Range(1, int.MaxValue, ErrorMessage = "Please provide a valid category type id")]
     public int CatalogTypeId { get; set; }
 
-    [Required(ErrorMessage = "Please provide a valid category brand id")]
+    [Required]
+    [Range(1, int.MaxValue, ErrorMessage = "Please provide a valid category brand id")]
     public int CatalogBrandId { get; set; }
 }

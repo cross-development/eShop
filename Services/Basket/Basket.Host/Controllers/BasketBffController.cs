@@ -23,19 +23,6 @@ public class BasketBffController : ControllerBase
     }
 
     [HttpGet]
-    [AllowAnonymous]
-    [Produces(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> LogMessage()
-    {
-        _logger.LogInformation("[BasketBffController: LogMessage] --> Log some random message");
-
-        await Task.CompletedTask;
-
-        return NoContent();
-    }
-
-    [HttpGet]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(GetBasketResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> Items()

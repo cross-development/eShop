@@ -5,7 +5,19 @@
 
 @if (Context.User.Identity.IsAuthenticated)
 {
-    <div class="d-flex justify-content-end">
+    <div class="nav d-flex justify-content-end align-items-center">
+        <div class="nav-item me-4">
+            <a type="button" class="btn btn-sm btn-link position-relative text-decoration-none p-1">
+                <span class="fs-4">
+                    <i class="d-flex bi bi-cart3 text-dark"></i>
+                </span>
+
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    9
+                </span>
+            </a>
+        </div>
+
         <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 @UserManager.Parse(User).Name

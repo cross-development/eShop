@@ -1,0 +1,75 @@
+﻿@using ClientApp.ViewModels.HomeViewModels
+
+@model ItemDetailsViewModel
+
+@{
+    ViewData["Title"] = $"{Model.Name}";
+}
+
+<section class="my-5">
+    <div class="container">
+        <div class="d-flex">
+            <a type="button"
+               asp-controller="Home"
+               asp-action="Index"
+               class="d-flex align-items-center btn btn-primary btn-sm px-2 fs-6">
+                <i class="d-flex bi bi-chevron-left me-1"></i>
+
+                Back
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="album bg-white">
+    <div class="container">
+        <div class="card border-0">
+            <div class="row">
+                <div class="col-md-4">
+                    <img width="100%"
+                         height="100%"
+                         alt="@Model.Name thumbnail"
+                         src="@Model.PictureUrl"
+                         class="rounded" />
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 mb-4">
+                                <h1 class="card-title">@Model.Name</h1>
+                            </div>
+
+                            <div class="col-12 mb-5">
+                                <p class="card-text fs-5">@Model.Description</p>
+                            </div>
+
+                            <div class="col-12 mb-4">
+                                <p class="card-text mb-1 fs-5">
+                                    <strong>Product type:</strong> @Model.CatalogType.Type
+                                </p>
+
+                                <p class="card-text mb-1 fs-5">
+                                    <strong>Product brand:</strong> @Model.CatalogBrand.Brand
+                                </p>
+
+                                <p class="card-text mb-1 fs-5">
+                                    <strong>Available on stock:</strong> @Model.AvailableStock
+                                </p>
+                            </div>
+
+                            <div class="d-flex col-12 justify-content-end">
+                                <a type="button"
+                                   class="d-flex align-items-center btn btn-lg btn-success">
+                                    <i class="d-flex bi bi-bag-plus me-2"></i>
+
+                                    Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

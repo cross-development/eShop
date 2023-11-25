@@ -79,4 +79,28 @@ public class HomeController : Controller
 
         return View(catalogViewModel);
     }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        var catalogItem = await _catalogService.GetCatalogItemById(id);
+
+        if (catalogItem == null)
+        {
+            return View("Error");
+        }
+
+        var itemDetailsModelView = new ItemDetailsViewModel
+        {
+            Id = catalogItem.Id,
+            Name = catalogItem.Name,
+            Description = catalogItem.Description,
+            Price = catalogItem.Price,
+            PictureUrl = catalogItem.PictureUrl,
+            AvailableStock = catalogItem.AvailableStock,
+            CatalogBrand = catalogItem.CatalogBrand,
+            CatalogType = catalogItem.CatalogType
+        };
+
+        return View(itemDetailsModelView);
+    }
 }

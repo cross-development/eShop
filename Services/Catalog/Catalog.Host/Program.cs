@@ -48,7 +48,9 @@ builder.Services.AddSwaggerGen(options =>
                 Scopes = new Dictionary<string, string>()
                 {
                     { AuthScope.WebClient, "Web client full access" },
-                    { AuthScope.CatalogApi, "Catalog api full access" }
+                    { AuthScope.CatalogApiItems, "Catalog api (items) full access" },
+                    { AuthScope.CatalogApiBrands, "Catalog api (brands) full access" },
+                    { AuthScope.CatalogApiTypes, "Catalog api (types) full access" },
                 }
             }
         }

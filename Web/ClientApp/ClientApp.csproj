@@ -23,7 +23,6 @@
   <ItemGroup>
     <Folder Include="DTOs\Responses\" />
     <Folder Include="ViewModels\HomeViewModels\" />
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
