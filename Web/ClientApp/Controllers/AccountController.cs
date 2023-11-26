@@ -38,6 +38,8 @@ public class AccountController : Controller
 
         var homeUrl = Url.Action(nameof(HomeController.Index), "Home");
 
+        _logger.LogInformation($"After successful sign out, the user will be redirected to: {homeUrl}");
+
         return new SignOutResult(OpenIdConnectDefaults.AuthenticationScheme,
             new AuthenticationProperties { RedirectUri = homeUrl });
     }
