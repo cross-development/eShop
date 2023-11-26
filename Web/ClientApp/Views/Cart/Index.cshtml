@@ -4,14 +4,14 @@
 
 <section class="my-5">
     <div class="container">
-        <div class="my-3 p-3 rounded shadow-sm">
-            <h2 class="mb-4 text-center">Your Cart</h2>
+        <div class="my-3 p-3">
+            <h2 class="mb-5 text-center">Your Cart</h2>
 
             <table class="table table-striped mb-0">
                 <thead>
                     <tr>
                         <th scope="col" style="width: 10%"></th>
-                        <th scope="col" style="width: 50%">Product name</th>
+                        <th scope="col" style="width: 50%">Product</th>
                         <th scope="col" style="width: 15%">Amount</th>
                         <th scope="col" style="width: 15%">Price per unit</th>
                         <th scope="col" style="width: 8%"></th>
@@ -64,14 +64,18 @@
                                         <td style="width: 60%">
                                             <strong>Total amount</strong>
                                         </td>
-                                        <td style="width: 40%; text-align: right">10</td>
+                                        <td style="width: 40%; text-align: right">
+                                            <strong>10</strong>
+                                        </td>
                                     </tr>
 
                                     <tr>
                                         <td style="width: 60%">
                                             <strong>Total price</strong>
                                         </td>
-                                        <td style="width: 40%; text-align: right">20$</td>
+                                        <td style="width: 40%; text-align: right">
+                                            <strong>20$</strong>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -79,6 +83,14 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div class="d-flex align-items-center justify-content-end mt-4">
+                <a type="button" class="d-flex align-items-center btn btn-success">
+                    <i class="d-flex bi bi-check-square me-2"></i>
+
+                    Confirm order
+                </a>
+            </div>
         </div>
     </div>
 </section>
