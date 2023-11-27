@@ -3,9 +3,10 @@
 @model ItemDetailsViewModel
 
 @{
-    ViewData["Title"] = $"{Model.Name}";
+    ViewData["Title"] = $"{Model.Item.Name}";
 }
 
+@*Navigation section*@
 <section class="my-5">
     <div class="container">
         <div class="d-flex">
@@ -21,55 +22,79 @@
     </div>
 </section>
 
+@*Product section*@
 <section class="album bg-white">
     <div class="container">
         <div class="card border-0">
-            <div class="row">
+            <form class="row" asp-action="AddToBasket" asp-controller="Basket" method="post">
+                <input name="id" type="hidden" asp-for="@Model.Item.Id" />
+
                 <div class="col-md-4">
                     <img width="100%"
                          height="100%"
-                         alt="@Model.Name thumbnail"
-                         src="@Model.PictureUrl"
+                         alt="@Model.Item.Name thumbnail"
+                         src="@Model.Item.PictureUrl"
                          class="rounded" />
+                    <input name="pictureUrl" type="hidden" asp-for="@Model.Item.PictureUrl" />
                 </div>
 
                 <div class="col-md-8">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 mb-4">
-                                <h1 class="card-title">@Model.Name</h1>
+                                <h1 class="card-title">@Model.Item.Name</h1>
+                                <input name="name" type="hidden" asp-for="@Model.Item.Name" />
                             </div>
 
                             <div class="col-12 mb-5">
-                                <p class="card-text fs-5">@Model.Description</p>
+                                <p class="card-text fs-5">@Model.Item.Description</p>
                             </div>
 
                             <div class="col-12 mb-4">
                                 <p class="card-text mb-1 fs-5">
-                                    <strong>Product type:</strong> @Model.CatalogType.Type
+                                    <strong>Product type:</strong> @Model.Item.CatalogType.Type
                                 </p>
 
                                 <p class="card-text mb-1 fs-5">
-                                    <strong>Product brand:</strong> @Model.CatalogBrand.Brand
+                                    <strong>Product brand:</strong> @Model.Item.CatalogBrand.Brand
                                 </p>
 
                                 <p class="card-text mb-1 fs-5">
-                                    <strong>Available on stock:</strong> @Model.AvailableStock
+                                    <strong>Available on stock:</strong> @Model.Item.AvailableStock
                                 </p>
                             </div>
 
-                            <div class="d-flex col-12 justify-content-end">
-                                <a type="button"
-                                   class="d-flex align-items-center btn btn-lg btn-success">
-                                    <i class="d-flex bi bi-bag-plus me-2"></i>
+                            <div class="d-flex col-12 justify-content-end align-items-end">
+                                <div class="me-5">
+                                    <p class="card-text mb-0 fs-1 lh-1 fw-bold">$@Model.Item.Price.ToString("N2")</p>
+                                    <input name="price" type="hidden" asp-for="@Model.Item.Price" />
+                                </div>
 
-                                    Add to Cart
-                                </a>
+                                @if (Context.User.Identity.IsAuthenticated)
+                                {
+                                    <button type="submit" class="d-flex align-items-center btn btn-lg btn-success">
+                                        <i class="d-flex bi bi-bag-plus me-2"></i>
+
+                                        Add to Cart
+                                    </button>
+                                }
+                                else
+                                {
+                                    <a type="button"
+                                       asp-area=""
+                                       asp-controller="Account"
+                                       asp-action="SignIn"
+                                       class="d-flex align-items-center btn btn-lg btn-secondary">
+                                        <i class="d-flex bi bi-box-arrow-in-right me-2"></i>
+
+                                        Log in to purchase
+                                    </a>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </section>

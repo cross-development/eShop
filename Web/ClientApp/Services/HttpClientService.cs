@@ -42,7 +42,7 @@ public sealed class HttpClientService : IHttpClientService
 
         builder.Query = query.ToString() ?? string.Empty;
 
-        _logger.LogInformation($"[HttpClientService: GetQueryString] --> BUILDER QUERY: {builder.Query}");
+        _logger.LogInformation($"[HttpClientService: GetQueryString] ==> BUILDER QUERY: {builder.Query}");
 
         return builder.Query;
     }
@@ -52,7 +52,7 @@ public sealed class HttpClientService : IHttpClientService
         var serializedContent = JsonConvert.SerializeObject(content);
         var stringContent = new StringContent(serializedContent, Encoding.UTF8, MediaTypeNames.Application.Json);
 
-        _logger.LogInformation($"[HttpClientService: GetStringContent] --> STRING CONTENT: {serializedContent}");
+        _logger.LogInformation($"[HttpClientService: GetStringContent] ==> STRING CONTENT: {serializedContent}");
 
         return stringContent;
     }
@@ -70,7 +70,7 @@ public sealed class HttpClientService : IHttpClientService
 
         var accessToken = await _httpContextAccessor.HttpContext?.GetTokenAsync("access_token")!;
 
-        _logger.LogInformation($"[HttpClientService: SendAsync] --> ACCESS TOKEN: {accessToken}");
+        _logger.LogInformation($"[HttpClientService: SendAsync] ==> ACCESS TOKEN: {accessToken}");
 
         if (!string.IsNullOrEmpty(accessToken))
         {
@@ -90,6 +90,8 @@ public sealed class HttpClientService : IHttpClientService
 
         if (!result.IsSuccessStatusCode)
         {
+            _logger.LogInformation($"[HttpClientService: SendAsync] ==> RESULT STATUS CODE: {result.StatusCode}");
+
             return default;
         }
 

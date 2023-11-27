@@ -29,7 +29,7 @@ public class BasketBffController : ControllerBase
     {
         var userId = User.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;
 
-        _logger.LogInformation($"[BasketBffController: Items] --> User id is {userId}");
+        _logger.LogInformation($"[BasketBffController: Items] ==> USER ID: {userId}");
 
         var response = await _basketService.GetBasketAsync(userId);
 

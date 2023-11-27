@@ -23,6 +23,7 @@
   <ItemGroup>
     <Folder Include="DTOs\Responses\" />
     <Folder Include="ViewModels\HomeViewModels\" />
+    <Folder Include="ViewModels\BasketViewModels\" />
   </ItemGroup>
 
 </Project>

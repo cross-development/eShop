@@ -18,29 +18,29 @@ public sealed class CatalogService : ICatalogService
         _apiOptions = apiOptions.Value;
     }
 
-    public async Task<CatalogResponseDto> GetCatalogItems(CatalogRequestDto catalogRequest)
+    public async Task<CatalogResponseDto> GetCatalogItemsAsync(CatalogRequestDto catalogRequest)
     {
         var result = await _httpClientService.SendAsync<CatalogResponseDto, CatalogRequestDto>(
-            $"{_apiOptions.CatalogUrl}{_apiOptions.CatalogPath}/items",
+            $"{_apiOptions.CatalogUrl}/catalog-bff/items",
             HttpMethod.Get,
             catalogRequest);
 
         return result;
     }
 
-    public async Task<ItemResponseDto> GetCatalogItemById(int id)
+    public async Task<ItemResponseDto> GetCatalogItemByIdAsync(int id)
     {
         var result = await _httpClientService.SendAsync<ItemResponseDto>(
-            $"{_apiOptions.CatalogUrl}{_apiOptions.CatalogPath}/items/{id}",
+            $"{_apiOptions.CatalogUrl}/catalog-bff/items/{id}",
             HttpMethod.Get);
 
         return result;
     }
 
-    public async Task<IEnumerable<SelectListItem>> GetBrands()
+    public async Task<IEnumerable<SelectListItem>> GetBrandsAsync()
     {
         var result = await _httpClientService.SendAsync<BrandResponseDto>(
-            $"{_apiOptions.CatalogUrl}{_apiOptions.CatalogPath}/brands",
+            $"{_apiOptions.CatalogUrl}/catalog-bff/brands",
             HttpMethod.Get);
 
         var listOfBrands = result.Data
@@ -50,10 +50,10 @@ public sealed class CatalogService : ICatalogService
         return listOfBrands;
     }
 
-    public async Task<IEnumerable<SelectListItem>> GetTypes()
+    public async Task<IEnumerable<SelectListItem>> GetTypesAsync()
     {
         var result = await _httpClientService.SendAsync<TypeResponseDto>(
-            $"{_apiOptions.CatalogUrl}{_apiOptions.CatalogPath}/types",
+            $"{_apiOptions.CatalogUrl}/catalog-bff/types",
             HttpMethod.Get);
 
         var listOfTypes = result.Data

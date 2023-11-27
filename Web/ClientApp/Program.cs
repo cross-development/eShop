@@ -42,6 +42,7 @@ builder.Services.AddAuthentication(options =>
         options.Scope.Add(AuthScope.OpenId);
         options.Scope.Add(AuthScope.Profile);
         options.Scope.Add(AuthScope.WebClient);
+        options.Scope.Add(AuthScope.BasketApi);
     });
 
 builder.AddBaseConfiguration();
@@ -50,6 +51,7 @@ builder.Services.Configure<ApiConfiguration>(configuration.GetSection("Api"));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<IHttpClientService, HttpClientService>();
 builder.Services.AddTransient<ICatalogService, CatalogService>();
+builder.Services.AddTransient<IBasketService, BasketService>();
 builder.Services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
 
 var app = builder.Build();

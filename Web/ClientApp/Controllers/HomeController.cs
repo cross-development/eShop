@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ClientApp.DTOs.Requests;
+using ClientApp.Models;
 using ClientApp.Services.Interfaces;
 using ClientApp.ViewModels.HomeViewModels;
 using ClientApp.ViewModels.CommonViewModels;
@@ -29,7 +30,7 @@ public class HomeController : Controller
         };
 
         // Fetching catalog items
-        var catalogItems = await _catalogService.GetCatalogItems(request);
+        var catalogItems = await _catalogService.GetCatalogItemsAsync(request);
 
         if (catalogItems == null)
         {
@@ -37,7 +38,7 @@ public class HomeController : Controller
         }
 
         // Fetching catalog brands
-        var brands = await _catalogService.GetBrands();
+        var brands = await _catalogService.GetBrandsAsync();
 
         if (brands == null)
         {
@@ -45,7 +46,7 @@ public class HomeController : Controller
         }
 
         // Fetching catalog types
-        var types = await _catalogService.GetTypes();
+        var types = await _catalogService.GetTypesAsync();
 
         if (types == null)
         {
@@ -82,7 +83,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Details(int id)
     {
-        var catalogItem = await _catalogService.GetCatalogItemById(id);
+        var catalogItem = await _catalogService.GetCatalogItemByIdAsync(id);
 
         if (catalogItem == null)
         {
@@ -91,14 +92,17 @@ public class HomeController : Controller
 
         var itemDetailsModelView = new ItemDetailsViewModel
         {
-            Id = catalogItem.Id,
-            Name = catalogItem.Name,
-            Description = catalogItem.Description,
-            Price = catalogItem.Price,
-            PictureUrl = catalogItem.PictureUrl,
-            AvailableStock = catalogItem.AvailableStock,
-            CatalogBrand = catalogItem.CatalogBrand,
-            CatalogType = catalogItem.CatalogType
+            Item = new CatalogItem
+            {
+                Id = catalogItem.Id,
+                Name = catalogItem.Name,
+                Description = catalogItem.Description,
+                Price = catalogItem.Price,
+                PictureUrl = catalogItem.PictureUrl,
+                AvailableStock = catalogItem.AvailableStock,
+                CatalogBrand = catalogItem.CatalogBrand,
+                CatalogType = catalogItem.CatalogType
+            }
         };
 
         return View(itemDetailsModelView);

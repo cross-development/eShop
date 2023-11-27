@@ -26,39 +26,36 @@ public sealed class CacheService : ICacheService
 
     public async Task<T> GetAsync<T>(string key)
     {
-        _logger.LogInformation($"[CacheService: GetAsync] --> The key for getting cache data is: {key}");
+        _logger.LogInformation($"[CacheService: GetAsync] ==> KEY TO GET CACHE DATA: {key}");
 
         var redis = GetRedisDatabase();
 
         var serialized = await redis.StringGetAsync(key);
 
+        _logger.LogInformation($"[CacheService: GetAsync] ==> SERIALIZED CACHE DATA: {serialized}");
+
         var cachedData = serialized.HasValue ? JsonConvert.DeserializeObject<T>(serialized.ToString()) : default;
 
-        _logger.LogInformation($"[CacheService: GetAsync] --> The received cached data: {cachedData}");
+        _logger.LogInformation($"[CacheService: GetAsync] ==> RECEIVED CACHE DATA: {cachedData}");
 
         return cachedData;
     }
 
     public async Task<bool> AddOrUpdateAsync<T>(string key, T value)
     {
-        _logger.LogInformation($"[CacheService: AddOrUpdateAsync] --> The key for caching data is: {key}");
+        _logger.LogInformation($"[CacheService: AddOrUpdateAsync] ==> KEY TO CACHE DATA: {key}");
 
         var redis = GetRedisDatabase();
 
         var serialized = JsonConvert.SerializeObject(value);
 
-        _logger.LogInformation($"[CacheService: AddOrUpdateAsync] --> The serialized data is: {serialized}");
+        _logger.LogInformation($"[CacheService: AddOrUpdateAsync] ==> SERIALIZED DATA: {serialized}");
 
         var isDataCached = await redis.StringSetAsync(key, serialized, _config.CacheTimeout);
 
-        if (isDataCached)
-        {
-            _logger.LogInformation($"[CacheService: AddOrUpdateAsync] --> The data was cached with the key: {key}");
-        }
-        else
-        {
-            _logger.LogInformation($"[CacheService: AddOrUpdateAsync] --> The data was updated with the key: {key}");
-        }
+        _logger.LogInformation(isDataCached
+            ? $"[CacheService: AddOrUpdateAsync] ==> DATA WAS CACHED WITH KEY: {key}"
+            : $"[CacheService: AddOrUpdateAsync] ==> DATA WAS UPDATED WITH KEY: {key}");
 
         return isDataCached;
     }

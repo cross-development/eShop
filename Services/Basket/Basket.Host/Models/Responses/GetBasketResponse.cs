@@ -1,6 +1,8 @@
-﻿namespace Basket.Host.Models.Responses;
+﻿using Basket.Host.Models.DTOs;
+
+namespace Basket.Host.Models.Responses;
 
 public sealed class GetBasketResponse
 {
-    public string Data { get; set; }
+    public IEnumerable<BasketDataDto> Data { get; set; }
 }

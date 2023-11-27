@@ -6,11 +6,11 @@ namespace ClientApp.Services.Interfaces;
 
 public interface ICatalogService
 {
-    Task<CatalogResponseDto> GetCatalogItems(CatalogRequestDto catalogRequest);
+    Task<CatalogResponseDto> GetCatalogItemsAsync(CatalogRequestDto catalogRequest);
 
-    Task<ItemResponseDto> GetCatalogItemById(int id);
+    Task<ItemResponseDto> GetCatalogItemByIdAsync(int id);
 
-    Task<IEnumerable<SelectListItem>> GetBrands();
+    Task<IEnumerable<SelectListItem>> GetBrandsAsync();
 
-    Task<IEnumerable<SelectListItem>> GetTypes();
+    Task<IEnumerable<SelectListItem>> GetTypesAsync();
 }

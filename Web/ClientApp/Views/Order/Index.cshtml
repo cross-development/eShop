@@ -2,13 +2,29 @@
     ViewData["Title"] = "Order Page";
 }
 
+@*Navigation section*@
+<section class="mt-5">
+    <div class="container">
+        <div class="d-flex">
+            <a type="button"
+               asp-controller="Home"
+               asp-action="Index"
+               class="d-flex align-items-center btn btn-primary btn-sm px-2 fs-6">
+                <i class="d-flex bi bi-chevron-left me-1"></i>
+
+                Back home
+            </a>
+        </div>
+    </div>
+</section>
+
+@*Orders section*@
 <section class="my-5">
     <div class="container">
-        <div class="my-3 p-3">
-            <h2 class="mb-5 text-center">My Orders</h2>
+        <h2 class="mb-5 text-center fw-bold">My Orders</h2>
 
-            <table class="table table-striped mb-0">
-                <thead>
+        <table class="table table-striped mb-0">
+            <thead>
                 <tr>
                     <th scope="col" style="width: 5%">#</th>
                     <th scope="col" style="width: 46%">Order name</th>
@@ -17,9 +33,9 @@
                     <th scope="col" style="width: 14%">Total price</th>
                     <th scope="col" style="width: 7%"></th>
                 </tr>
-                </thead>
+            </thead>
 
-                <tbody>
+            <tbody>
                 <tr>
                     <th scope="row">1</th>
                     <td>Order #1</td>
@@ -79,29 +95,28 @@
                     <td colspan="3" class="border-bottom-0">
                         <table class="table mb-0">
                             <tbody>
-                            <tr>
-                                <td style="width: 65%">
-                                    <strong>Total number of ordered goods</strong>
-                                </td>
-                                <td style="width: 35%; text-align: right">
-                                    <strong>10</strong>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td style="width: 65%">
+                                        <strong>Total number of ordered goods</strong>
+                                    </td>
+                                    <td style="width: 35%; text-align: right">
+                                        <strong>10</strong>
+                                    </td>
+                                </tr>
 
-                            <tr>
-                                <td style="width: 65%">
-                                    <strong>Total amount of orders</strong>
-                                </td>
-                                <td style="width: 35%; text-align: right">
-                                    <strong>20$</strong>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td style="width: 65%">
+                                        <strong>Total amount of orders</strong>
+                                    </td>
+                                    <td style="width: 35%; text-align: right">
+                                        <strong>20$</strong>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </td>
                 </tr>
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
     </div>
 </section>

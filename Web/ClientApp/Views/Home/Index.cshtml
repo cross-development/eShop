@@ -49,53 +49,75 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
                 @foreach (var item in Model.CatalogItems)
                 {
-                    <div class="col">
-                        <div class="card shadow-sm h-100 position-relative">
-                            <img width="100%"
-                                 height="320"
-                                 alt="@item.Name thumbnail"
-                                 src="@item.PictureUrl"
-                                 class="bd-placeholder-img card-img-top" />
+                    <form asp-action="AddToBasket" asp-controller="Basket" method="post">
+                        <input name="id" type="hidden" asp-for="@item.Id" />
 
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="card-title">@item.Name</h5>
+                        <div class="col">
+                            <div class="card shadow-sm h-100 position-relative">
+                                <img width="100%"
+                                     height="320"
+                                     alt="@item.Name thumbnail"
+                                     src="@item.PictureUrl"
+                                     asp-for="PictureUrl"
+                                     class="bd-placeholder-img card-img-top" />
+                                <input name="pictureUrl" type="hidden" asp-for="@item.PictureUrl" />
 
-                                    <p class="card-text">$@item.Price.ToString("N2")</p>
-                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="card-title">@item.Name</h5>
+                                        <input name="name" type="hidden" asp-for="@item.Name" />
 
-                                <div class="d-flex justify-content-end position-absolute top-0 end-0">
-                                    @if (item.AvailableStock <= 5)
-                                    {
-                                        <span class="badge bg-danger">Low stock</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-secondary">Available on stock</span>
-                                    }
-                                </div>
+                                        <p class="card-text">$@item.Price.ToString("N2")</p>
+                                        <input name="price" type="hidden" asp-for="@item.Price" />
+                                    </div>
 
-                                <div class="d-flex justify-content-end mt-3">
-                                    <a type="button"
-                                       asp-controller="Home"
-                                       asp-action="Details"
-                                       asp-route-id="@item.Id"
-                                       class="d-flex align-items-center btn btn-sm btn-primary me-2">
-                                        <i class="d-flex bi bi-arrow-down-left-square me-2"></i>
+                                    <div class="d-flex justify-content-end position-absolute top-0 end-0">
+                                        @if (item.AvailableStock <= 5)
+                                        {
+                                            <span class="badge bg-danger">Low stock</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Available on stock</span>
+                                        }
+                                    </div>
 
-                                        View
-                                    </a>
+                                    <div class="d-flex justify-content-end mt-3">
+                                        <a type="button"
+                                           asp-controller="Home"
+                                           asp-action="Details"
+                                           asp-route-id="@item.Id"
+                                           class="d-flex align-items-center btn btn-sm btn-primary me-2">
+                                            <i class="d-flex bi bi-arrow-down-left-square me-2"></i>
 
-                                    <a type="button"
-                                       class="d-flex align-items-center btn btn-sm btn-success">
-                                        <i class="d-flex bi bi-bag-plus me-2"></i>
+                                            View
+                                        </a>
 
-                                        Add to Cart
-                                    </a>
+                                        @if (Context.User.Identity.IsAuthenticated)
+                                        {
+                                            <button type="submit" class="d-flex align-items-center btn btn-sm btn-success">
+                                                <i class="d-flex bi bi-bag-plus me-2"></i>
+
+                                                Add to Cart
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <a type="button"
+                                               asp-area=""
+                                               asp-controller="Account"
+                                               asp-action="SignIn"
+                                               class="d-flex align-items-center btn btn-sm btn-secondary">
+                                                <i class="d-flex bi bi-box-arrow-in-right me-2"></i>
+
+                                                Log in to purchase
+                                            </a>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 }
             </div>
 
@@ -106,17 +128,13 @@
         }
         else
         {
-            <div class="px-4 py-5 my-5 text-center">
-                <img width="140"
-                     height="162"
-                     alt="no data placeholder"
-                     src="~/images/no_data.png"
-                     class="d-block mx-auto mb-4">
+            <div class="d-flex flex-column align-items-center px-4 my-5 text-center">
+                <i class="d-flex mb-4 bi bi-file-earmark-excel" style="font-size: 120px"></i>
 
                 <h1 class="display-5 fw-bold">Ooops...</h1>
 
                 <div class="col-lg-6 mx-auto">
-                    <p class="lead mb-4">There are no results that match your choice</p>
+                    <p class="lead mb-0 fs-4">There are no results that match your choice</p>
                 </div>
             </div>
         }
