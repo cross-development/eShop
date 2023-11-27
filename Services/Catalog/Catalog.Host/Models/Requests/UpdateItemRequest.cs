@@ -4,7 +4,7 @@ namespace Catalog.Host.Models.Requests;
 
 public sealed class UpdateItemRequest
 {
-    [MaxLength(100, ErrorMessage = "The product name should be 100 characters or less")]
+    [MaxLength(50, ErrorMessage = "The product name should be 50 characters or less")]
     public string Name { get; set; }
 
     [MaxLength(200, ErrorMessage = "The product description should be 200 characters or less")]

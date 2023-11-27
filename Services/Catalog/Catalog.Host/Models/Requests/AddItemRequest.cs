@@ -5,7 +5,7 @@ namespace Catalog.Host.Models.Requests;
 public sealed class AddItemRequest
 {
     [Required]
-    [MaxLength(100, ErrorMessage = "The product name should be 100 characters or less")]
+    [MaxLength(50, ErrorMessage = "The product name should be 50 characters or less")]
     public string Name { get; set; }
 
     [Required]
