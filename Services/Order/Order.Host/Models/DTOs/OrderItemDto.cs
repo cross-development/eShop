@@ -1,6 +1,6 @@
-﻿namespace Order.Host.Data.Entities;
+﻿namespace Order.Host.Models.DTOs;
 
-public class OrderItem
+public sealed class OrderItemDto
 {
     public int Id { get; set; }
 

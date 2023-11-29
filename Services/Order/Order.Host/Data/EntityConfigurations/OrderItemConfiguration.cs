@@ -33,5 +33,9 @@ public sealed class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
         builder.Property(orderItem => orderItem.TotalPrice)
             // Do we need to add any other constraints?
             .IsRequired();
+
+        builder.Property(orderItem => orderItem.UserId)
+            // Do we need to add any other constraints?
+            .IsRequired();
     }
 }

@@ -22,6 +22,7 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<HttpGlobalExceptionFilter>();
     options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseRouteTransformer()));
 });
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

@@ -1,9 +1,7 @@
-﻿namespace Order.Host.Data.Entities;
+﻿namespace Order.Host.Models.Requests;
 
-public class OrderItem
+public sealed class AddOrderRequest
 {
-    public int Id { get; set; }
-
     public string Name { get; set; }
 
     public DateTime Date { get; set; }

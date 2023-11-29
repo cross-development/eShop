@@ -43,6 +43,7 @@ builder.Services.AddAuthentication(options =>
         options.Scope.Add(AuthScope.Profile);
         options.Scope.Add(AuthScope.WebClient);
         options.Scope.Add(AuthScope.BasketApi);
+        options.Scope.Add(AuthScope.OrderApi);
     });
 
 builder.AddBaseConfiguration();

@@ -14,22 +14,24 @@ namespace Basket.Host.Controllers;
 public class BasketBffController : ControllerBase
 {
     private readonly IBasketService _basketService;
-    private readonly ILogger<BasketBffController> _logger;
 
-    public BasketBffController(IBasketService basketService, ILogger<BasketBffController> logger)
+    public BasketBffController(IBasketService basketService)
     {
         _basketService = basketService;
-        _logger = logger;
     }
 
     [HttpGet]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(GetBasketResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Items()
     {
         var userId = User.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;
 
-        _logger.LogInformation($"[BasketBffController: Items] ==> USER ID: {userId}");
+        if (userId == null)
+        {
+            return BadRequest("User not found");
+        }
 
         var response = await _basketService.GetBasketAsync(userId);
 

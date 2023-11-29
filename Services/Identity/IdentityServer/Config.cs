@@ -64,7 +64,8 @@ public static class Config
                     AuthScope.OpenId,
                     AuthScope.Profile,
                     AuthScope.WebClient,
-                    AuthScope.BasketApi
+                    AuthScope.BasketApi,
+                    AuthScope.OrderApi,
                 }
             },
             new Client
