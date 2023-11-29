@@ -1,18 +1,16 @@
-﻿namespace Order.Host.Data.Entities;
+﻿namespace ClientApp.DTOs.Requests;
 
-public class OrderItem
+public sealed class AddOrderRequestDto
 {
-    public int Id { get; set; }
-
     public string Name { get; set; }
 
     public DateTime Date { get; set; }
 
     public IEnumerable<string> Products { get; set; }
 
-    public uint Quantity { get; set; }
+    public int Quantity { get; set; }
 
-    public uint TotalPrice { get; set; }
+    public int TotalPrice { get; set; }
 
     public string UserId { get; set; }
 }

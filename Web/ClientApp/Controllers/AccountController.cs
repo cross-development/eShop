@@ -9,7 +9,7 @@ using ClientApp.Services.Interfaces;
 namespace ClientApp.Controllers;
 
 [Authorize]
-public class AccountController : Controller
+public sealed class AccountController : Controller
 {
     private readonly ILogger<AccountController> _logger;
     private readonly IIdentityParser<ApplicationUser> _identityParser;

@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using ClientApp.Models;
-using ClientApp.ViewModels.CommonViewModels;
 
 namespace ClientApp.ViewModels.HomeViewModels;
 
-public class CatalogViewModel
+public sealed class CatalogViewModel
 {
     public IEnumerable<CatalogItem> CatalogItems { get; set; }
 
@@ -16,5 +15,5 @@ public class CatalogViewModel
 
     public IEnumerable<SelectListItem> Types { get; set; }
 
-    public PaginationViewModel PaginationViewModel { get; set; }
+    public PaginationWithFilterViewModel PaginationViewModel { get; set; }
 }

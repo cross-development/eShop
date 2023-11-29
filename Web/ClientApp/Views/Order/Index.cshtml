@@ -1,4 +1,8 @@
-﻿@{
+﻿@using ClientApp.ViewModels.OrderViewModels
+
+@model OrdersViewModel
+
+@{
     ViewData["Title"] = "Order Page";
 }
 
@@ -20,103 +24,89 @@
 
 @*Orders section*@
 <section class="my-5">
-    <div class="container">
-        <h2 class="mb-5 text-center fw-bold">My Orders</h2>
+    @if (Model.OrderItems.Any())
+    {
+        <div class="container">
+            <h2 class="mb-5 text-center fw-bold">My Orders</h2>
 
-        <table class="table table-striped mb-0">
-            <thead>
-                <tr>
-                    <th scope="col" style="width: 5%">#</th>
-                    <th scope="col" style="width: 46%">Order name</th>
-                    <th scope="col" style="width: 14%">Order date</th>
-                    <th scope="col" style="width: 14%">Quantity</th>
-                    <th scope="col" style="width: 14%">Total price</th>
-                    <th scope="col" style="width: 7%"></th>
-                </tr>
-            </thead>
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 5%">Id</th>
+                        <th scope="col" style="width: 46%">Name</th>
+                        <th scope="col" style="width: 14%">Date</th>
+                        <th scope="col" style="width: 14%">Quantity</th>
+                        <th scope="col" style="width: 14%">Total price</th>
+                        <th scope="col" style="width: 7%"></th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Order #1</td>
-                    <td>20.11.2023</td>
-                    <td>10</td>
-                    <td>100$</td>
-                    <td style="text-align: center">
-                        <a type="button"
-                           asp-controller="Order"
-                           asp-action="Details"
-                           class="d-flex align-items-center justify-content-center btn btn-sm btn-primary">
-                            <i class="d-flex bi bi-arrow-down-left-square me-2"></i>
+                <tbody>
+                    @foreach (var item in Model.OrderItems)
+                    {
+                        <tr>
+                            <th scope="row">@item.Id</th>
+                            <td>@item.Name</td>
+                            <td>@item.Date.ToLongDateString()</td>
+                            <td>@item.Quantity</td>
+                            <td>$ @item.TotalPrice</td>
+                            <td style="text-align: center">
+                                <a type="button"
+                                   asp-controller="Order"
+                                   asp-action="Details"
+                                   asp-route-id="@item.Id"
+                                   class="d-flex align-items-center justify-content-center btn btn-sm btn-primary">
+                                    <i class="d-flex bi bi-arrow-down-left-square me-2"></i>
 
-                            View
-                        </a>
-                    </td>
-                </tr>
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+                    }
 
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Order #2</td>
-                    <td>21.11.2023</td>
-                    <td>11</td>
-                    <td>150$</td>
-                    <td style="text-align: center">
-                        <a type="button"
-                           asp-controller="Order"
-                           asp-action="Details"
-                           class="d-flex align-items-center justify-content-center btn btn-sm btn-primary">
-                            <i class="d-flex bi bi-arrow-down-left-square me-2"></i>
+                    <tr>
+                        <td colspan="3" class="border-bottom-0"></td>
+                        <td colspan="3" class="border-bottom-0">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 65%">
+                                            <strong>Total number of ordered goods</strong>
+                                        </td>
+                                        <td style="width: 35%; text-align: right">
+                                            <strong>@Model.OrderItems.Sum(item => item.Quantity)</strong>
+                                        </td>
+                                    </tr>
 
-                            View
-                        </a>
-                    </td>
-                </tr>
+                                    <tr>
+                                        <td style="width: 65%">
+                                            <strong>Total amount of orders</strong>
+                                        </td>
+                                        <td style="width: 35%; text-align: right">
+                                            <strong>$ @Model.OrderItems.Sum(item => item.TotalPrice)</strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Order #3</td>
-                    <td>22.11.2023</td>
-                    <td>12</td>
-                    <td>200$</td>
-                    <td style="text-align: center">
-                        <a type="button"
-                           asp-controller="Order"
-                           asp-action="Details"
-                           class="d-flex align-items-center justify-content-center btn btn-sm btn-primary">
-                            <i class="d-flex bi bi-arrow-down-left-square me-2"></i>
+            @if (Model.PaginationViewModel.TotalItems > Model.PaginationViewModel.ItemsPerPage)
+            {
+                <partial name="_OrderPagination" for="PaginationViewModel" />
+            }
+        </div>
+    }
+    else
+    {
+        <div class="container h-100 d-flex flex-column justify-content-center">
+            <div class="d-flex align-items-center flex-column text-center">
+                <i class="d-flex bi bi-clipboard2-x mb-4" style="font-size: 120px"></i>
 
-                            View
-                        </a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="3" class="border-bottom-0"></td>
-                    <td colspan="3" class="border-bottom-0">
-                        <table class="table mb-0">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 65%">
-                                        <strong>Total number of ordered goods</strong>
-                                    </td>
-                                    <td style="width: 35%; text-align: right">
-                                        <strong>10</strong>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td style="width: 65%">
-                                        <strong>Total amount of orders</strong>
-                                    </td>
-                                    <td style="width: 35%; text-align: right">
-                                        <strong>20$</strong>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                <h1 class="display-5 mb-0">Empty order list</h1>
+            </div>
+        </div>
+    }
 </section>

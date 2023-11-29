@@ -1,6 +1,6 @@
-﻿namespace Order.Host.Data.Entities;
+﻿namespace ClientApp.DTOs.Responses;
 
-public class OrderItem
+public sealed class OrderResponseDto
 {
     public int Id { get; set; }
 
@@ -10,9 +10,9 @@ public class OrderItem
 
     public IEnumerable<string> Products { get; set; }
 
-    public uint Quantity { get; set; }
+    public int Quantity { get; set; }
 
-    public uint TotalPrice { get; set; }
+    public int TotalPrice { get; set; }
 
     public string UserId { get; set; }
 }

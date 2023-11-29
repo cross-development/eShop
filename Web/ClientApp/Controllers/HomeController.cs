@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ClientApp.DTOs.Requests;
 using ClientApp.Models;
+using ClientApp.DTOs.Requests;
 using ClientApp.Services.Interfaces;
 using ClientApp.ViewModels.HomeViewModels;
 using ClientApp.ViewModels.CommonViewModels;
 
 namespace ClientApp.Controllers;
 
-public class HomeController : Controller
+public sealed class HomeController : Controller
 {
     private const int ItemsPerPage = 6;
 
@@ -20,7 +20,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index(int? brandId, int? typeId, int? page)
     {
-        // Making a query string for the request
+        // Making a query for the request
         var request = new CatalogRequestDto
         {
             Page = page ?? 1,
@@ -53,9 +53,11 @@ public class HomeController : Controller
             return View("Error");
         }
 
-        // Making a pagination view model the pagination
-        var paginationViewModel = new PaginationViewModel
+        // Making a pagination view model for the pagination view
+        var paginationViewModel = new PaginationWithFilterViewModel
         {
+            BrandId = brandId,
+            TypeId = typeId,
             CurrentPage = request.Page,
             ItemsPerPage = catalogItems.Data.Count(),
             TotalItems = catalogItems.Count,
@@ -90,7 +92,7 @@ public class HomeController : Controller
             return View("Error");
         }
 
-        var itemDetailsModelView = new ItemDetailsViewModel
+        var itemDetailsViewModel = new ItemDetailsViewModel
         {
             Item = new CatalogItem
             {
@@ -105,6 +107,6 @@ public class HomeController : Controller
             }
         };
 
-        return View(itemDetailsModelView);
+        return View(itemDetailsViewModel);
     }
 }

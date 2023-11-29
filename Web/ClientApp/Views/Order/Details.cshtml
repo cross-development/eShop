@@ -1,4 +1,8 @@
-﻿@{
+﻿@using ClientApp.ViewModels.OrderViewModels
+
+@model OrderDetailsViewModel
+
+@{
     ViewData["Title"] = "Order Details Page";
 }
 
@@ -26,27 +30,26 @@
                 <div class="col-6 offset-3">
                     <div class="card-body">
                         <div class="mb-3">
-                            <h1 class="card-title fw-bold">Order Name</h1>
+                            <h1 class="card-title fw-bold">@Model.Item.Name - @Model.Item.Id</h1>
                         </div>
 
                         <dl class="row mb-0 border rounded py-3 px-1">
                             <dt class="col-sm-6 border-bottom">Products:</dt>
                             <dd class="col-sm-6 mb-0 border-bottom">
-                                <p class="mb-1">Product 1</p>
-                                <p class="mb-1">Product 2</p>
-                                <p class="mb-1">Product 3</p>
-                                <p class="mb-1">Product 4</p>
-                                <p class="mb-1">Product 5</p>
+                                @foreach (var product in Model.Item.Products)
+                                {
+                                    <p class="mb-1">@product</p>
+                                }
                             </dd>
-                            
+
                             <dt class="col-sm-6 py-3 border-bottom">Order date:</dt>
-                            <dd class="col-sm-6 py-3 mb-0 border-bottom">20.11.2023</dd>
+                            <dd class="col-sm-6 py-3 mb-0 border-bottom">@Model.Item.Date.ToLongDateString()</dd>
 
                             <dt class="col-sm-6 py-3">Quantity of products:</dt>
-                            <dt class="col-sm-6 py-3 mb-0">10</dt>
+                            <dt class="col-sm-6 py-3 mb-0">@Model.Item.Quantity</dt>
 
                             <dt class="col-sm-6">Total price:</dt>
-                            <dt class="col-sm-6 mb-0">100$</dt>
+                            <dt class="col-sm-6 mb-0">$ @Model.Item.TotalPrice.ToString("N2")</dt>
                         </dl>
                     </div>
                 </div>

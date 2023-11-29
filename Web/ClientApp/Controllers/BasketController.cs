@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ClientApp.DTOs.Requests;
 using ClientApp.Models;
+using ClientApp.DTOs.Requests;
 using ClientApp.Services.Interfaces;
 using ClientApp.ViewModels.BasketViewModels;
 
 namespace ClientApp.Controllers;
 
 [Authorize]
-public class BasketController : Controller
+public sealed class BasketController : Controller
 {
     private readonly IBasketService _basketService;
 
@@ -29,7 +29,6 @@ public class BasketController : Controller
         return View(basketItemsViewModel);
     }
 
-    //[HttpPost]
     public async Task<IActionResult> AddToBasket(CatalogItem catalogItem)
     {
         var basketDto = new BasketRequestDto

@@ -6,7 +6,7 @@ public sealed class ApiConfiguration
 
     public string BasketUrl { get; set; }
 
-    public string OrderPath { get; set; }
+    public string OrderUrl { get; set; }
 
     public int SessionCookieLifetimeMinutes { get; set; }
 

@@ -17,13 +17,13 @@ public sealed class BasketService : IBasketService
         _apiOptions = apiOptions.Value;
     }
 
-    public async Task<bool> AddToBasketAsync(BasketRequestDto data)
+    public async Task<bool> AddToBasketAsync(BasketRequestDto request)
     {
         var result = await _httpClientService.SendAsync<bool, object, BasketRequestDto>(
             $"{_apiOptions.BasketUrl}/basket-item/add",
             HttpMethod.Post,
             null,
-            data);
+            request);
 
         return result;
     }

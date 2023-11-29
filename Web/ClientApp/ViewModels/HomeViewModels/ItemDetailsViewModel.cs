@@ -2,7 +2,7 @@
 
 namespace ClientApp.ViewModels.HomeViewModels;
 
-public class ItemDetailsViewModel
+public sealed class ItemDetailsViewModel
 {
     public CatalogItem Item { get; set; }
 }

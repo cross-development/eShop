@@ -7,5 +7,6 @@ public interface IApplicationDbContextWrapper<out T>
     where T : DbContext
 {
     T ApplicationDbContext { get; }
+
     Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken);
 }

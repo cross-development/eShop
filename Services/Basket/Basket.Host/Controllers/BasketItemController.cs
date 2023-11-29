@@ -12,7 +12,7 @@ namespace Basket.Host.Controllers;
 [Authorize(Policy = AuthPolicy.AllowClientPolicy)]
 [Scope(AuthScope.BasketApi)]
 [Route(ComponentDefaults.DefaultRouteV1)]
-public class BasketItemController : ControllerBase
+public sealed class BasketItemController : ControllerBase
 {
     private readonly IBasketService _basketService;
 

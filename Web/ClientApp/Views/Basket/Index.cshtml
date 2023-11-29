@@ -54,7 +54,7 @@
                                 </th>
                                 <td>@item.Name</td>
                                 <td>@item.Amount</td>
-                                <td>@item.Price</td>
+                                <td>$ @item.Price</td>
                                 <td style="text-align: center">
                                     <a type="button" class="btn btn-sm btn-danger p-1">
                                         <i class="d-flex bi bi-trash"></i>
@@ -82,7 +82,7 @@
                                                 <strong>Total price</strong>
                                             </td>
                                             <td style="width: 40%; text-align: right">
-                                                <strong>@Model.BasketItems.Sum(item => item.Price) $</strong>
+                                                <strong>$ @Model.BasketItems.Sum(item => item.Price)</strong>
                                             </td>
                                         </tr>
                                     </tbody>

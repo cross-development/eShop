@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ClientApp.Models;
 using ClientApp.DTOs.Requests;
 using ClientApp.DTOs.Responses;
 using ClientApp.Configurations;
@@ -18,12 +19,12 @@ public sealed class CatalogService : ICatalogService
         _apiOptions = apiOptions.Value;
     }
 
-    public async Task<CatalogResponseDto> GetCatalogItemsAsync(CatalogRequestDto catalogRequest)
+    public async Task<PaginatedResponseDto<CatalogItem>> GetCatalogItemsAsync(CatalogRequestDto request)
     {
-        var result = await _httpClientService.SendAsync<CatalogResponseDto, CatalogRequestDto>(
+        var result = await _httpClientService.SendAsync<PaginatedResponseDto<CatalogItem>, CatalogRequestDto>(
             $"{_apiOptions.CatalogUrl}/catalog-bff/items",
             HttpMethod.Get,
-            catalogRequest);
+            request);
 
         return result;
     }

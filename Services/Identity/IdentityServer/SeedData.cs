@@ -8,7 +8,7 @@ using IdentityServer.Models;
 
 namespace IdentityServer;
 
-public class SeedData
+public static class SeedData
 {
     public static void EnsureSeedData(WebApplication app)
     {

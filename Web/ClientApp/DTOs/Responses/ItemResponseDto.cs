@@ -2,7 +2,7 @@
 
 namespace ClientApp.DTOs.Responses;
 
-public class ItemResponseDto
+public sealed class ItemResponseDto
 {
     public int Id { get; set; }
 
@@ -14,9 +14,9 @@ public class ItemResponseDto
 
     public string PictureUrl { get; set; }
 
+    public int AvailableStock { get; set; }
+
     public CatalogType CatalogType { get; set; }
 
     public CatalogBrand CatalogBrand { get; set; }
-
-    public int AvailableStock { get; set; }
 }

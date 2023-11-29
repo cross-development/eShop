@@ -11,7 +11,7 @@ namespace Basket.Host.Controllers;
 [ApiController]
 [Authorize(Policy = AuthPolicy.AllowEndUserPolicy)]
 [Route(ComponentDefaults.DefaultRouteV1)]
-public class BasketBffController : ControllerBase
+public sealed class BasketBffController : ControllerBase
 {
     private readonly IBasketService _basketService;
 

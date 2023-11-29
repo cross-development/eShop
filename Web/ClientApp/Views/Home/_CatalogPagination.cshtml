@@ -1,0 +1,53 @@
+﻿@using ClientApp.ViewModels.HomeViewModels
+
+@model PaginationWithFilterViewModel
+
+<nav class="d-flex justify-content-end mt-4" aria-label="pagination">
+    <ul class="pagination mb-0">
+        <li class="@(Model.IsPreviousDisabled ? "page-item disabled" : "page-item")">
+            <a id="PreviousPage"
+               tabindex="@(Model.IsPreviousDisabled ? "-1" : "0")"
+               aria-disabled="@Model.IsPreviousDisabled"
+               aria-label="Previous"
+               class="page-link"
+               asp-controller="Home"
+               asp-action="Index"
+               asp-route-page="@(Model.CurrentPage - 1)"
+               asp-route-brandId="@Model.BrandId"
+               asp-route-typeId="@Model.TypeId">
+                Previous
+            </a>
+        </li>
+
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="@(i == Model.CurrentPage ? "page-item active" : "page-item")"
+                aria-current="@(i == Model.CurrentPage ? "page" : "")">
+                <a class="page-link"
+                   asp-controller="Home"
+                   asp-action="Index"
+                   asp-route-page="@i"
+                   asp-route-brandId="@Model.BrandId"
+                   asp-route-typeId="@Model.TypeId">
+                    @i
+                </a>
+
+            </li>
+        }
+
+        <li class="@(Model.IsNextDisabled ? "page-item disabled" : "page-item")">
+            <a id="NaxtPage"
+               tabindex="@(Model.IsNextDisabled ? -1 : 0)"
+               aria-disabled="@Model.IsNextDisabled"
+               aria-label="Next"
+               class="page-link"
+               asp-controller="Home"
+               asp-action="Index"
+               asp-route-page="@(Model.CurrentPage + 1)"
+               asp-route-brandId="@Model.BrandId"
+               asp-route-typeId="@Model.TypeId">
+                Next
+            </a>
+        </li>
+    </ul>
+</nav>

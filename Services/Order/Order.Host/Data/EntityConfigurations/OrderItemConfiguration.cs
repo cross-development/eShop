@@ -19,23 +19,19 @@ public sealed class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
             .IsRequired();
 
         builder.Property(orderItem => orderItem.Date)
-            // Do we need to add any extra constraints?
+            .HasDefaultValue(DateTime.Now)
             .IsRequired();
 
         builder.Property(orderItem => orderItem.Products)
-            // Do we need to add any other constraints?
             .IsRequired();
 
         builder.Property(orderItem => orderItem.Quantity)
-            // Do we need to add any extra constraints?
             .IsRequired();
 
         builder.Property(orderItem => orderItem.TotalPrice)
-            // Do we need to add any other constraints?
             .IsRequired();
 
         builder.Property(orderItem => orderItem.UserId)
-            // Do we need to add any other constraints?
             .IsRequired();
     }
 }
