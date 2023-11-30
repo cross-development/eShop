@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helpers;
 using Infrastructure.Identity;
+using Infrastructure.Exceptions;
 using Basket.Host.Models.Responses;
 using Basket.Host.Services.Interfaces;
 
@@ -23,14 +24,14 @@ public sealed class BasketBffController : ControllerBase
     [HttpGet]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(GetBasketResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Items()
     {
         var userId = User.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;
 
         if (userId == null)
         {
-            return BadRequest("User not found");
+            return NotFound(new BusinessException("Invalid user"));
         }
 
         var response = await _basketService.GetBasketAsync(userId);

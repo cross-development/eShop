@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helpers;
 using Infrastructure.Identity;
+using Infrastructure.Exceptions;
 using Catalog.Host.Models.DTOs;
 using Catalog.Host.Models.Requests;
 using Catalog.Host.Models.Responses;
@@ -51,7 +52,7 @@ public sealed class CatalogBffController : ControllerBase
 
         if (result == null)
         {
-            return NotFound();
+            return NotFound(new BusinessException("Item with provided id not found"));
         }
 
         return Ok(result);
@@ -79,7 +80,7 @@ public sealed class CatalogBffController : ControllerBase
 
         if (result == null)
         {
-            return NotFound();
+            return NotFound(new BusinessException("Item with provided id not found"));
         }
 
         return Ok(result);
@@ -107,7 +108,7 @@ public sealed class CatalogBffController : ControllerBase
 
         if (result == null)
         {
-            return NotFound();
+            return NotFound(new BusinessException("Item with provided id not found"));
         }
 
         return Ok(result);

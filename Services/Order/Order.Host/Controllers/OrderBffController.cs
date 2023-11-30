@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helpers;
 using Infrastructure.Identity;
+using Infrastructure.Exceptions;
 using Order.Host.Models.DTOs;
 using Order.Host.Models.Requests;
 using Order.Host.Models.Responses;
@@ -32,7 +33,7 @@ public sealed class OrderBffController : ControllerBase
 
         if (userId == null)
         {
-            return BadRequest("User not found");
+            return BadRequest(new BusinessException("Invalid user"));
         }
 
         var result = await _orderService.GetOrderItemsAsync(request, userId);
@@ -51,14 +52,14 @@ public sealed class OrderBffController : ControllerBase
 
         if (userId == null)
         {
-            return BadRequest("User not found");
+            return BadRequest(new BusinessException("Invalid user"));
         }
 
         var result = await _orderService.GetOrderItemByIdAsync(id, userId);
 
         if (result == null)
         {
-            return NotFound("Order with provided id not found");
+            return NotFound("Item with provided id not found");
         }
 
         return Ok(result);

@@ -5,7 +5,9 @@ namespace Basket.Host.Services.Interfaces;
 
 public interface IBasketService
 {
+    Task<GetBasketResponse> GetBasketAsync(string userId);
+
     Task<bool> AddItemAsync(string userId, BasketDataDto data);
 
-    Task<GetBasketResponse> GetBasketAsync(string userId);
+    Task<bool> DeleteItemAsync(string userId, int id);
 }

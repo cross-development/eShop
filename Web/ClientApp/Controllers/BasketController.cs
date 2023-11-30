@@ -52,4 +52,24 @@ public sealed class BasketController : Controller
 
         return RedirectToAction("Index", "Home");
     }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteFromBasket(int id)
+    {
+        if (!ModelState.IsValid)
+        {
+            Console.WriteLine($"[DELETE FROM BASKET : ID MODEL STATE IS NOT VALID] =====> {id}");
+        }
+
+        Console.WriteLine($"[DELETE FROM BASKET : ID] =====> {id}");
+
+        var result = await _basketService.DeleteFromBasketAsync(id);
+
+        if (!result)
+        {
+            return View("Error");
+        }
+
+        return RedirectToAction("Index", "Basket");
+    }
 }

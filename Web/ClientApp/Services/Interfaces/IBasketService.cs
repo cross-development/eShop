@@ -5,7 +5,9 @@ namespace ClientApp.Services.Interfaces;
 
 public interface IBasketService
 {
+    Task<bool> AddToBasketAsync(BasketRequestDto request);
+
     Task<BasketResponseDto> GetBasketAsync();
 
-    Task<bool> AddToBasketAsync(BasketRequestDto request);
+    Task<bool> DeleteFromBasketAsync(int id);
 }

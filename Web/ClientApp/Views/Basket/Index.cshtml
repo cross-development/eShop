@@ -30,8 +30,7 @@
             <div class="p-3">
                 <h2 class="mb-5 text-center fw-bold">Your Cart</h2>
 
-                @using (Html.BeginForm("Checkout", "Order", FormMethod.Post))
-                {
+                <form id="add-order" asp-action="Index" asp-controller="Basket" method="post">
                     <table class="table table-striped mb-0">
                         <thead>
                             <tr>
@@ -68,9 +67,12 @@
                                         <input type="hidden" asp-for="@item.Price" />
                                     </td>
                                     <td style="text-align: center">
-                                        <a type="button" class="btn btn-sm btn-danger p-1">
-                                            <i class="d-flex bi bi-trash"></i>
-                                        </a>
+                                        <form id="delete-item" method="post" asp-controller="Basket" asp-action="DeleteFromBasket">
+                                            <input type="hidden" name="id" asp-for="@item.Id" />
+                                            <button type="submit" form="delete-item" class="btn btn-sm btn-danger p-1">
+                                                <i class="d-flex bi bi-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             }
@@ -105,13 +107,13 @@
                     </table>
 
                     <div class="d-flex align-items-center justify-content-end mt-4">
-                        <button type="submit" class="d-flex align-items-center btn btn-success">
+                        <button type="submit" form="add-order" class="d-flex align-items-center btn btn-success">
                             <i class="d-flex bi bi-check-square me-2"></i>
 
                             Confirm order
                         </button>
                     </div>
-                }
+                </form>
             </div>
         </div>
     }

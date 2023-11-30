@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helpers;
 using Infrastructure.Identity;
+using Infrastructure.Exceptions;
 using Catalog.Host.Models.Requests;
 using Catalog.Host.Models.Responses;
 using Catalog.Host.Services.Interfaces;
@@ -32,7 +33,7 @@ public sealed class CatalogItemController : ControllerBase
 
         if (result == null)
         {
-            return BadRequest("Could not add the catalog item");
+            return BadRequest(new BusinessException("Could not add the catalog item"));
         }
 
         return CreatedAtAction(nameof(Add), new AddItemResponse { Id = result.Id });
@@ -49,14 +50,14 @@ public sealed class CatalogItemController : ControllerBase
 
         if (item == null)
         {
-            return NotFound();
+             return NotFound(new BusinessException("Item with provided id not found"));
         }
 
         var result = await _catalogItemService.UpdateCatalogItemAsync(request, item);
 
         if (result == null)
         {
-            return BadRequest("Could not update the catalog type");
+            return BadRequest(new BusinessException("Could not update the catalog type"));
         }
 
         return Ok(new AddItemResponse { Id = result.Id });
@@ -73,14 +74,14 @@ public sealed class CatalogItemController : ControllerBase
 
         if (item == null)
         {
-            return NotFound();
+             return NotFound(new BusinessException("Item with provided id not found"));
         }
 
         var result = await _catalogItemService.DeleteCatalogItemAsync(item);
 
         if (!result)
         {
-            return BadRequest("Could not delete the catalog item");
+            return BadRequest(new BusinessException("Could not delete the catalog item"));
         }
 
         return NoContent();

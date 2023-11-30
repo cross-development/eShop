@@ -16,6 +16,14 @@ public sealed class BasketService : IBasketService
         _httpClientService = httpClientService;
         _apiOptions = apiOptions.Value;
     }
+    public async Task<BasketResponseDto> GetBasketAsync()
+    {
+        var result = await _httpClientService.SendAsync<BasketResponseDto>(
+            $"{_apiOptions.BasketUrl}/basket-bff/items",
+            HttpMethod.Get);
+
+        return result;
+    }
 
     public async Task<bool> AddToBasketAsync(BasketRequestDto request)
     {
@@ -28,11 +36,11 @@ public sealed class BasketService : IBasketService
         return result;
     }
 
-    public async Task<BasketResponseDto> GetBasketAsync()
+    public async Task<bool> DeleteFromBasketAsync(int id)
     {
-        var result = await _httpClientService.SendAsync<BasketResponseDto>(
-            $"{_apiOptions.BasketUrl}/basket-bff/items",
-            HttpMethod.Get);
+        var result = await _httpClientService.SendAsync<bool>(
+            $"{_apiOptions.BasketUrl}/basket-item/delete/{id}",
+            HttpMethod.Delete);
 
         return result;
     }
