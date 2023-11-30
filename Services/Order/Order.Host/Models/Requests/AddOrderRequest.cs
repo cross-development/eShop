@@ -6,7 +6,7 @@ public sealed class AddOrderRequest
 
     public DateTime Date { get; set; }
 
-    public IEnumerable<string> Products { get; set; }
+    public string Products { get; set; }
 
     public int Quantity { get; set; }
 

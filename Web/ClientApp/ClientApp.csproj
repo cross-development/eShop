@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="ViewModels\BasketViewModels\" />
-    <Folder Include="ViewModels\OrderViewModels\" />
   </ItemGroup>
 
 </Project>

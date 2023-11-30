@@ -8,7 +8,7 @@ public sealed class OrderItemDto
 
     public DateTime Date { get; set; }
 
-    public IEnumerable<string> Products { get; set; }
+    public string Products { get; set; }
 
     public int Quantity { get; set; }
 

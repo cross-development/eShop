@@ -19,7 +19,7 @@ public sealed class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
             .IsRequired();
 
         builder.Property(orderItem => orderItem.Date)
-            .HasDefaultValue(DateTime.Now)
+            .HasColumnType("timestamp")
             .IsRequired();
 
         builder.Property(orderItem => orderItem.Products)

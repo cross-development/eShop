@@ -88,4 +88,11 @@ public sealed class OrderController : Controller
 
         return View(orderDetailsViewModel);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Checkout(CheckoutViewModel checkoutViewModel)
+    {
+
+        return RedirectToAction("Index", "Basket");
+    }
 }

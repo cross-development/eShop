@@ -8,7 +8,7 @@ public class OrderItem
 
     public DateTime Date { get; set; }
 
-    public IEnumerable<string> Products { get; set; }
+    public string Products { get; set; }
 
     public uint Quantity { get; set; }
 

@@ -4,9 +4,9 @@ public sealed class AddOrderRequestDto
 {
     public string Name { get; set; }
 
-    public DateTime Date { get; set; }
+    public DateTimeOffset Date { get; set; }
 
-    public IEnumerable<string> Products { get; set; }
+    public string Products { get; set; }
 
     public int Quantity { get; set; }
 

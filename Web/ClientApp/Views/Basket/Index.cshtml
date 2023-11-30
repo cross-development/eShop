@@ -30,75 +30,88 @@
             <div class="p-3">
                 <h2 class="mb-5 text-center fw-bold">Your Cart</h2>
 
-                <table class="table table-striped mb-0">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="width: 8%"></th>
-                            <th scope="col" style="width: 52%">Product</th>
-                            <th scope="col" style="width: 15%">Amount</th>
-                            <th scope="col" style="width: 15%">Price per unit</th>
-                            <th scope="col" style="width: 8%"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach (var item in Model.BasketItems)
-                        {
+                @using (Html.BeginForm("Checkout", "Order", FormMethod.Post))
+                {
+                    <table class="table table-striped mb-0">
+                        <thead>
                             <tr>
-                                <th scope="row">
-                                    <img width="48px"
-                                         height="48px"
-                                         alt="@item.Name thumbnail"
-                                         src="@item.PictureUrl"
-                                         class="rounded" />
-                                </th>
-                                <td>@item.Name</td>
-                                <td>@item.Amount</td>
-                                <td>$ @item.Price</td>
-                                <td style="text-align: center">
-                                    <a type="button" class="btn btn-sm btn-danger p-1">
-                                        <i class="d-flex bi bi-trash"></i>
-                                    </a>
+                                <th scope="col" style="width: 8%"></th>
+                                <th scope="col" style="width: 52%">Product</th>
+                                <th scope="col" style="width: 15%">Amount</th>
+                                <th scope="col" style="width: 15%">Price per unit</th>
+                                <th scope="col" style="width: 8%"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model.BasketItems)
+                            {
+                                <tr>
+                                    <th scope="row">
+                                        <img width="48px"
+                                             height="48px"
+                                             alt="@item.Name thumbnail"
+                                             src="@item.PictureUrl"
+                                             class="rounded" />
+                                        <input type="hidden" asp-for="@item.PictureUrl" />
+                                    </th>
+                                    <td>
+                                        @item.Name
+                                        <input type="hidden" asp-for="@item.Name" />
+                                    </td>
+                                    <td>
+                                        @item.Amount
+                                        <input type="hidden" asp-for="@item.Amount" />
+                                    </td>
+                                    <td>
+                                        $ @item.Price
+                                        <input type="hidden" asp-for="@item.Price" />
+                                    </td>
+                                    <td style="text-align: center">
+                                        <a type="button" class="btn btn-sm btn-danger p-1">
+                                            <i class="d-flex bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+                            <tr>
+                                <td colspan="2" class="border-bottom-0"></td>
+                                <td colspan="3" class="border-bottom-0">
+                                    <table class="table mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 60%">
+                                                    <strong>Total amount</strong>
+                                                </td>
+                                                <td style="width: 40%; text-align: right">
+                                                    <strong>@Model.BasketItems.Sum(item => item.Amount)</strong>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 60%">
+                                                    <strong>Total price</strong>
+                                                </td>
+                                                <td style="width: 40%; text-align: right">
+                                                    <strong>$ @Model.BasketItems.Sum(item => item.Price)</strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </td>
                             </tr>
-                        }
+                        </tbody>
+                    </table>
 
-                        <tr>
-                            <td colspan="2" class="border-bottom-0"></td>
-                            <td colspan="3" class="border-bottom-0">
-                                <table class="table mb-0">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 60%">
-                                                <strong>Total amount</strong>
-                                            </td>
-                                            <td style="width: 40%; text-align: right">
-                                                <strong>@Model.BasketItems.Sum(item => item.Amount)</strong>
-                                            </td>
-                                        </tr>
+                    <div class="d-flex align-items-center justify-content-end mt-4">
+                        <button type="submit" class="d-flex align-items-center btn btn-success">
+                            <i class="d-flex bi bi-check-square me-2"></i>
 
-                                        <tr>
-                                            <td style="width: 60%">
-                                                <strong>Total price</strong>
-                                            </td>
-                                            <td style="width: 40%; text-align: right">
-                                                <strong>$ @Model.BasketItems.Sum(item => item.Price)</strong>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="d-flex align-items-center justify-content-end mt-4">
-                    <a type="button" class="d-flex align-items-center btn btn-success">
-                        <i class="d-flex bi bi-check-square me-2"></i>
-
-                        Confirm order
-                    </a>
-                </div>
+                            Confirm order
+                        </button>
+                    </div>
+                }
             </div>
         </div>
     }

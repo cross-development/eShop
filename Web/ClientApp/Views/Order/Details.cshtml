@@ -36,14 +36,14 @@
                         <dl class="row mb-0 border rounded py-3 px-1">
                             <dt class="col-sm-6 border-bottom">Products:</dt>
                             <dd class="col-sm-6 mb-0 border-bottom">
-                                @foreach (var product in Model.Item.Products)
+                                @foreach (var product in Model.Item.Products.Split(", "))
                                 {
                                     <p class="mb-1">@product</p>
                                 }
                             </dd>
 
                             <dt class="col-sm-6 py-3 border-bottom">Order date:</dt>
-                            <dd class="col-sm-6 py-3 mb-0 border-bottom">@Model.Item.Date.ToLongDateString()</dd>
+                            <dd class="col-sm-6 py-3 mb-0 border-bottom">@Model.Item.Date</dd>
 
                             <dt class="col-sm-6 py-3">Quantity of products:</dt>
                             <dt class="col-sm-6 py-3 mb-0">@Model.Item.Quantity</dt>
