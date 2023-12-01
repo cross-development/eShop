@@ -71,6 +71,7 @@
                                     <td style="text-align: center">
                                         <input type="hidden" name="id" asp-for="@item.Id" />
                                         <button type="submit"
+                                                id="removeFromCartBtn"
                                                 asp-controller="Basket"
                                                 asp-action="DeleteFromBasket"
                                                 class="btn btn-sm btn-danger p-1">
@@ -134,3 +135,18 @@
         </div>
     }
 </section>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // TODO: change id to class
+        $('#removeFromCartBtn').click(function () {
+            let currentCount = localStorage.getItem('cartCount') || 0
+
+            currentCount--;
+
+            localStorage.setItem('cartCount', currentCount);
+        });
+    });
+</script>

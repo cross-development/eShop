@@ -15,8 +15,8 @@
                     <i class="d-flex bi bi-cart3 text-dark"></i>
                 </span>
 
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    9
+                <span id="cartLabel"
+                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
                 </span>
             </a>
         </div>
@@ -64,3 +64,18 @@ else
         </a>
     </div>
 }
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // TODO: change id to class
+        const cartCount = localStorage.getItem('cartCount') || 0;
+
+        const cartLabel = $("#cartLabel");
+
+        cartLabel.text(cartCount);
+
+            cartLabel.addClass("bg-danger");
+    });
+</script>
