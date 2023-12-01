@@ -71,7 +71,7 @@
                                     <td style="text-align: center">
                                         <input type="hidden" name="id" asp-for="@item.Id" />
                                         <button type="submit"
-                                                id="removeFromCartBtn"
+                                                data-button="addToCartBtn"
                                                 asp-controller="Basket"
                                                 asp-action="DeleteFromBasket"
                                                 class="btn btn-sm btn-danger p-1">
@@ -140,13 +140,14 @@
 
 <script>
     $(document).ready(function () {
-        // TODO: change id to class
-        $('#removeFromCartBtn').click(function () {
-            let currentCount = localStorage.getItem('cartCount') || 0
+        $('[data-button="addToCartBtn"]').click(function () {
+            let currentCount = localStorage.getItem('cartCount') || 0;
 
             currentCount--;
 
-            localStorage.setItem('cartCount', currentCount);
+            currentCount === 0
+                ? localStorage.removeItem('cartCount')
+                : localStorage.setItem('cartCount', currentCount);
         });
     });
 </script>

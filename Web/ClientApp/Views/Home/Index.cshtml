@@ -96,7 +96,7 @@
                                         @if (Context.User.Identity.IsAuthenticated)
                                         {
                                             <button type="submit"
-                                                    id="addToCartBtn"
+                                                    data-button="addToCartBtn"
                                                     class="d-flex align-items-center btn btn-sm btn-success">
                                                 <i class="d-flex bi bi-bag-plus me-2"></i>
 
@@ -147,8 +147,7 @@
 
 <script>
     $(document).ready(function () {
-        // TODO: change id to class
-        $('#addToCartBtn').click(function () {
+        $('[data-button="addToCartBtn"]').click(function () {
             let currentCount = localStorage.getItem('cartCount') || 0;
 
             currentCount++;

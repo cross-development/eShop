@@ -69,13 +69,13 @@ else
 
 <script>
     $(document).ready(function () {
-        // TODO: change id to class
-        const cartCount = localStorage.getItem('cartCount') || 0;
+        const cartCount = localStorage.getItem('cartCount');
 
         const cartLabel = $("#cartLabel");
 
-        cartLabel.text(cartCount);
-
+        if (cartCount > 0) {
+            cartLabel.text(cartCount);
             cartLabel.addClass("bg-danger");
+        }
     });
 </script>
