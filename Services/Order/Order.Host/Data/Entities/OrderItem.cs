@@ -12,7 +12,7 @@ public class OrderItem
 
     public uint Quantity { get; set; }
 
-    public uint TotalPrice { get; set; }
+    public decimal TotalPrice { get; set; }
 
     public string UserId { get; set; }
 }

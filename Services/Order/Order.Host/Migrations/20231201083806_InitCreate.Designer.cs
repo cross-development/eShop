@@ -12,7 +12,7 @@ using Order.Host.Data;
 namespace Order.Host.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231130133413_InitCreate")]
+    [Migration("20231201083806_InitCreate")]
     partial class InitCreate
     {
         /// <inheritdoc />
@@ -51,8 +51,8 @@ namespace Order.Host.Migrations
                     b.Property<long>("Quantity")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("TotalPrice")
-                        .HasColumnType("bigint");
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("UserId")
                         .IsRequired()

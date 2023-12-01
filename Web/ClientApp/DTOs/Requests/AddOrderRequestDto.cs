@@ -8,9 +8,7 @@ public sealed class AddOrderRequestDto
 
     public string Products { get; set; }
 
-    public int Quantity { get; set; }
+    public uint Quantity { get; set; }
 
-    public int TotalPrice { get; set; }
-
-    public string UserId { get; set; }
+    public decimal TotalPrice { get; set; }
 }

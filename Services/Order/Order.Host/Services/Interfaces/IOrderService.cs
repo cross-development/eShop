@@ -11,5 +11,5 @@ public interface IOrderService
 
     Task<OrderItemDto> GetOrderItemByIdAsync(int id, string userId);
 
-    Task<OrderItem> AddOrderAsync(AddOrderRequest request);
+    Task<OrderItem> AddOrderAsync(AddOrderRequest request, string userId);
 }

@@ -47,7 +47,7 @@ public sealed class OrderController : Controller
         };
 
         // Making an order view model for the orders view
-        var ordersViewModel = new OrdersViewModel
+        var ordersViewModel = new OrderListViewModel
         {
             OrderItems = orderItems.Data,
             PaginationViewModel = paginationViewModel
@@ -82,17 +82,9 @@ public sealed class OrderController : Controller
                 Quantity = orderItem.Quantity,
                 TotalPrice = orderItem.TotalPrice,
                 Products = orderItem.Products,
-                UserId = orderItem.UserId
             }
         };
 
         return View(orderDetailsViewModel);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Checkout(CheckoutViewModel checkoutViewModel)
-    {
-
-        return RedirectToAction("Index", "Basket");
     }
 }

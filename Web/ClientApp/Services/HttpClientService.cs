@@ -70,7 +70,7 @@ public sealed class HttpClientService : IHttpClientService
 
         var accessToken = await _httpContextAccessor.HttpContext?.GetTokenAsync("access_token")!;
 
-        _logger.LogInformation($"[HttpClientService: SendAsync] ==> ACCESS TOKEN: {accessToken}");
+        //_logger.LogInformation($"[HttpClientService: SendAsync] ==> ACCESS TOKEN: {accessToken}");
 
         if (!string.IsNullOrEmpty(accessToken))
         {

@@ -4,6 +4,7 @@ using ClientApp.Models;
 using ClientApp.DTOs.Requests;
 using ClientApp.Services.Interfaces;
 using ClientApp.ViewModels.BasketViewModels;
+using IdentityModel;
 
 namespace ClientApp.Controllers;
 
@@ -11,10 +12,12 @@ namespace ClientApp.Controllers;
 public sealed class BasketController : Controller
 {
     private readonly IBasketService _basketService;
+    private readonly IOrderService _orderService;
 
-    public BasketController(IBasketService basketService)
+    public BasketController(IBasketService basketService, IOrderService orderService)
     {
         _basketService = basketService;
+        _orderService = orderService;
     }
 
     public async Task<IActionResult> Index()
@@ -31,6 +34,13 @@ public sealed class BasketController : Controller
 
     public async Task<IActionResult> AddToBasket(CatalogItem catalogItem)
     {
+        if (!ModelState.IsValid)
+        {
+            Console.WriteLine($"[BasketController : AddToBasket] ====> MODEL STATE IS NOT VALID");
+
+            return View("Error");
+        }
+
         var basketDto = new BasketRequestDto
         {
             Data = new BasketData
@@ -58,10 +68,12 @@ public sealed class BasketController : Controller
     {
         if (!ModelState.IsValid)
         {
-            Console.WriteLine($"[DELETE FROM BASKET : ID MODEL STATE IS NOT VALID] =====> {id}");
+            Console.WriteLine($"[BasketController : DeleteFromBasket] ====> MODEL STATE IS NOT VALID");
+
+            return View("Error");
         }
 
-        Console.WriteLine($"[DELETE FROM BASKET : ID] =====> {id}");
+        Console.WriteLine($"[BasketController: DeleteFromBasket] =====> ID: {id}");
 
         var result = await _basketService.DeleteFromBasketAsync(id);
 
@@ -71,5 +83,35 @@ public sealed class BasketController : Controller
         }
 
         return RedirectToAction("Index", "Basket");
+    }
+
+    public async Task<IActionResult> Checkout(BasketItemsViewModel basketItemsViewModel)
+    {
+        if (!ModelState.IsValid)
+        {
+            Console.WriteLine($"[BasketController : Checkout] ====> MODEL STATE IS NOT VALID");
+
+            return View("Error");
+        }
+
+        var addOrderRequestDto = new AddOrderRequestDto
+        {
+            Name = $"Order #{DateTimeOffset.Now.ToString().ToSha256()}",
+            Date = DateTimeOffset.Now,
+            Quantity = (uint)basketItemsViewModel.BasketItems.Count(),
+            TotalPrice = basketItemsViewModel.BasketItems.Sum(item => item.Price),
+            Products = ""
+        };
+
+        //var result = await _orderService.AddOrderAsync(addOrderRequestDto);
+
+        //if (result == null)
+        //{
+        //    Console.WriteLine($"[BasketController : Checkout] ====> RESULT IS NULL");
+
+        //    return View("Error");
+        //}
+
+        return View();
     }
 }

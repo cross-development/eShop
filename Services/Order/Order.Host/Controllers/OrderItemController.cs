@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helpers;
@@ -26,9 +27,17 @@ public sealed class OrderItemController : ControllerBase
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(AddOrderResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
     public async Task<IActionResult> Add([FromBody] AddOrderRequest request)
     {
-        var result = await _orderService.AddOrderAsync(request);
+        var userId = User.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;
+
+        if (userId == null)
+        {
+            return BadRequest(new BusinessException("Invalid user"));
+        }
+
+        var result = await _orderService.AddOrderAsync(request, userId);
 
         if (result == null)
         {

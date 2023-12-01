@@ -24,7 +24,7 @@ namespace Order.Host.Migrations
                     Date = table.Column<DateTime>(type: "timestamp", nullable: false),
                     Products = table.Column<string>(type: "text", nullable: false),
                     Quantity = table.Column<long>(type: "bigint", nullable: false),
-                    TotalPrice = table.Column<long>(type: "bigint", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "numeric", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>

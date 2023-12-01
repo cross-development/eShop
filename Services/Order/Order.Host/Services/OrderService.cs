@@ -50,13 +50,15 @@ public class OrderService : BaseDataService<ApplicationDbContext>, IOrderService
         });
     }
 
-    public async Task<OrderItem> AddOrderAsync(AddOrderRequest request)
+    public async Task<OrderItem> AddOrderAsync(AddOrderRequest request, string userId)
     {
         return await ExecuteSafeAsync(async () =>
         {
-            var catalogBrand = _mapper.Map<OrderItem>(request);
+            var orderItem = _mapper.Map<OrderItem>(request);
 
-            return await _orderRepository.AddAsync(catalogBrand);
+            orderItem.UserId = userId;
+
+            return await _orderRepository.AddAsync(orderItem);
         });
     }
 }

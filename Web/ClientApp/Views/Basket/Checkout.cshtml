@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Checkout Page";
+}
+
+<section class="mb-5 flex-grow-1">
+    <div class="container h-100 d-flex flex-column justify-content-center">
+        <div class="d-flex align-items-center flex-column text-center">
+            <i class="d-flex bi bi-check2-circle mb-4 text-success" style="font-size: 120px"></i>
+
+            <h1 class="display-5 mb-0">Your order has been made successfully!</h1>
+
+            <div class="mx-auto">
+                <p class="lead mb-0 fs-4">
+                    If you would like to see your orders, you can visit this 
+                    <a asp-controller="Order" asp-action="Index">page</a>.
+                </p>
+            </div>
+
+            <div class="mx-auto mt-5">
+                <a type="button"
+                   asp-controller="Home"
+                   asp-action="Index"
+                   class="d-flex align-items-center btn btn-sm btn-primary me-2">
+                    <i class="d-flex bi bi-chevron-left me-2"></i>
+
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
