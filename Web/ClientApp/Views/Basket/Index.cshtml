@@ -65,7 +65,7 @@
                                         <input type="hidden" name="BasketItems[@item.Id].Amount" asp-for="@item.Amount" />
                                     </td>
                                     <td>
-                                        $ @item.Price
+                                        $@item.Price
                                         <input type="hidden" name="BasketItems[@item.Id].Price" asp-for="@item.Price" />
                                     </td>
                                     <td style="text-align: center">
@@ -100,7 +100,7 @@
                                                     <strong>Total price</strong>
                                                 </td>
                                                 <td style="width: 40%; text-align: right">
-                                                    <strong>$ @Model.BasketItems.Sum(item => item.Price)</strong>
+                                                    <strong>$@Model.BasketItems.Sum(item => item.Price)</strong>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -130,13 +130,11 @@
             <div class="d-flex align-items-center flex-column text-center">
                 <i class="d-flex bi bi-cart-x mb-4" style="font-size: 120px"></i>
 
-                <h1 class="display-5 mb-0">Empty shopping cart</h1>
+                <h1 class="display-5 mb-0">Shopping cart is empty</h1>
             </div>
         </div>
     }
 </section>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script>
     $(document).ready(function () {

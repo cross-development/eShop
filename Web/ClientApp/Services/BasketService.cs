@@ -35,8 +35,17 @@ public sealed class BasketService : IBasketService
 
         return result;
     }
+    
+    public async Task<bool> DeleteAllFromBasketAsync()
+    {
+        var result = await _httpClientService.SendAsync<bool>(
+            $"{_apiOptions.BasketUrl}/basket-item/delete",
+            HttpMethod.Delete);
 
-    public async Task<bool> DeleteFromBasketAsync(int id)
+        return result;
+    }
+
+    public async Task<bool> DeleteFromBasketByIdAsync(int id)
     {
         var result = await _httpClientService.SendAsync<bool>(
             $"{_apiOptions.BasketUrl}/basket-item/delete/{id}",

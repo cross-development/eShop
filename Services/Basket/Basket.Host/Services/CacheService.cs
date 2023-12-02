@@ -36,7 +36,7 @@ public sealed class CacheService : ICacheService
 
         var cachedData = serialized.HasValue ? JsonConvert.DeserializeObject<T>(serialized.ToString()) : default;
 
-        _logger.LogInformation($"[CacheService: GetAsync] ==> RECEIVED CACHE DATA: {cachedData}");
+        _logger.LogInformation($"[CacheService: GetAsync] ==> DESERIALIZED CACHE DATA: {cachedData}");
 
         return cachedData;
     }

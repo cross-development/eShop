@@ -32,6 +32,11 @@ public class OrderRepository : IOrderRepository
             .FirstOrDefaultAsync(item => item.Id == id && item.UserId == userId);
     }
 
+    public async Task<int> GetCountAsync()
+    {
+        return await _dbContext.OrderItems.CountAsync();
+    }
+
     public async Task<OrderItem> AddAsync(OrderItem entity)
     {
         var item = await _dbContext.AddAsync(entity);

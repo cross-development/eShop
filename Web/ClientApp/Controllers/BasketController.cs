@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using IdentityModel;
 using ClientApp.Models;
 using ClientApp.DTOs.Requests;
 using ClientApp.Services.Interfaces;
 using ClientApp.ViewModels.BasketViewModels;
-using IdentityModel;
 
 namespace ClientApp.Controllers;
 
@@ -57,6 +57,8 @@ public sealed class BasketController : Controller
 
         if (!result)
         {
+            Console.WriteLine($"[BasketController : AddToBasket] ====> ITEM HAS NOT BEEN ADDED");
+
             return View("Error");
         }
 
@@ -66,6 +68,8 @@ public sealed class BasketController : Controller
     [HttpPost]
     public async Task<IActionResult> DeleteFromBasket(int id)
     {
+        Console.WriteLine($"[BasketController: DeleteFromBasket] =====> ID: {id}");
+
         if (!ModelState.IsValid)
         {
             Console.WriteLine($"[BasketController : DeleteFromBasket] ====> MODEL STATE IS NOT VALID");
@@ -73,12 +77,12 @@ public sealed class BasketController : Controller
             return View("Error");
         }
 
-        Console.WriteLine($"[BasketController: DeleteFromBasket] =====> ID: {id}");
-
-        var result = await _basketService.DeleteFromBasketAsync(id);
+        var result = await _basketService.DeleteFromBasketByIdAsync(id);
 
         if (!result)
         {
+            Console.WriteLine($"[BasketController : DeleteFromBasket] ====> ITEM HAS NOT BEEN DELETED");
+
             return View("Error");
         }
 
@@ -94,23 +98,34 @@ public sealed class BasketController : Controller
             return View("Error");
         }
 
+        var products = basketItemsViewModel.BasketItems.Select(item => item.Name);
+
         var addOrderRequestDto = new AddOrderRequestDto
         {
-            Name = $"Order #{DateTimeOffset.Now.ToString().ToSha256()}",
+            Name = $"Order #{DateTimeOffset.Now.ToString().ToSha256().Substring(0, 10)}",
             Date = DateTimeOffset.Now,
             Quantity = (uint)basketItemsViewModel.BasketItems.Count(),
-            TotalPrice = basketItemsViewModel.BasketItems.Sum(item => item.Price),
-            Products = ""
+            TotalPrice = basketItemsViewModel.BasketItems.Sum(data => data.Price),
+            Products = string.Join(", ", products),
         };
 
-        //var result = await _orderService.AddOrderAsync(addOrderRequestDto);
+        var result = await _orderService.AddOrderAsync(addOrderRequestDto);
 
-        //if (result == null)
-        //{
-        //    Console.WriteLine($"[BasketController : Checkout] ====> RESULT IS NULL");
+        if (result == null)
+        {
+            Console.WriteLine($"[BasketController : Checkout] ====> ORDER HAS NOT BEEN ADDED");
 
-        //    return View("Error");
-        //}
+            return View("Error");
+        }
+
+        var isDeleted = await _basketService.DeleteAllFromBasketAsync();
+
+        if (!isDeleted)
+        {
+            Console.WriteLine($"[BasketController : Checkout] ====> BASKET HAS NOT BEEN CLEARED");
+
+            return View("Error");
+        }
 
         return View();
     }

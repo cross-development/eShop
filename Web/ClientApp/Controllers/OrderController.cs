@@ -11,7 +11,7 @@ namespace ClientApp.Controllers;
 [Authorize]
 public sealed class OrderController : Controller
 {
-    private const int ItemsPerPage = 10;
+    private const int ItemsPerPage = 5;
 
     private readonly IOrderService _orderService;
 

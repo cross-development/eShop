@@ -11,7 +11,7 @@
 
             <div class="mx-auto">
                 <p class="lead mb-0 fs-4">
-                    If you would like to see your orders, you can visit this 
+                    If you would like to see your orders, you can visit this
                     <a asp-controller="Order" asp-action="Index">page</a>.
                 </p>
             </div>
@@ -29,3 +29,14 @@
         </div>
     </div>
 </section>
+
+<script>
+    $(document).ready(function () {
+        localStorage.removeItem('cartCount');
+
+        const cartLabel = $("#cartLabel");
+
+        cartLabel.text(0);
+        cartLabel.removeClass("bg-danger");
+    });
+</script>

@@ -9,5 +9,7 @@ public interface IBasketService
 
     Task<BasketResponseDto> GetBasketAsync();
 
-    Task<bool> DeleteFromBasketAsync(int id);
+    Task<bool> DeleteAllFromBasketAsync();
+
+    Task<bool> DeleteFromBasketByIdAsync(int id);
 }

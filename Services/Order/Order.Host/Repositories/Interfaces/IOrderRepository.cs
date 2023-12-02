@@ -9,5 +9,7 @@ public interface IOrderRepository
 
     Task<OrderItem> GetByIdAsync(int id, string userId);
 
+    Task<int> GetCountAsync();
+
     Task<OrderItem> AddAsync(OrderItem entity);
 }

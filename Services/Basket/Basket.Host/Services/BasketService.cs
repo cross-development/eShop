@@ -1,7 +1,6 @@
 ﻿using Basket.Host.Models.DTOs;
 using Basket.Host.Models.Responses;
 using Basket.Host.Services.Interfaces;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Basket.Host.Services;
 
@@ -42,6 +41,22 @@ public sealed class BasketService : IBasketService
         result.Add(data);
 
         return await _cacheService.AddOrUpdateAsync(userId, result);
+    }
+
+    public async Task<bool> DeleteAllAsync(string userId)
+    {
+        _logger.LogInformation($"[BasketService: DeleteAllAsync] ==> USER ID: {userId}");
+
+        var result = await _cacheService.GetAsync<List<BasketDataDto>>(userId);
+
+        if (result == null || !result.Any())
+        {
+            _logger.LogInformation("[BasketService: DeleteAllAsync] ==> THERE IS NOTHING TO DELETE");
+
+            return false;
+        }
+
+        return await _cacheService.AddOrUpdateAsync(userId, Enumerable.Empty<BasketDataDto>());
     }
 
     public async Task<bool> DeleteItemAsync(string userId, int id)

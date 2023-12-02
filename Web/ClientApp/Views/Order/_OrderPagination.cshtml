@@ -10,7 +10,7 @@
                aria-disabled="@Model.IsPreviousDisabled"
                aria-label="Previous"
                class="page-link"
-               asp-controller="Home"
+               asp-controller="Order"
                asp-action="Index"
                asp-route-page="@(Model.CurrentPage - 1)">
                 Previous
@@ -22,7 +22,7 @@
             <li class="@(i == Model.CurrentPage ? "page-item active" : "page-item")"
                 aria-current="@(i == Model.CurrentPage ? "page" : "")">
                 <a class="page-link"
-                   asp-controller="Home"
+                   asp-controller="Order"
                    asp-action="Index"
                    asp-route-page="@i">
                     @i
@@ -37,7 +37,7 @@
                aria-disabled="@Model.IsNextDisabled"
                aria-label="Next"
                class="page-link"
-               asp-controller="Home"
+               asp-controller="Order"
                asp-action="Index"
                asp-route-page="@(Model.CurrentPage + 1)">
                 Next

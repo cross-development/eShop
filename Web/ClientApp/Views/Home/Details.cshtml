@@ -26,10 +26,10 @@
 <section class="album bg-white">
     <div class="container">
         <div class="card border-0">
-            <form class="row" asp-action="AddToBasket" asp-controller="Basket" method="post">
+            <form asp-action="AddToBasket" asp-controller="Basket" method="post" class="row">
                 <input name="id" type="hidden" asp-for="@Model.Item.Id" />
 
-                <div class="col-md-4">
+                <div class="col-xs-12 col-md-6 col-lg-4">
                     <img width="100%"
                          height="100%"
                          alt="@Model.Item.Name thumbnail"
@@ -38,7 +38,7 @@
                     <input name="pictureUrl" type="hidden" asp-for="@Model.Item.PictureUrl" />
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-xs-12 col-md-6 col-lg-8">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 mb-4">
@@ -66,13 +66,15 @@
 
                             <div class="d-flex col-12 justify-content-end align-items-end">
                                 <div class="me-5">
-                                    <p class="card-text mb-0 fs-1 lh-1 fw-bold">$ @Model.Item.Price.ToString("N2")</p>
+                                    <p class="card-text mb-0 fs-1 lh-1 fw-bold">$@Model.Item.Price.ToString("N2")</p>
                                     <input name="price" type="hidden" asp-for="@Model.Item.Price" />
                                 </div>
 
                                 @if (Context.User.Identity.IsAuthenticated)
                                 {
-                                    <button type="submit" class="d-flex align-items-center btn btn-lg btn-success">
+                                    <button type="submit"
+                                            data-button="addToCartBtn"
+                                            class="d-flex align-items-center btn btn-lg btn-success">
                                         <i class="d-flex bi bi-bag-plus me-2"></i>
 
                                         Add to Cart
@@ -98,3 +100,15 @@
         </div>
     </div>
 </section>
+
+<script>
+    $(document).ready(function () {
+        $('[data-button="addToCartBtn"]').click(function () {
+            let currentCount = localStorage.getItem('cartCount') || 0;
+
+            currentCount++;
+
+            localStorage.setItem('cartCount', currentCount);
+        });
+    });
+</script>

@@ -33,9 +33,14 @@ public class OrderService : BaseDataService<ApplicationDbContext>, IOrderService
         {
             var result = await _orderRepository.GetAllAsync(request, userId);
 
+            var totalCount = await _orderRepository.GetCountAsync();
+
             return new PaginatedResponse<OrderItemDto>
             {
-                Data = result.Select(item => _mapper.Map<OrderItemDto>(item))
+                Page = request.Page,
+                Limit = request.Limit,
+                Count = totalCount,
+                Data = result.Select(item => _mapper.Map<OrderItemDto>(item)),
             };
         });
     }

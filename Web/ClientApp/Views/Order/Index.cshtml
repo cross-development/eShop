@@ -29,12 +29,12 @@
         <div class="container">
             <h2 class="mb-5 text-center fw-bold">My Orders</h2>
 
-            <table class="table table-striped mb-0">
-                <thead>
+            <table class="table mb-0">
+                <thead class="table-active">
                     <tr>
                         <th scope="col" style="width: 5%">Id</th>
                         <th scope="col" style="width: 46%">Name</th>
-                        <th scope="col" style="width: 14%">Date</th>
+                        <th scope="col" style="width: 14%">Date and time</th>
                         <th scope="col" style="width: 14%">Quantity</th>
                         <th scope="col" style="width: 14%">Total price</th>
                         <th scope="col" style="width: 7%"></th>
@@ -47,16 +47,16 @@
                         <tr>
                             <th scope="row">@item.Id</th>
                             <td>@item.Name</td>
-                            <td>@item.Date</td>
+                            <td>@item.Date.ToString("dd.MM.yyyy HH:mm")</td>
                             <td>@item.Quantity</td>
-                            <td>$ @item.TotalPrice</td>
+                            <td>$@item.TotalPrice</td>
                             <td style="text-align: center">
                                 <a type="button"
                                    asp-controller="Order"
                                    asp-action="Details"
                                    asp-route-id="@item.Id"
                                    class="d-flex align-items-center justify-content-center btn btn-sm btn-primary">
-                                    <i class="d-flex bi bi-arrow-down-left-square me-2"></i>
+                                    <i class="d-flex bi bi-box-arrow-in-up-right me-2"></i>
 
                                     View
                                 </a>
@@ -83,7 +83,7 @@
                                             <strong>Total amount of orders</strong>
                                         </td>
                                         <td style="width: 35%; text-align: right">
-                                            <strong>$ @Model.OrderItems.Sum(item => item.TotalPrice)</strong>
+                                            <strong>$@Model.OrderItems.Sum(item => item.TotalPrice)</strong>
                                         </td>
                                     </tr>
                                 </tbody>

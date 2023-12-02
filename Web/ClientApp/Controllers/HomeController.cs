@@ -3,13 +3,12 @@ using ClientApp.Models;
 using ClientApp.DTOs.Requests;
 using ClientApp.Services.Interfaces;
 using ClientApp.ViewModels.HomeViewModels;
-using ClientApp.ViewModels.CommonViewModels;
 
 namespace ClientApp.Controllers;
 
 public sealed class HomeController : Controller
 {
-    private const int ItemsPerPage = 6;
+    private const int ItemsPerPage = 8;
 
     private readonly ICatalogService _catalogService;
 

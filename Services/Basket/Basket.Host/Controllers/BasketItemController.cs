@@ -46,6 +46,29 @@ public sealed class BasketItemController : ControllerBase
         return CreatedAtAction(nameof(Add), hasAdded);
     }
 
+    [HttpDelete]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Delete()
+    {
+        var userId = User.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;
+
+        if (userId == null)
+        {
+            return NotFound(new BusinessException("Invalid user"));
+        }
+
+        var hasDeleted = await _basketService.DeleteAllAsync(userId);
+
+        if (!hasDeleted)
+        {
+            return NotFound(new BusinessException("Something went wrong while deleting all items from the basket"));
+        }
+
+        return Ok(hasDeleted);
+    }
+
     [HttpDelete("{id:int}")]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]

@@ -46,76 +46,74 @@
     <div class="container">
         @if (Model.CatalogItems.Any())
         {
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
+            <div class="row g-4">
                 @foreach (var item in Model.CatalogItems)
                 {
-                    <form asp-action="AddToBasket" asp-controller="Basket" method="post">
+                    <form asp-action="AddToBasket" asp-controller="Basket" method="post" class="col-12 col-sm-6 col-lg-4 col-xl-3">
                         <input name="id" type="hidden" asp-for="@item.Id" />
 
-                        <div class="col">
-                            <div class="card shadow-sm h-100 position-relative">
-                                <img width="100%"
-                                     height="320"
-                                     alt="@item.Name thumbnail"
-                                     src="@item.PictureUrl"
-                                     asp-for="PictureUrl"
-                                     class="bd-placeholder-img card-img-top" />
-                                <input name="pictureUrl" type="hidden" asp-for="@item.PictureUrl" />
+                        <div class="card shadow-sm h-100 position-relative">
+                            <img width="100%"
+                                 height="320"
+                                 alt="@item.Name thumbnail"
+                                 src="@item.PictureUrl"
+                                 asp-for="PictureUrl"
+                                 class="bd-placeholder-img card-img-top" />
+                            <input name="pictureUrl" type="hidden" asp-for="@item.PictureUrl" />
 
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <h5 class="card-title">@item.Name</h5>
-                                        <input name="name" type="hidden" asp-for="@item.Name" />
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="card-title">@item.Name</h5>
+                                    <input name="name" type="hidden" asp-for="@item.Name" />
 
-                                        <p class="card-text">$@item.Price.ToString("N2")</p>
-                                        <input name="price" type="hidden" asp-for="@item.Price" />
-                                    </div>
+                                    <p class="card-text">$@item.Price.ToString("N2")</p>
+                                    <input name="price" type="hidden" asp-for="@item.Price" />
+                                </div>
 
-                                    <div class="d-flex justify-content-end position-absolute top-0 end-0">
-                                        @if (item.AvailableStock <= 5)
-                                        {
-                                            <span class="badge bg-danger">Low stock</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-secondary">Available on stock</span>
-                                        }
-                                    </div>
+                                <div class="d-flex justify-content-end position-absolute top-0 end-0">
+                                    @if (item.AvailableStock <= 5)
+                                    {
+                                        <span class="badge bg-danger">Low stock</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Available on stock</span>
+                                    }
+                                </div>
 
-                                    <div class="d-flex justify-content-end mt-3">
+                                <div class="d-flex justify-content-end mt-3">
+                                    <a type="button"
+                                       asp-controller="Home"
+                                       asp-action="Details"
+                                       asp-route-id="@item.Id"
+                                       class="d-flex align-items-center btn btn-sm btn-primary me-2">
+                                        <i class="d-flex bi bi-box-arrow-in-up-right me-2"></i>
+
+                                        View
+                                    </a>
+
+                                    @if (Context.User.Identity.IsAuthenticated)
+                                    {
+                                        <button type="submit"
+                                                data-button="addToCartBtn"
+                                                class="d-flex align-items-center btn btn-sm btn-success">
+                                            <i class="d-flex bi bi-bag-plus me-2"></i>
+
+                                            Add to Cart
+                                        </button>
+                                    }
+                                    else
+                                    {
                                         <a type="button"
-                                           asp-controller="Home"
-                                           asp-action="Details"
-                                           asp-route-id="@item.Id"
-                                           class="d-flex align-items-center btn btn-sm btn-primary me-2">
-                                            <i class="d-flex bi bi-arrow-down-left-square me-2"></i>
+                                           asp-area=""
+                                           asp-controller="Account"
+                                           asp-action="SignIn"
+                                           class="d-flex align-items-center btn btn-sm btn-secondary">
+                                            <i class="d-flex bi bi-box-arrow-in-right me-2"></i>
 
-                                            View
+                                            Log in to purchase
                                         </a>
-
-                                        @if (Context.User.Identity.IsAuthenticated)
-                                        {
-                                            <button type="submit"
-                                                    data-button="addToCartBtn"
-                                                    class="d-flex align-items-center btn btn-sm btn-success">
-                                                <i class="d-flex bi bi-bag-plus me-2"></i>
-
-                                                Add to Cart
-                                            </button>
-                                        }
-                                        else
-                                        {
-                                            <a type="button"
-                                               asp-area=""
-                                               asp-controller="Account"
-                                               asp-action="SignIn"
-                                               class="d-flex align-items-center btn btn-sm btn-secondary">
-                                                <i class="d-flex bi bi-box-arrow-in-right me-2"></i>
-
-                                                Log in to purchase
-                                            </a>
-                                        }
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -142,8 +140,6 @@
         }
     </div>
 </section>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script>
     $(document).ready(function () {
