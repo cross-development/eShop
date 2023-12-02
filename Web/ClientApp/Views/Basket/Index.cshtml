@@ -72,11 +72,11 @@
                                     $@(item.Price * item.Amount)
                                 </td>
                                 <td style="text-align: center">
-                                    <input type="hidden" name="id" asp-for="@item.Id" />
                                     <button type="submit"
                                             data-button="addToCartBtn"
                                             asp-controller="Basket"
                                             asp-action="DeleteFromBasket"
+                                            asp-route-id="@item.Id"
                                             class="btn btn-sm btn-danger p-1">
                                         <i class="d-flex bi bi-trash"></i>
                                     </button>
