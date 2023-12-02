@@ -57,8 +57,6 @@ public static class Config
                 ClientSecrets = { new Secret("secret".Sha256()) },
                 RedirectUris = { $"{configuration["Api:WebClientUrl"]}/signin-oidc" },
                 PostLogoutRedirectUris = { $"{configuration["Api:WebClientUrl"]}/signout-callback-oidc" },
-                AccessTokenLifetime = 60 * 60 * 2, // 2 hours
-                IdentityTokenLifetime= 60 * 60 * 2, // 2 hours
                 AllowedScopes =
                 {
                     AuthScope.OpenId,

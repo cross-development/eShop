@@ -38,7 +38,17 @@ public sealed class BasketService : IBasketService
             return await _cacheService.AddOrUpdateAsync(userId, new List<BasketDataDto> { data });
         }
 
-        result.Add(data);
+        var existingItemIndex = result.FindIndex(basketData => basketData.Id == data.Id);
+
+        if (existingItemIndex == -1)
+        {
+            result.Add(data);
+        }
+        else
+        {
+            result[existingItemIndex].Amount++;
+        }
+
 
         return await _cacheService.AddOrUpdateAsync(userId, result);
     }

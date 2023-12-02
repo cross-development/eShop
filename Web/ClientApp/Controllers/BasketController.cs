@@ -89,6 +89,7 @@ public sealed class BasketController : Controller
         return RedirectToAction("Index", "Basket");
     }
 
+    [HttpPost]
     public async Task<IActionResult> Checkout(BasketItemsViewModel basketItemsViewModel)
     {
         if (!ModelState.IsValid)
@@ -104,8 +105,8 @@ public sealed class BasketController : Controller
         {
             Name = $"Order #{DateTimeOffset.Now.ToString().ToSha256().Substring(0, 10)}",
             Date = DateTimeOffset.Now,
-            Quantity = (uint)basketItemsViewModel.BasketItems.Count(),
-            TotalPrice = basketItemsViewModel.BasketItems.Sum(data => data.Price),
+            Quantity = (uint)basketItemsViewModel.BasketItems.Sum(data => data.Amount),
+            TotalPrice = basketItemsViewModel.BasketItems.Sum(data => data.Price * data.Amount),
             Products = string.Join(", ", products),
         };
 

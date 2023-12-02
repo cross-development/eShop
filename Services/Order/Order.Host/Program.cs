@@ -99,4 +99,6 @@ app.UseAuthorization();
 app.MapDefaultControllerRoute();
 app.MapControllers();
 
+DbInitializer.Init(app);
+
 app.Run();

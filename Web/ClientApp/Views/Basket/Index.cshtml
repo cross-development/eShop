@@ -26,102 +26,104 @@
 <section class="mb-5 flex-grow-1">
     @if (Model.BasketItems.Any())
     {
-        <div class="container">
-            <div class="p-3">
-                <h2 class="mb-5 text-center fw-bold">Your Cart</h2>
+        <div class="container pt-4">
+            <h2 class="mb-5 text-center fw-bold">Shopping Cart</h2>
 
-                <form method="post">
-                    <table class="table mb-0">
-                        <thead class="table-active">
+            <form method="post">
+                <table class="table mb-0">
+                    <thead class="table-active">
+                        <tr>
+                            <th scope="col" style="width: 8%"></th>
+                            <th scope="col" style="width: 48%">Product</th>
+                            <th scope="col" style="width: 12%">Amount</th>
+                            <th scope="col" style="width: 12%">Price per unit</th>
+                            <th scope="col" style="width: 12%">Total price</th>
+                            <th scope="col" style="width: 8%"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.BasketItems)
+                        {
                             <tr>
-                                <th scope="col" style="width: 8%"></th>
-                                <th scope="col" style="width: 52%">Product</th>
-                                <th scope="col" style="width: 15%">Amount</th>
-                                <th scope="col" style="width: 15%">Price per unit</th>
-                                <th scope="col" style="width: 8%"></th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var item in Model.BasketItems)
-                            {
-                                <tr>
-                                    <th scope="row">
-                                        <img width="48px"
-                                             height="48px"
-                                             alt="@item.Name thumbnail"
-                                             src="@item.PictureUrl"
-                                             class="rounded" />
-                                        <input type="hidden" name="BasketItems.Index" value="@item.Id" />
-                                        <input type="hidden" name="BasketItems[@item.Id].Id" asp-for="@item.Id" />
-                                        <input type="hidden" name="BasketItems[@item.Id].PictureUrl" asp-for="@item.PictureUrl" />
-                                    </th>
-                                    <td>
-                                        @item.Name
-                                        <input type="hidden" name="BasketItems[@item.Id].Name" asp-for="@item.Name" />
-                                    </td>
-                                    <td>
-                                        @item.Amount
-                                        <input type="hidden" name="BasketItems[@item.Id].Amount" asp-for="@item.Amount" />
-                                    </td>
-                                    <td>
-                                        $@item.Price
-                                        <input type="hidden" name="BasketItems[@item.Id].Price" asp-for="@item.Price" />
-                                    </td>
-                                    <td style="text-align: center">
-                                        <input type="hidden" name="id" asp-for="@item.Id" />
-                                        <button type="submit"
-                                                data-button="addToCartBtn"
-                                                asp-controller="Basket"
-                                                asp-action="DeleteFromBasket"
-                                                class="btn btn-sm btn-danger p-1">
-                                            <i class="d-flex bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            }
-
-                            <tr>
-                                <td colspan="2" class="border-bottom-0"></td>
-                                <td colspan="3" class="border-bottom-0">
-                                    <table class="table mb-0">
-                                        <tbody>
-                                            <tr>
-                                                <td style="width: 60%">
-                                                    <strong>Total amount</strong>
-                                                </td>
-                                                <td style="width: 40%; text-align: right">
-                                                    <strong>@Model.BasketItems.Sum(item => item.Amount)</strong>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td style="width: 60%">
-                                                    <strong>Total price</strong>
-                                                </td>
-                                                <td style="width: 40%; text-align: right">
-                                                    <strong>$@Model.BasketItems.Sum(item => item.Price)</strong>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <th scope="row">
+                                    <img width="48px"
+                                         height="48px"
+                                         alt="@item.Name thumbnail"
+                                         src="@item.PictureUrl"
+                                         class="rounded" />
+                                    <input type="hidden" name="BasketItems.Index" value="@item.Id" />
+                                    <input type="hidden" name="BasketItems[@item.Id].Id" asp-for="@item.Id" />
+                                    <input type="hidden" name="BasketItems[@item.Id].PictureUrl" asp-for="@item.PictureUrl" />
+                                </th>
+                                <td>
+                                    @item.Name
+                                    <input type="hidden" name="BasketItems[@item.Id].Name" asp-for="@item.Name" />
+                                </td>
+                                <td>
+                                    @item.Amount
+                                    <input type="hidden" name="BasketItems[@item.Id].Amount" asp-for="@item.Amount" />
+                                </td>
+                                <td>
+                                    $@item.Price
+                                    <input type="hidden" name="BasketItems[@item.Id].Price" asp-for="@item.Price" />
+                                </td>
+                                <td>
+                                    $@(item.Price * item.Amount)
+                                </td>
+                                <td style="text-align: center">
+                                    <input type="hidden" name="id" asp-for="@item.Id" />
+                                    <button type="submit"
+                                            data-button="addToCartBtn"
+                                            asp-controller="Basket"
+                                            asp-action="DeleteFromBasket"
+                                            class="btn btn-sm btn-danger p-1">
+                                        <i class="d-flex bi bi-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
+                        }
 
-                    <div class="d-flex align-items-center justify-content-end mt-4">
-                        <button type="submit"
-                                asp-action="Checkout"
-                                asp-controller="Basket"
-                                class="d-flex align-items-center btn btn-success">
-                            <i class="d-flex bi bi-check-square me-2"></i>
+                        <tr>
+                            <td colspan="2" class="border-bottom-0"></td>
+                            <td colspan="4" class="border-bottom-0">
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 60%">
+                                                <strong>Total amount</strong>
+                                            </td>
+                                            <td style="width: 40%; text-align: right">
+                                                <strong>@Model.BasketItems.Sum(data => data.Amount)</strong>
+                                            </td>
+                                        </tr>
 
-                            Confirm order
-                        </button>
-                    </div>
-                </form>
-            </div>
+                                        <tr>
+                                            <td style="width: 60%">
+                                                <strong>Total price</strong>
+                                            </td>
+                                            <td style="width: 40%; text-align: right">
+                                                <strong>$@Model.BasketItems.Sum(data => data.Price * data.Amount)</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="d-flex align-items-center justify-content-end mt-4">
+                    <button type="submit"
+                            asp-action="Checkout"
+                            asp-controller="Basket"
+                            class="d-flex align-items-center btn btn-success">
+                        <i class="d-flex bi bi-check-square me-2"></i>
+
+                        Confirm order
+                    </button>
+                </div>
+            </form>
         </div>
     }
     else
