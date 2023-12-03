@@ -32,6 +32,7 @@ public sealed class BasketController : Controller
         return View(basketItemsViewModel);
     }
 
+    [HttpPost]
     public async Task<IActionResult> AddToBasket(CatalogItem catalogItem)
     {
         if (!ModelState.IsValid)

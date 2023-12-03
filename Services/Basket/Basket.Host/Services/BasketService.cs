@@ -42,13 +42,16 @@ public sealed class BasketService : IBasketService
 
         if (existingItemIndex == -1)
         {
+            _logger.LogInformation("[BasketService: AddItemAsync] ==> ITEM WAS ADDED TO THE BASKET");
+
             result.Add(data);
         }
         else
         {
+            _logger.LogInformation("[BasketService: AddItemAsync] ==> AMOUNT OF ITEMS WAS INCREASED");
+
             result[existingItemIndex].Amount++;
         }
-
 
         return await _cacheService.AddOrUpdateAsync(userId, result);
     }
@@ -83,17 +86,28 @@ public sealed class BasketService : IBasketService
             return false;
         }
 
-        var requestedItem = result.FirstOrDefault(data => data.Id == id);
+        var existingItemIndex = result.FindIndex(data => data.Id == id);
 
-        if (requestedItem == null)
+        if (existingItemIndex == -1)
         {
             _logger.LogInformation("[BasketService: DeleteItemAsync] ==> ITEM WITH REQUESTED ID NOT FOUND");
 
             return false;
         }
 
-        var filteredResult = result.Where(data => data.Id != id).ToList();
+        if (result[existingItemIndex].Amount > 1)
+        {
+            _logger.LogInformation($"[BasketService: DeleteItemAsync] ==> AMOUNT OF ITEMS: {result[existingItemIndex].Amount}");
 
-        return await _cacheService.AddOrUpdateAsync(userId, filteredResult);
+            result[existingItemIndex].Amount--;
+        }
+        else
+        {
+            _logger.LogInformation("[BasketService: DeleteItemAsync] ==> AMOUNT OF ITEMS IS 1");
+
+            result = result.Where(data => data.Id != id).ToList();
+        }
+
+        return await _cacheService.AddOrUpdateAsync(userId, result);
     }
 }
