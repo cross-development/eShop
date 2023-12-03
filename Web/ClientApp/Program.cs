@@ -31,6 +31,13 @@ builder.Services.AddAuthentication(options =>
             context.ProtocolMessage.RedirectUri = configuration["Api:RedirectUri"];
             await Task.FromResult(0);
         };
+        options.Events.OnRemoteFailure = async (context) =>
+        {
+            context.Response.Redirect(configuration["Api:CallbackUrl"]!);
+            context.HandleResponse();
+
+            await Task.FromResult(0);
+        };
         options.SignedOutRedirectUri = configuration["Api:CallbackUrl"]!;
         options.ClientId = "web_client_pkce";
         options.ClientSecret = "secret";
