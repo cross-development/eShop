@@ -10,16 +10,17 @@ public sealed class HomeController : Controller
 {
     private const int ItemsPerPage = 8;
 
+    private readonly ILogger<HomeController> _logger;
     private readonly ICatalogService _catalogService;
 
-    public HomeController(ICatalogService catalogService)
+    public HomeController(ILogger<HomeController> logger, ICatalogService catalogService)
     {
+        _logger = logger;
         _catalogService = catalogService;
     }
 
     public async Task<IActionResult> Index(int? brandId, int? typeId, int? page)
     {
-        // Making a query for the request
         var request = new CatalogRequestDto
         {
             Page = page ?? 1,
@@ -28,31 +29,33 @@ public sealed class HomeController : Controller
             TypeId = typeId
         };
 
-        // Fetching catalog items
         var catalogItems = await _catalogService.GetCatalogItemsAsync(request);
 
         if (catalogItems == null)
         {
+            _logger.LogInformation("[HomeController: Index] ==> ERROR OCCURRED WHILE FETCHING CATALOG ITEMS\n");
+
             return View("Error");
         }
 
-        // Fetching catalog brands
         var brands = await _catalogService.GetBrandsAsync();
 
         if (brands == null)
         {
+            _logger.LogInformation("[HomeController: Index] ==> ERROR OCCURRED WHILE FETCHING CATALOG BRANDS\n");
+
             return View("Error");
         }
 
-        // Fetching catalog types
         var types = await _catalogService.GetTypesAsync();
 
         if (types == null)
         {
+            _logger.LogInformation("[HomeController: Index] ==> ERROR OCCURRED WHILE FETCHING CATALOG TYPES\n");
+
             return View("Error");
         }
 
-        // Making a pagination view model for the pagination view
         var paginationViewModel = new PaginationWithFilterViewModel
         {
             BrandId = brandId,
@@ -63,7 +66,6 @@ public sealed class HomeController : Controller
             TotalPages = (int)Math.Ceiling((decimal)catalogItems.Count / request.Limit)
         };
 
-        // Making a catalog view model for the home view
         var catalogViewModel = new CatalogViewModel
         {
             CatalogItems = catalogItems.Data,
@@ -72,7 +74,6 @@ public sealed class HomeController : Controller
             PaginationViewModel = paginationViewModel
         };
 
-        // Making the pagination prev and next buttons disabled
         var isNextPageDisabled = catalogViewModel.PaginationViewModel.CurrentPage == catalogViewModel.PaginationViewModel.TotalPages;
         var isPrevPageDisabled = catalogViewModel.PaginationViewModel.CurrentPage == 1;
 
@@ -88,6 +89,8 @@ public sealed class HomeController : Controller
 
         if (catalogItem == null)
         {
+            _logger.LogInformation("[HomeController: Details] ==> ERROR OCCURRED WHILE FETCHING CATALOG ITEM DETAILS\n");
+
             return View("Error");
         }
 

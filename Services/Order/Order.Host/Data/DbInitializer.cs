@@ -13,11 +13,15 @@ public sealed class DbInitializer
 
         try
         {
+            logger.LogInformation("[DbInitializer: Init] ==> SEEDING DATABASE...\n");
+
             SeedData(context, logger).Wait();
+
+            logger.LogInformation("[DbInitializer: Init] ==> DONE SEEDING DATABASE. EXITING.\n");
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "[DbInitializer: Init] ==> An error occurred creating the DB.");
+            logger.LogError(ex, "[DbInitializer: Init] ==> AN ERROR OCCURRED WHILE CREATING DATABASE\n");
         }
     }
 

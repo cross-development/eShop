@@ -16,10 +16,14 @@ namespace Catalog.Host.Controllers;
 [Route(ComponentDefaults.DefaultRouteV1)]
 public sealed class CatalogItemController : ControllerBase
 {
+    private readonly ILogger<CatalogItemController> _logger;
     private readonly ICatalogItemService _catalogItemService;
 
-    public CatalogItemController(ICatalogItemService catalogItemService)
+    public CatalogItemController(
+        ILogger<CatalogItemController> logger,
+        ICatalogItemService catalogItemService)
     {
+        _logger = logger;
         _catalogItemService = catalogItemService;
     }
 
@@ -33,6 +37,8 @@ public sealed class CatalogItemController : ControllerBase
 
         if (result == null)
         {
+            _logger.LogInformation("[CatalogItemController: Add] ==> CATALOG ITEM HAS NOT BEEN ADDED\n");
+
             return BadRequest(new BusinessException("Could not add the catalog item"));
         }
 
@@ -50,13 +56,17 @@ public sealed class CatalogItemController : ControllerBase
 
         if (item == null)
         {
-             return NotFound(new BusinessException("Item with provided id not found"));
+            _logger.LogInformation("[CatalogItemController: Update] ==> ITEM WITH PROVIDED ID NOT FOUND\n");
+
+            return NotFound(new BusinessException("Item with provided id not found"));
         }
 
         var result = await _catalogItemService.UpdateCatalogItemAsync(request, item);
 
         if (result == null)
         {
+            _logger.LogInformation("[CatalogItemController: Update] ==> CATALOG ITEM HAS NOT BEEN UPDATED\n");
+
             return BadRequest(new BusinessException("Could not update the catalog type"));
         }
 
@@ -74,13 +84,17 @@ public sealed class CatalogItemController : ControllerBase
 
         if (item == null)
         {
-             return NotFound(new BusinessException("Item with provided id not found"));
+            _logger.LogInformation("[CatalogItemController: Delete] ==> ITEM WITH PROVIDED ID NOT FOUND\n");
+
+            return NotFound(new BusinessException("Item with provided id not found"));
         }
 
         var result = await _catalogItemService.DeleteCatalogItemAsync(item);
 
         if (!result)
         {
+            _logger.LogInformation("[CatalogItemController: Delete] ==> CATALOG ITEM HAS NOT BEEN DELETED\n");
+
             return BadRequest(new BusinessException("Could not delete the catalog item"));
         }
 

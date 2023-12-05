@@ -15,10 +15,12 @@ namespace Basket.Host.Controllers;
 [Route(ComponentDefaults.DefaultRouteV1)]
 public sealed class BasketItemController : ControllerBase
 {
+    private readonly ILogger<BasketItemController> _logger;
     private readonly IBasketService _basketService;
 
-    public BasketItemController(IBasketService basketService)
+    public BasketItemController(ILogger<BasketItemController> logger, IBasketService basketService)
     {
+        _logger = logger;
         _basketService = basketService;
     }
 
@@ -33,6 +35,8 @@ public sealed class BasketItemController : ControllerBase
 
         if (userId == null)
         {
+            _logger.LogInformation("[BasketItemController: Add] ==> USER ID IS NULL\n");
+
             return NotFound(new BusinessException("Invalid user"));
         }
 
@@ -40,6 +44,8 @@ public sealed class BasketItemController : ControllerBase
 
         if (!hasAdded)
         {
+            _logger.LogInformation("[BasketItemController: Add] ==> BASKET ITEM HAS NOT BEEN ADDED\n");
+
             return BadRequest(new BusinessException("Something went wrong while adding the item to the basket"));
         }
 
@@ -56,6 +62,8 @@ public sealed class BasketItemController : ControllerBase
 
         if (userId == null)
         {
+            _logger.LogInformation("[BasketItemController: Delete] ==> USER ID IS NULL\n");
+
             return NotFound(new BusinessException("Invalid user"));
         }
 
@@ -63,6 +71,8 @@ public sealed class BasketItemController : ControllerBase
 
         if (!hasDeleted)
         {
+            _logger.LogInformation("[BasketItemController: Delete] ==> BASKET ITEM HAS NOT BEEN DELETED\n");
+
             return NotFound(new BusinessException("Something went wrong while deleting all items from the basket"));
         }
 
@@ -80,6 +90,8 @@ public sealed class BasketItemController : ControllerBase
 
         if (userId == null)
         {
+            _logger.LogInformation("[BasketItemController: Delete_Id] ==> USER ID IS NULL\n");
+
             return BadRequest(new BusinessException("Invalid user"));
         }
 
@@ -87,6 +99,8 @@ public sealed class BasketItemController : ControllerBase
 
         if (!hasDeleted)
         {
+            _logger.LogInformation("[BasketItemController: Delete_Id] ==> BASKET ITEM HAS NOT BEEN DELETED\n");
+
             return NotFound(new BusinessException("Item with provided id not found"));
         }
 

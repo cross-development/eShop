@@ -1,6 +1,6 @@
 ﻿namespace ClientApp.Models;
 
-public class OrderItem
+public sealed class OrderItem
 {
     public int Id { get; set; }
 

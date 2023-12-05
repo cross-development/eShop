@@ -1,6 +1,7 @@
 ﻿namespace ClientApp.DTOs.Responses;
 
-public sealed class PaginatedResponseDto<T> where T : class
+public sealed class PaginatedResponseDto<T>
+    where T : class
 {
     public int Page { get; init; }
 

@@ -26,13 +26,13 @@ public sealed class CacheService : ICacheService
 
     public async Task<T> GetAsync<T>(string key)
     {
-        _logger.LogInformation($"[CacheService: GetAsync] ==> KEY TO GET CACHE DATA: {key}");
+        _logger.LogInformation($"[CacheService: GetAsync] ==> KEY FOR GETTING CACHE DATA: {key}\n");
 
         var redis = GetRedisDatabase();
 
         var serialized = await redis.StringGetAsync(key);
 
-        _logger.LogInformation($"[CacheService: GetAsync] ==> SERIALIZED CACHE DATA: {serialized}");
+        _logger.LogInformation($"[CacheService: GetAsync] ==> SERIALIZED CACHE DATA: {serialized}\n");
 
         var cachedData = serialized.HasValue ? JsonConvert.DeserializeObject<T>(serialized.ToString()) : default;
 
@@ -43,19 +43,19 @@ public sealed class CacheService : ICacheService
 
     public async Task<bool> AddOrUpdateAsync<T>(string key, T value)
     {
-        _logger.LogInformation($"[CacheService: AddOrUpdateAsync] ==> KEY TO CACHE DATA: {key}");
+        _logger.LogInformation($"[CacheService: AddOrUpdateAsync] ==> KEY FOR GETTING CACHE DATA: {key}\n");
 
         var redis = GetRedisDatabase();
 
         var serialized = JsonConvert.SerializeObject(value);
 
-        _logger.LogInformation($"[CacheService: AddOrUpdateAsync] ==> SERIALIZED DATA: {serialized}");
+        _logger.LogInformation($"[CacheService: AddOrUpdateAsync] ==> SERIALIZED DATA: {serialized}\n");
 
         var isDataCached = await redis.StringSetAsync(key, serialized, _config.CacheTimeout);
 
         _logger.LogInformation(isDataCached
-            ? $"[CacheService: AddOrUpdateAsync] ==> DATA WAS CACHED WITH KEY: {key}"
-            : $"[CacheService: AddOrUpdateAsync] ==> DATA WAS UPDATED WITH KEY: {key}");
+            ? $"[CacheService: AddOrUpdateAsync] ==> DATA WAS CACHED WITH KEY: {key}\n"
+            : $"[CacheService: AddOrUpdateAsync] ==> DATA WAS NOT CACHED WITH KEY: {key}\n");
 
         return isDataCached;
     }

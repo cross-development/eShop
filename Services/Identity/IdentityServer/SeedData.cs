@@ -21,7 +21,7 @@ public static class SeedData
 
         if (userMgr.Users.Any())
         {
-            Log.Information("There is no need for seeding database because its already has some users.");
+            Log.Information("THERE IS NO NEED TO SEED DATABASE");
 
             return;
         }
@@ -57,11 +57,11 @@ public static class SeedData
                 throw new Exception(result.Errors.First().Description);
             }
 
-            Log.Debug("alice created");
+            Log.Debug("ALICE CREATED");
         }
         else
         {
-            Log.Debug("alice already exists");
+            Log.Debug("ALICE ALREADY EXISTS");
         }
 
         var bob = userMgr.FindByNameAsync("bob").Result;
@@ -95,11 +95,11 @@ public static class SeedData
                 throw new Exception(result.Errors.First().Description);
             }
 
-            Log.Debug("bob created");
+            Log.Debug("BOB CREATED");
         }
         else
         {
-            Log.Debug("bob already exists");
+            Log.Debug("BOB ALREADY EXISTS");
         }
     }
 }

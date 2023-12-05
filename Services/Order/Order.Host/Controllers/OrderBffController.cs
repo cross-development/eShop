@@ -16,10 +16,12 @@ namespace Order.Host.Controllers;
 [Route(ComponentDefaults.DefaultRouteV1)]
 public sealed class OrderBffController : ControllerBase
 {
+    private readonly ILogger<OrderBffController> _logger;
     private readonly IOrderService _orderService;
 
-    public OrderBffController(IOrderService orderService)
+    public OrderBffController(ILogger<OrderBffController> logger, IOrderService orderService)
     {
+        _logger = logger;
         _orderService = orderService;
     }
 
@@ -33,8 +35,12 @@ public sealed class OrderBffController : ControllerBase
 
         if (userId == null)
         {
+            _logger.LogInformation("[OrderBffController: Items] ==> USER ID IS NULL\n");
+
             return BadRequest(new BusinessException("Invalid user"));
         }
+
+        _logger.LogInformation($"[OrderBffController: Items] ==> USER ID {userId}\n");
 
         var result = await _orderService.GetOrderItemsAsync(request, userId);
 
@@ -52,14 +58,20 @@ public sealed class OrderBffController : ControllerBase
 
         if (userId == null)
         {
+            _logger.LogInformation("[OrderBffController: Items_Id] ==> USER ID IS NULL\n");
+
             return BadRequest(new BusinessException("Invalid user"));
         }
+
+        _logger.LogInformation($"[OrderBffController: Items_id] ==> USER ID {userId}\n");
 
         var result = await _orderService.GetOrderItemByIdAsync(id, userId);
 
         if (result == null)
         {
-            return NotFound("Item with provided id not found");
+            _logger.LogInformation("[OrderBffController: Items_Id] ==> ORDER NOT FOUND\n");
+
+            return NotFound(new BusinessException("Item with provided id not found"));
         }
 
         return Ok(result);

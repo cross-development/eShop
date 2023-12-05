@@ -11,11 +11,16 @@ namespace ClientApp.Controllers;
 [Authorize]
 public sealed class BasketController : Controller
 {
+    private readonly ILogger<BasketController> _logger;
     private readonly IBasketService _basketService;
     private readonly IOrderService _orderService;
 
-    public BasketController(IBasketService basketService, IOrderService orderService)
+    public BasketController(
+        ILogger<BasketController> logger,
+        IBasketService basketService,
+        IOrderService orderService)
     {
+        _logger = logger;
         _basketService = basketService;
         _orderService = orderService;
     }
@@ -37,7 +42,7 @@ public sealed class BasketController : Controller
     {
         if (!ModelState.IsValid)
         {
-            Console.WriteLine($"[BasketController : AddToBasket] ====> MODEL STATE IS NOT VALID");
+            _logger.LogInformation("[BasketController: AddToBasket] ==> MODEL STATE IS NOT VALID\n");
 
             return View("Error");
         }
@@ -58,7 +63,7 @@ public sealed class BasketController : Controller
 
         if (!result)
         {
-            Console.WriteLine($"[BasketController : AddToBasket] ====> ITEM HAS NOT BEEN ADDED");
+            _logger.LogInformation("[BasketController: AddToBasket] ==> ITEM HAS NOT BEEN ADDED\n");
 
             return View("Error");
         }
@@ -69,11 +74,11 @@ public sealed class BasketController : Controller
     [HttpPost]
     public async Task<IActionResult> DeleteFromBasket(int id)
     {
-        Console.WriteLine($"[BasketController: DeleteFromBasket] =====> ID: {id}");
+        _logger.LogInformation($"[BasketController: DeleteFromBasket] ==> PROVIDED ID {id}\n");
 
         if (!ModelState.IsValid)
         {
-            Console.WriteLine($"[BasketController : DeleteFromBasket] ====> MODEL STATE IS NOT VALID");
+            _logger.LogInformation("[BasketController: DeleteFromBasket] ==> MODEL STATE IS NOT VALID\n");
 
             return View("Error");
         }
@@ -82,7 +87,7 @@ public sealed class BasketController : Controller
 
         if (!result)
         {
-            Console.WriteLine($"[BasketController : DeleteFromBasket] ====> ITEM HAS NOT BEEN DELETED");
+            _logger.LogInformation("[BasketController: DeleteFromBasket] ==> ITEM HAS NOT BEEN DELETED\n");
 
             return View("Error");
         }
@@ -95,12 +100,10 @@ public sealed class BasketController : Controller
     {
         if (!ModelState.IsValid)
         {
-            Console.WriteLine($"[BasketController : Checkout] ====> MODEL STATE IS NOT VALID");
+            _logger.LogInformation("[BasketController: Checkout] ==> MODEL STATE IS NOT VALID\n");
 
             return View("Error");
         }
-
-        var products = basketItemsViewModel.BasketItems.Select(item => item.Name);
 
         var addOrderRequestDto = new AddOrderRequestDto
         {
@@ -108,14 +111,14 @@ public sealed class BasketController : Controller
             Date = DateTimeOffset.Now,
             Quantity = (uint)basketItemsViewModel.BasketItems.Sum(data => data.Amount),
             TotalPrice = basketItemsViewModel.BasketItems.Sum(data => data.Price * data.Amount),
-            Products = string.Join(", ", products),
+            Products = string.Join(", ", basketItemsViewModel.BasketItems.Select(data => data.Name)),
         };
 
         var result = await _orderService.AddOrderAsync(addOrderRequestDto);
 
         if (result == null)
         {
-            Console.WriteLine($"[BasketController : Checkout] ====> ORDER HAS NOT BEEN ADDED");
+            _logger.LogInformation("[BasketController: Checkout] ==> ORDER HAS NOT BEEN ADDED\n");
 
             return View("Error");
         }
@@ -124,7 +127,7 @@ public sealed class BasketController : Controller
 
         if (!isDeleted)
         {
-            Console.WriteLine($"[BasketController : Checkout] ====> BASKET HAS NOT BEEN CLEARED");
+            _logger.LogInformation("[BasketController: Checkout] ==> BASKET HAS NOT BEEN CLEARED\n");
 
             return View("Error");
         }

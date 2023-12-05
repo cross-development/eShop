@@ -14,11 +14,15 @@ public sealed class DbInitializer
 
         try
         {
+            logger.LogInformation("[DbInitializer: Init] ==> SEEDING DATABASE...\n");
+
             SeedData(context, logger).Wait();
+
+            logger.LogInformation("[DbInitializer: Init] ==> DONE SEEDING DATABASE. EXITING.\n");
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "[DbInitializer: Init] ==> An error occurred creating the DB.");
+            logger.LogError(ex, "[DbInitializer: Init] ==> AN ERROR OCCURRED WHILE CREATING DATABASE\n");
         }
     }
 
@@ -33,11 +37,11 @@ public sealed class DbInitializer
             await context.CatalogBrands.AddRangeAsync(seedCatalogBrands);
             await context.SaveChangesAsync();
 
-            logger.LogInformation("[DbInitializer: SeedData] ==> Catalog brand data has been successfully seeded");
+            logger.LogInformation("[DbInitializer: SeedData] ==> CATALOG BRANDS DATA HAS BEEN SEEDED");
         }
         else
         {
-            logger.LogInformation("[DbInitializer: SeedData] ==> Already have the catalog brands data - no need to seed");
+            logger.LogInformation("[DbInitializer: SeedData] ==> NO NEED TO SEED CATALOG BRANDS DATA");
         }
 
         if (!context.CatalogTypes.Any())
@@ -47,11 +51,11 @@ public sealed class DbInitializer
             await context.CatalogTypes.AddRangeAsync(seedCatalogTypes);
             await context.SaveChangesAsync();
 
-            logger.LogInformation("[DbInitializer: SeedData] ==> Catalog type data has been successfully seeded");
+            logger.LogInformation("[DbInitializer: SeedData] ==> CATALOG TYPES DATA HAS BEEN SEEDED");
         }
         else
         {
-            logger.LogInformation("[DbInitializer: SeedData] ==> Already have the catalog types data - no need to seed");
+            logger.LogInformation("[DbInitializer: SeedData] ==> NO NEED TO SEED CATALOG TYPES DATA");
         }
 
         if (!context.CatalogItems.Any())
@@ -61,11 +65,11 @@ public sealed class DbInitializer
             await context.CatalogItems.AddRangeAsync(seedCatalogItems);
             await context.SaveChangesAsync();
 
-            logger.LogInformation("[DbInitializer: SeedData] ==> Catalog item data has been successfully seeded");
+            logger.LogInformation("[DbInitializer: SeedData] ==> CATALOG ITEMS DATA HAS BEEN SEEDED");
         }
         else
         {
-            logger.LogInformation("[DbInitializer: SeedData] ==> Already have the catalog items data - no need to seed");
+            logger.LogInformation("[DbInitializer: SeedData] ==> NO NEED TO SEED CATALOG ITEMS DATA");
         }
     }
 
@@ -120,9 +124,9 @@ public sealed class DbInitializer
             {
                 CatalogTypeId = 2,
                 CatalogBrandId = 5,
-                AvailableStock = 100, 
-                Name = "Prism White T-Shirt", 
-                Description = "Unleash your coding creativity in the Prism White T-Shirt. This tee embodies simplicity and style, making it the perfect canvas for your coding adventures.", 
+                AvailableStock = 100,
+                Name = "Prism White T-Shirt",
+                Description = "Unleash your coding creativity in the Prism White T-Shirt. This tee embodies simplicity and style, making it the perfect canvas for your coding adventures.",
                 Price = 12,
                 PictureFileName = "3.png"
             },
@@ -182,8 +186,8 @@ public sealed class DbInitializer
                 CatalogBrandId = 5,
                 AvailableStock = 100,
                 Name = "Cup<T> White Mug",
-                Description = "Sip with a touch of humor using the Cup<T> White Mug. A playful nod to coding conventions, this mug adds a tech-inspired twist to your coffee routine.", 
-                Price = 12, 
+                Description = "Sip with a touch of humor using the Cup<T> White Mug. A playful nod to coding conventions, this mug adds a tech-inspired twist to your coffee routine.",
+                Price = 12,
                 PictureFileName = "9.png"
             },
             new CatalogItem
@@ -191,8 +195,8 @@ public sealed class DbInitializer
                 CatalogTypeId = 3,
                 CatalogBrandId = 2,
                 AvailableStock = 100,
-                Name = ".NET Foundation Sheet", 
-                Description = "Dress your bed in .NET pride with the .NET Foundation Sheet. Comfort meets dedication in this sheet that celebrates the heart of coding innovation.", 
+                Name = ".NET Foundation Sheet",
+                Description = "Dress your bed in .NET pride with the .NET Foundation Sheet. Comfort meets dedication in this sheet that celebrates the heart of coding innovation.",
                 Price = 12,
                 PictureFileName = "10.png"
             },
@@ -201,9 +205,9 @@ public sealed class DbInitializer
                 CatalogTypeId = 3,
                 CatalogBrandId = 2,
                 AvailableStock = 100,
-                Name = "Cup<T> Sheet", 
-                Description = "Bring coding humor to your bedtime routine with the Cup<T> Sheet. Soft and quirky, this sheet is a playful addition to any coder's sleep haven.", 
-                Price = 8.5M, 
+                Name = "Cup<T> Sheet",
+                Description = "Bring coding humor to your bedtime routine with the Cup<T> Sheet. Soft and quirky, this sheet is a playful addition to any coder's sleep haven.",
+                Price = 8.5M,
                 PictureFileName = "11.png"
             },
             new CatalogItem
@@ -211,9 +215,9 @@ public sealed class DbInitializer
                 CatalogTypeId = 2,
                 CatalogBrandId = 5,
                 AvailableStock = 100,
-                Name = "Prism White TShirt", 
-                Description = "Elevate your coding wardrobe with the Prism White T-Shirt. A symbol of simplicity and sophistication, perfect for expressing your coding passion.", 
-                Price = 12, 
+                Name = "Prism White TShirt",
+                Description = "Elevate your coding wardrobe with the Prism White T-Shirt. A symbol of simplicity and sophistication, perfect for expressing your coding passion.",
+                Price = 12,
                 PictureFileName = "12.png"
             },
         };

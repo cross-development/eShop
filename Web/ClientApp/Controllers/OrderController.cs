@@ -13,31 +13,32 @@ public sealed class OrderController : Controller
 {
     private const int ItemsPerPage = 5;
 
+    private readonly ILogger<OrderController> _logger;
     private readonly IOrderService _orderService;
 
-    public OrderController(IOrderService orderService)
+    public OrderController(ILogger<OrderController> logger, IOrderService orderService)
     {
+        _logger = logger;
         _orderService = orderService;
     }
 
     public async Task<IActionResult> Index(int? page)
     {
-        // Making a query for the request
         var request = new OrderRequestDto
         {
             Page = page ?? 1,
             Limit = ItemsPerPage
         };
 
-        // Fetching order items
         var orderItems = await _orderService.GetOrderItemsAsync(request);
 
         if (orderItems == null)
         {
+            _logger.LogInformation("[OrderController: Index] ==> ERROR OCCURRED WHILE FETCHING ORDERS\n");
+
             return View("Error");
         }
 
-        // Making a pagination view model for the pagination view
         var paginationViewModel = new PaginationViewModel
         {
             CurrentPage = request.Page,
@@ -46,14 +47,12 @@ public sealed class OrderController : Controller
             TotalPages = (int)Math.Ceiling((decimal)orderItems.Count / request.Limit)
         };
 
-        // Making an order view model for the orders view
         var ordersViewModel = new OrderListViewModel
         {
             OrderItems = orderItems.Data,
             PaginationViewModel = paginationViewModel
         };
 
-        // Making the pagination prev and next buttons disabled
         var isNextPageDisabled = ordersViewModel.PaginationViewModel.CurrentPage == ordersViewModel.PaginationViewModel.TotalPages;
         var isPrevPageDisabled = ordersViewModel.PaginationViewModel.CurrentPage == 1;
 
@@ -69,6 +68,8 @@ public sealed class OrderController : Controller
 
         if (orderItem == null)
         {
+            _logger.LogInformation("[OrderController: Details] ==> ERROR OCCURRED WHILE FETCHING ORDER DETAILS\n");
+
             return View("Error");
         }
 

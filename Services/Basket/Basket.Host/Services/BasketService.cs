@@ -17,24 +17,26 @@ public sealed class BasketService : IBasketService
 
     public async Task<GetBasketResponse> GetBasketAsync(string userId)
     {
-        _logger.LogInformation($"[BasketService: GetBasketAsync] ==> USER ID: {userId}");
+        _logger.LogInformation($"[BasketService: GetBasketAsync] ==> USER ID {userId}\n");
 
         var result = await _cacheService.GetAsync<List<BasketDataDto>>(userId);
 
-        _logger.LogInformation($"[BasketService: GetBasketAsync] ==> REQUESTED DATA: {result}");
+        _logger.LogInformation($"[BasketService: GetBasketAsync] ==> REQUESTED DATA {result}\n");
 
         return new GetBasketResponse { Data = result ?? Enumerable.Empty<BasketDataDto>() };
     }
 
     public async Task<bool> AddItemAsync(string userId, BasketDataDto data)
     {
-        _logger.LogInformation($"[BasketService: AddItemAsync] ==> USER ID: {userId}");
-        _logger.LogInformation($"[BasketService: AddItemAsync] ==> PROVIDED DATA: {data}");
+        _logger.LogInformation($"[BasketService: AddItemAsync] ==> USER ID {userId}\n");
+        _logger.LogInformation($"[BasketService: AddItemAsync] ==> PROVIDED DATA {data}\n");
 
         var result = await _cacheService.GetAsync<List<BasketDataDto>>(userId);
 
         if (result == null)
         {
+            _logger.LogInformation("[BasketService: AddItemAsync] ==> ADDING DATA FIRST TIME\n");
+
             return await _cacheService.AddOrUpdateAsync(userId, new List<BasketDataDto> { data });
         }
 
@@ -42,13 +44,13 @@ public sealed class BasketService : IBasketService
 
         if (existingItemIndex == -1)
         {
-            _logger.LogInformation("[BasketService: AddItemAsync] ==> ITEM WAS ADDED TO THE BASKET");
+            _logger.LogInformation("[BasketService: AddItemAsync] ==> ITEM WAS ADDED TO THE BASKET\n");
 
             result.Add(data);
         }
         else
         {
-            _logger.LogInformation("[BasketService: AddItemAsync] ==> AMOUNT OF ITEMS WAS INCREASED");
+            _logger.LogInformation("[BasketService: AddItemAsync] ==> AMOUNT OF ITEMS WAS INCREASED\n");
 
             result[existingItemIndex].Amount++;
         }
@@ -58,13 +60,13 @@ public sealed class BasketService : IBasketService
 
     public async Task<bool> DeleteAllAsync(string userId)
     {
-        _logger.LogInformation($"[BasketService: DeleteAllAsync] ==> USER ID: {userId}");
+        _logger.LogInformation($"[BasketService: DeleteAllAsync] ==> USER ID {userId}\n");
 
         var result = await _cacheService.GetAsync<List<BasketDataDto>>(userId);
 
         if (result == null || !result.Any())
         {
-            _logger.LogInformation("[BasketService: DeleteAllAsync] ==> THERE IS NOTHING TO DELETE");
+            _logger.LogInformation("[BasketService: DeleteAllAsync] ==> THERE IS NOTHING TO DELETE\n");
 
             return false;
         }
@@ -74,14 +76,14 @@ public sealed class BasketService : IBasketService
 
     public async Task<bool> DeleteItemAsync(string userId, int id)
     {
-        _logger.LogInformation($"[BasketService: DeleteItemAsync] ==> USER ID: {userId}");
-        _logger.LogInformation($"[BasketService: DeleteItemAsync] ==> PROVIDED DATA: {id}");
+        _logger.LogInformation($"[BasketService: DeleteItemAsync] ==> USER ID {userId}\n");
+        _logger.LogInformation($"[BasketService: DeleteItemAsync] ==> PROVIDED DATA {id}\n");
 
         var result = await _cacheService.GetAsync<List<BasketDataDto>>(userId);
 
         if (result == null || !result.Any())
         {
-            _logger.LogInformation("[BasketService: DeleteItemAsync] ==> THERE IS NOTHING TO DELETE");
+            _logger.LogInformation("[BasketService: DeleteItemAsync] ==> THERE IS NOTHING TO DELETE\n");
 
             return false;
         }
@@ -90,20 +92,20 @@ public sealed class BasketService : IBasketService
 
         if (existingItemIndex == -1)
         {
-            _logger.LogInformation("[BasketService: DeleteItemAsync] ==> ITEM WITH REQUESTED ID NOT FOUND");
+            _logger.LogInformation("[BasketService: DeleteItemAsync] ==> ITEM WITH REQUESTED ID NOT FOUND\n");
 
             return false;
         }
 
         if (result[existingItemIndex].Amount > 1)
         {
-            _logger.LogInformation($"[BasketService: DeleteItemAsync] ==> AMOUNT OF ITEMS: {result[existingItemIndex].Amount}");
+            _logger.LogInformation($"[BasketService: DeleteItemAsync] ==> AMOUNT OF ITEMS {result[existingItemIndex].Amount}\n");
 
             result[existingItemIndex].Amount--;
         }
         else
         {
-            _logger.LogInformation("[BasketService: DeleteItemAsync] ==> AMOUNT OF ITEMS IS 1");
+            _logger.LogInformation("[BasketService: DeleteItemAsync] ==> AMOUNT OF ITEMS IS 1\n");
 
             result = result.Where(data => data.Id != id).ToList();
         }

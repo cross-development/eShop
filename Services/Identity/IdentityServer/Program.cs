@@ -5,7 +5,7 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
 
-Log.Information("Starting up");
+Log.Information("STARTING UP");
 
 try
 {
@@ -22,24 +22,21 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
 
-    Log.Information("Seeding database...");
+    Log.Information("SEEDING DATABASE...");
     SeedData.EnsureSeedData(app);
-    Log.Information("Done seeding database. Exiting.");
+    Log.Information("DONE SEEDING DATABASE. EXITING.");
 
     app.Run();
 }
 catch (Exception ex) when (
-    // https://github.com/dotnet/runtime/issues/60600
     ex.GetType().Name is not "StopTheHostException"
-    // HostAbortedException was added in .NET 7, but since we target .NET 6 we
-    // need to do it this way until we target .NET 8
     && ex.GetType().Name is not "HostAbortedException"
 )
 {
-    Log.Fatal(ex, "Unhandled exception");
+    Log.Fatal(ex, "UNHANDLED EXCEPTION");
 }
 finally
 {
-    Log.Information("Shut down complete");
+    Log.Information("SHUT DOWN COMPLETE");
     Log.CloseAndFlush();
 }

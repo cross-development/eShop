@@ -16,10 +16,12 @@ namespace Order.Host.Controllers;
 [Route(ComponentDefaults.DefaultRouteV1)]
 public sealed class OrderItemController : ControllerBase
 {
+    private readonly ILogger<OrderItemController> _logger;
     private readonly IOrderService _orderService;
 
-    public OrderItemController(IOrderService orderService)
+    public OrderItemController(ILogger<OrderItemController> logger, IOrderService orderService)
     {
+        _logger = logger;
         _orderService = orderService;
     }
 
@@ -34,6 +36,8 @@ public sealed class OrderItemController : ControllerBase
 
         if (userId == null)
         {
+            _logger.LogInformation("[OrderItemController: Add] ==> USER ID IS NULL\n");
+
             return BadRequest(new BusinessException("Invalid user"));
         }
 
@@ -41,7 +45,9 @@ public sealed class OrderItemController : ControllerBase
 
         if (result == null)
         {
-            return BadRequest("Could not add the order item");
+            _logger.LogInformation("[OrderItemController: Add] ==> ORDER HAS NOT BEEN ADDED\n");
+
+            return BadRequest(new BusinessException("Could not add the order item"));
         }
 
         return CreatedAtAction(nameof(Add), new AddOrderResponse { Id = result.Id });

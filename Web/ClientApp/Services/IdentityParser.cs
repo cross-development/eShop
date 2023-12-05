@@ -18,7 +18,7 @@ public sealed class IdentityParser : IIdentityParser<ApplicationUser>
     {
         if (principal is ClaimsPrincipal claims)
         {
-            _logger.LogInformation($"[IdentityParser: Parse] ==> Provided principal is the ClaimsPrincipal type");
+            _logger.LogInformation("[IdentityParser: Parse] ==> PROVIDED PRINCIPAL IS THE CLAIMS_PRINCIPAL TYPE\n");
 
             return new ApplicationUser
             {
@@ -40,7 +40,7 @@ public sealed class IdentityParser : IIdentityParser<ApplicationUser>
             };
         }
 
-        _logger.LogInformation($"[IdentityParser: Parse] ==> Provided principal is some different type");
+        _logger.LogInformation("[IdentityParser: Parse] ==> PROVIDED PRINCIPAL IS NOT THE CLAIMS_PRINCIPAL TYPE\n");
 
         throw new ArgumentException(message: "The principal must be a ClaimsPrincipal", paramName: nameof(principal));
     }

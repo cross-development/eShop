@@ -16,15 +16,18 @@ namespace Catalog.Host.Controllers;
 [Route(ComponentDefaults.DefaultRouteV1)]
 public sealed class CatalogBffController : ControllerBase
 {
+    private readonly ILogger<CatalogBffController> _logger;
     private readonly ICatalogItemService _catalogItemService;
     private readonly ICatalogBrandService _catalogBrandService;
     private readonly ICatalogTypeService _catalogTypeService;
 
     public CatalogBffController(
+        ILogger<CatalogBffController> logger,
         ICatalogItemService catalogItemService,
         ICatalogBrandService catalogBrandService,
         ICatalogTypeService catalogTypeService)
     {
+        _logger = logger;
         _catalogItemService = catalogItemService;
         _catalogBrandService = catalogBrandService;
         _catalogTypeService = catalogTypeService;
@@ -52,6 +55,8 @@ public sealed class CatalogBffController : ControllerBase
 
         if (result == null)
         {
+            _logger.LogInformation("[CatalogBffController: Items_Id] ==> ITEM WITH PROVIDED ID NOT FOUND\n");
+
             return NotFound(new BusinessException("Item with provided id not found"));
         }
 
@@ -80,6 +85,8 @@ public sealed class CatalogBffController : ControllerBase
 
         if (result == null)
         {
+            _logger.LogInformation("[CatalogBffController: Brands_Id] ==> BRAND WITH PROVIDED ID NOT FOUND\n");
+
             return NotFound(new BusinessException("Item with provided id not found"));
         }
 
@@ -108,6 +115,8 @@ public sealed class CatalogBffController : ControllerBase
 
         if (result == null)
         {
+            _logger.LogInformation("[CatalogBffController: Types_Id] ==> TYPE WITH PROVIDED ID NOT FOUND\n");
+
             return NotFound(new BusinessException("Item with provided id not found"));
         }
 

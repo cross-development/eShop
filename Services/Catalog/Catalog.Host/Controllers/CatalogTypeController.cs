@@ -16,10 +16,14 @@ namespace Catalog.Host.Controllers;
 [Route(ComponentDefaults.DefaultRouteV1)]
 public sealed class CatalogTypeController : ControllerBase
 {
+    private readonly ILogger<CatalogTypeController> _logger;
     private readonly ICatalogTypeService _catalogTypeService;
 
-    public CatalogTypeController(ICatalogTypeService catalogTypeService)
+    public CatalogTypeController(
+        ILogger<CatalogTypeController> logger, 
+        ICatalogTypeService catalogTypeService)
     {
+        _logger = logger;
         _catalogTypeService = catalogTypeService;
     }
 
@@ -33,6 +37,8 @@ public sealed class CatalogTypeController : ControllerBase
 
         if (result == null)
         {
+            _logger.LogInformation("[CatalogTypeController: Add] ==> CATALOG TYPE HAS NOT BEEN ADDED\n");
+
             return BadRequest(new BusinessException("Could not add the catalog type"));
         }
 
@@ -50,6 +56,8 @@ public sealed class CatalogTypeController : ControllerBase
 
         if (item == null)
         {
+            _logger.LogInformation("[CatalogTypeController: Update] ==> TYPE WITH PROVIDED ID NOT FOUND\n");
+
              return NotFound(new BusinessException("Item with provided id not found"));
         }
 
@@ -57,6 +65,8 @@ public sealed class CatalogTypeController : ControllerBase
 
         if (result == null)
         {
+            _logger.LogInformation("[CatalogTypeController: Update] ==> CATALOG TYPE HAS NOT BEEN UPDATED\n");
+
             return BadRequest(new BusinessException("Could not update the catalog type"));
         }
 
@@ -74,6 +84,8 @@ public sealed class CatalogTypeController : ControllerBase
 
         if (item == null)
         {
+            _logger.LogInformation("[CatalogTypeController: Delete] ==> TYPE WITH PROVIDED ID NOT FOUND\n");
+
              return NotFound(new BusinessException("Item with provided id not found"));
         }
 
@@ -81,6 +93,8 @@ public sealed class CatalogTypeController : ControllerBase
 
         if (!result)
         {
+            _logger.LogInformation("[CatalogTypeController: Delete] ==> CATALOG TYPE HAS NOT BEEN DELETED\n");
+
             return BadRequest(new BusinessException("Could not delete the catalog type"));
         }
 

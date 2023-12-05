@@ -26,7 +26,7 @@ public sealed class AccountController : Controller
     {
         var user = _identityParser.Parse(User);
 
-        _logger.LogInformation($"User {user.Name} authenticated");
+        _logger.LogInformation($"[AccountController: SignIn] ==> USER ID {user.Id}\n");
 
         return RedirectToAction(nameof(HomeController.Index), "Home");
     }
@@ -38,7 +38,7 @@ public sealed class AccountController : Controller
 
         var homeUrl = Url.Action(nameof(HomeController.Index), "Home");
 
-        _logger.LogInformation($"After successful sign out, the user will be redirected to: {homeUrl}");
+        _logger.LogInformation($"[AccountController: Signout] ==> SIGN OUT REDIRECT URL {homeUrl}\n");
 
         return new SignOutResult(OpenIdConnectDefaults.AuthenticationScheme,
             new AuthenticationProperties { RedirectUri = homeUrl });

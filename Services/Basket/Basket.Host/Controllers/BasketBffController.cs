@@ -14,10 +14,12 @@ namespace Basket.Host.Controllers;
 [Route(ComponentDefaults.DefaultRouteV1)]
 public sealed class BasketBffController : ControllerBase
 {
+    private readonly ILogger _logger;
     private readonly IBasketService _basketService;
 
-    public BasketBffController(IBasketService basketService)
+    public BasketBffController(ILogger<BasketBffController> logger, IBasketService basketService)
     {
+        _logger = logger;
         _basketService = basketService;
     }
 
@@ -31,6 +33,8 @@ public sealed class BasketBffController : ControllerBase
 
         if (userId == null)
         {
+            _logger.LogInformation("[BasketBffController: Items] ==> USER ID IS NULL\n");
+
             return NotFound(new BusinessException("Invalid user"));
         }
 

@@ -28,6 +28,8 @@ public sealed class HttpClientService : IHttpClientService
     {
         if (request == null)
         {
+            _logger.LogInformation("[HttpClientService: GetQueryString] ==> PROVIDED REQUEST IS NULL\n");
+
             return string.Empty;
         }
 
@@ -42,7 +44,7 @@ public sealed class HttpClientService : IHttpClientService
 
         builder.Query = query.ToString() ?? string.Empty;
 
-        _logger.LogInformation($"[HttpClientService: GetQueryString] ==> BUILDER QUERY: {builder.Query}");
+        _logger.LogInformation($"[HttpClientService: GetQueryString] ==> BUILDER QUERY {builder.Query}\n");
 
         return builder.Query;
     }
@@ -52,7 +54,7 @@ public sealed class HttpClientService : IHttpClientService
         var serializedContent = JsonConvert.SerializeObject(content);
         var stringContent = new StringContent(serializedContent, Encoding.UTF8, MediaTypeNames.Application.Json);
 
-        _logger.LogInformation($"[HttpClientService: GetStringContent] ==> STRING CONTENT: {serializedContent}");
+        _logger.LogInformation($"[HttpClientService: GetStringContent] ==> STRING CONTENT {serializedContent}\n");
 
         return stringContent;
     }
@@ -70,10 +72,12 @@ public sealed class HttpClientService : IHttpClientService
 
         var accessToken = await _httpContextAccessor.HttpContext?.GetTokenAsync("access_token")!;
 
-        //_logger.LogInformation($"[HttpClientService: SendAsync] ==> ACCESS TOKEN: {accessToken}");
+        _logger.LogInformation($"[HttpClientService: SendAsync] ==> ACCESS TOKEN {accessToken}\n");
 
         if (!string.IsNullOrEmpty(accessToken))
         {
+            _logger.LogInformation("[HttpClientService: SendAsync] ==> ACCESS TOKEN HAS BEEN SET\n");
+
             client.SetBearerToken(accessToken);
         }
 
@@ -90,12 +94,14 @@ public sealed class HttpClientService : IHttpClientService
 
         if (!result.IsSuccessStatusCode)
         {
-            _logger.LogInformation($"[HttpClientService: SendAsync] ==> RESULT STATUS CODE: {result.StatusCode}");
+            _logger.LogInformation($"[HttpClientService: SendAsync] ==> FAILED RESULT STATUS CODE {result.StatusCode}\n");
 
             return default;
         }
 
         var resultContent = await result.Content.ReadAsStringAsync();
+
+        _logger.LogInformation($"[HttpClientService: SendAsync] ==> RECEIVED RESULT {resultContent}\n");
 
         var response = JsonConvert.DeserializeObject<TResponse>(resultContent);
 

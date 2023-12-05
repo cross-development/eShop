@@ -25,32 +25,53 @@ public abstract class BaseDataService<T>
     private async Task ExecuteSafeAsync(Func<CancellationToken, Task> action,
         CancellationToken cancellationToken = default)
     {
+        _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithoutResult] ==> TRANSACTION STARTING...\n");
+
         await using var transaction = await _dbContextWrapper.BeginTransactionAsync(cancellationToken);
 
         try
         {
+            _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithoutResult] ==> PERFORMING ACTION...\n");
+
             await action(cancellationToken);
 
+            _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithoutResult] ==> ACTION PERFORMED\n");
+
+            _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithoutResult] ==> COMMITING TRANSACTION...\n");
+
             await transaction.CommitAsync(cancellationToken);
+
+            _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithoutResult] ==> TRANSACTION COMMITTED\n");
         }
         catch (Exception e)
         {
             await transaction.RollbackAsync(cancellationToken);
 
-            _logger.LogError(e, $"Transaction {transaction.TransactionId} is rollbacked");
+            _logger.LogError(e, "[BaseDataService: ExecuteSafeAsync_WithoutResult] ==> " +
+                                $"TRANSACTION WITH ID {transaction.TransactionId} HAS BEEN ROLLBACKED\n");
         }
     }
 
     private async Task<TResult> ExecuteSafeAsync<TResult>(Func<CancellationToken, Task<TResult>> action,
         CancellationToken cancellationToken = default)
     {
+        _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithResult] ==> TRANSACTION STARTING...\n");
+
         await using var transaction = await _dbContextWrapper.BeginTransactionAsync(cancellationToken);
 
         try
         {
+            _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithResult] ==> PERFORMING ACTION...\n");
+
             var result = await action(cancellationToken);
 
+            _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithResult] ==> ACTION PERFORMED\n");
+
+            _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithResult] ==> COMMITING TRANSACTION...\n");
+
             await transaction.CommitAsync(cancellationToken);
+
+            _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithResult] ==> TRANSACTION COMMITTED\n");
 
             return result;
         }
@@ -58,7 +79,8 @@ public abstract class BaseDataService<T>
         {
             await transaction.RollbackAsync(cancellationToken);
 
-            _logger.LogError(e, $"Transaction {transaction.TransactionId} is rollbacked");
+            _logger.LogError(e, "[BaseDataService: ExecuteSafeAsync_WithResult] ==> " +
+                                $"TRANSACTION WITH ID {transaction.TransactionId} HAS BEEN ROLLBACKED\n");
         }
 
         return default!;

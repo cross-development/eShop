@@ -16,10 +16,14 @@ namespace Catalog.Host.Controllers;
 [Route(ComponentDefaults.DefaultRouteV1)]
 public sealed class CatalogBrandController : ControllerBase
 {
+    private readonly ILogger<CatalogBrandController> _logger;
     private readonly ICatalogBrandService _catalogBrandService;
 
-    public CatalogBrandController(ICatalogBrandService catalogBrandService)
+    public CatalogBrandController(
+        ILogger<CatalogBrandController> logger,
+        ICatalogBrandService catalogBrandService)
     {
+        _logger = logger;
         _catalogBrandService = catalogBrandService;
     }
 
@@ -33,6 +37,8 @@ public sealed class CatalogBrandController : ControllerBase
 
         if (result == null)
         {
+            _logger.LogInformation("[CatalogBrandController: Add] ==> CATALOG BRAND HAS NOT BEEN ADDED\n");
+
             return BadRequest(new BusinessException("Could not add the catalog brand"));
         }
 
@@ -50,6 +56,8 @@ public sealed class CatalogBrandController : ControllerBase
 
         if (item == null)
         {
+            _logger.LogInformation("[CatalogBrandController: Update] ==> BRAND WITH PROVIDED ID NOT FOUND\n");
+
             return NotFound(new BusinessException("Item with provided id not found"));
         }
 
@@ -57,6 +65,8 @@ public sealed class CatalogBrandController : ControllerBase
 
         if (result == null)
         {
+            _logger.LogInformation("[CatalogBrandController: Update] ==> CATALOG BRAND HAS NOT BEEN UPDATED\n");
+
             return BadRequest(new BusinessException("Could not update the catalog brand"));
         }
 
@@ -74,6 +84,8 @@ public sealed class CatalogBrandController : ControllerBase
 
         if (item == null)
         {
+            _logger.LogInformation("[CatalogBrandController: Delete] ==> BRAND WITH PROVIDED ID NOT FOUND\n");
+
             return NotFound(new BusinessException("Item with provided id not found"));
         }
 
@@ -81,6 +93,8 @@ public sealed class CatalogBrandController : ControllerBase
 
         if (!result)
         {
+            _logger.LogInformation("[CatalogBrandController: Delete] ==> CATALOG BRAND HAS NOT BEEN DELETED\n");
+
             return BadRequest(new BusinessException("Could not delete the catalog brand"));
         }
 
