@@ -62,13 +62,13 @@ builder.Services.AddTransient<IBasketService, BasketService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("CorsPolicy",
+    options.AddPolicy(
+        "CorsPolicy",
         corsPolicyBuilder => corsPolicyBuilder
             .SetIsOriginAllowed((host) => true)
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .AllowCredentials()
-    );
+            .AllowCredentials());
 });
 
 var app = builder.Build();

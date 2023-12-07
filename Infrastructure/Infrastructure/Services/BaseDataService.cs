@@ -19,10 +19,12 @@ public abstract class BaseDataService<T>
     protected Task ExecuteSafeAsync(Func<Task> action, CancellationToken cancellationToken = default) =>
         ExecuteSafeAsync(token => action(), cancellationToken);
 
-    protected Task<TResult> ExecuteSafeAsync<TResult>(Func<Task<TResult>> action,
+    protected Task<TResult> ExecuteSafeAsync<TResult>(
+        Func<Task<TResult>> action,
         CancellationToken cancellationToken = default) => ExecuteSafeAsync(token => action(), cancellationToken);
 
-    private async Task ExecuteSafeAsync(Func<CancellationToken, Task> action,
+    private async Task ExecuteSafeAsync(
+        Func<CancellationToken, Task> action,
         CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithoutResult] ==> TRANSACTION STARTING...\n");
@@ -52,7 +54,8 @@ public abstract class BaseDataService<T>
         }
     }
 
-    private async Task<TResult> ExecuteSafeAsync<TResult>(Func<CancellationToken, Task<TResult>> action,
+    private async Task<TResult> ExecuteSafeAsync<TResult>(
+        Func<CancellationToken, Task<TResult>> action,
         CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("[BaseDataService: ExecuteSafeAsync_WithResult] ==> TRANSACTION STARTING...\n");

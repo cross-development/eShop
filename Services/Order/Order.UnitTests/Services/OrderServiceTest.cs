@@ -64,15 +64,12 @@ public class OrderServiceTest
 
         _orderRepository.Setup(repository => repository.GetAllAsync(
             It.Is<PaginatedRequest>(request => request.Equals(paginatedRequest)),
-            It.Is<string>(item => item.Equals(_userId)))
-        ).ReturnsAsync(orderItemsList);
+            It.Is<string>(item => item.Equals(_userId)))).ReturnsAsync(orderItemsList);
 
-        _orderRepository.Setup(repository => repository.GetCountAsync()
-        ).ReturnsAsync(testTotalCount);
+        _orderRepository.Setup(repository => repository.GetCountAsync()).ReturnsAsync(testTotalCount);
 
         _mapper.Setup(mapper => mapper.Map<OrderItemDto>(
-            It.Is<OrderItem>(order => order.Equals(orderItem)))
-        ).Returns(orderItemDto);
+            It.Is<OrderItem>(order => order.Equals(orderItem)))).Returns(orderItemDto);
 
         // act
         var result = await _orderService.GetOrderItemsAsync(paginatedRequest, _userId);
@@ -98,8 +95,7 @@ public class OrderServiceTest
 
         _orderRepository.Setup(repository => repository.GetAllAsync(
             It.Is<PaginatedRequest>(request => request.Equals(paginatedRequest)),
-            It.Is<string>(item => item.Equals(_userId)))
-        ).Returns((Func<PaginatedResponse<OrderItemDto>>)null!);
+            It.Is<string>(item => item.Equals(_userId)))).Returns((Func<PaginatedResponse<OrderItemDto>>)null!);
 
         // act
         var result = await _orderService.GetOrderItemsAsync(paginatedRequest, _userId);
@@ -137,12 +133,10 @@ public class OrderServiceTest
 
         _orderRepository.Setup(repository => repository.GetByIdAsync(
             It.Is<int>(itemId => itemId == orderItem.Id),
-            It.Is<string>(item => item.Equals(_userId)))
-        ).ReturnsAsync(orderItem);
+            It.Is<string>(item => item.Equals(_userId)))).ReturnsAsync(orderItem);
 
         _mapper.Setup(mapper => mapper.Map<OrderItemDto>(
-            It.Is<OrderItem>(item => item.Equals(orderItem)))
-        ).Returns(orderItemDto);
+            It.Is<OrderItem>(item => item.Equals(orderItem)))).Returns(orderItemDto);
 
         // act
         var result = await _orderService.GetOrderItemByIdAsync(orderItem.Id, _userId);
@@ -165,8 +159,7 @@ public class OrderServiceTest
 
         _orderRepository.Setup(repository => repository.GetByIdAsync(
             It.Is<int>(itemId => itemId == testItemId),
-            It.Is<string>(item => item.Equals(_userId)))
-        ).ReturnsAsync((Func<OrderItem>)null!);
+            It.Is<string>(item => item.Equals(_userId)))).ReturnsAsync((Func<OrderItem>)null!);
 
         // act
         var result = await _orderService.GetOrderItemByIdAsync(testItemId, _userId);
@@ -202,12 +195,10 @@ public class OrderServiceTest
         };
 
         _orderRepository.Setup(repository => repository.AddAsync(
-            It.Is<OrderItem>(item => item.Equals(orderItem)))
-        ).ReturnsAsync(orderItem);
+            It.Is<OrderItem>(item => item.Equals(orderItem)))).ReturnsAsync(orderItem);
 
         _mapper.Setup(mapper => mapper.Map<OrderItem>(
-            It.Is<AddOrderRequest>(request => request.Equals(addOrderRequest)))
-        ).Returns(orderItem);
+            It.Is<AddOrderRequest>(request => request.Equals(addOrderRequest)))).Returns(orderItem);
 
         // act
         var result = await _orderService.AddOrderAsync(addOrderRequest, _userId);
@@ -232,8 +223,7 @@ public class OrderServiceTest
         };
 
         _orderRepository.Setup(repository => repository.AddAsync(
-            It.Is<OrderItem>(item => item.Equals(addOrderRequest)))
-        ).ReturnsAsync(testResult);
+            It.Is<OrderItem>(item => item.Equals(addOrderRequest)))).ReturnsAsync(testResult);
 
         // act
         var result = await _orderService.AddOrderAsync(addOrderRequest, _userId);

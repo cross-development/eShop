@@ -23,8 +23,7 @@ public class CacheServiceTest
 
         _connectionMultiplexer
             .Setup(connection => connection.GetDatabase(
-                It.IsAny<int>(), It.IsAny<object>())
-            ).Returns(_redisDataBase.Object);
+                It.IsAny<int>(), It.IsAny<object>())).Returns(_redisDataBase.Object);
 
         _redisCacheConnectionService
             .Setup(cache => cache.Connection)
@@ -48,22 +47,21 @@ public class CacheServiceTest
             It.IsAny<RedisValue>(),
             It.IsAny<TimeSpan?>(),
             It.IsAny<When>(),
-            It.IsAny<CommandFlags>())
-        ).ReturnsAsync(true);
+            It.IsAny<CommandFlags>())).ReturnsAsync(true);
 
         // act
         await _cacheService.AddOrUpdateAsync(testEntity.UserId, testEntity.Data);
         await _cacheService.AddOrUpdateAsync(testEntity.UserId, testEntity.Data);
 
         // assert
-        _logger.Verify(logger => logger.Log(
+        _logger.Verify(
+            logger => logger.Log(
             LogLevel.Information,
             It.IsAny<EventId>(),
             It.Is<It.IsAnyType>((o, t) =>
                 o.ToString().Contains($"The data was cached for the key: {testEntity.UserId}")),
             It.IsAny<Exception>(),
-            It.IsAny<Func<It.IsAnyType, Exception, string>>()
-        ), Times.Never);
+            It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Never);
     }
 
     [Fact]
@@ -81,21 +79,20 @@ public class CacheServiceTest
             It.IsAny<RedisValue>(),
             It.IsAny<TimeSpan?>(),
             It.IsAny<When>(),
-            It.IsAny<CommandFlags>())
-        ).ReturnsAsync(true);
+            It.IsAny<CommandFlags>())).ReturnsAsync(true);
 
         // act
         await _cacheService.AddOrUpdateAsync(testEntity.UserId, testEntity.Data);
 
         // assert
-        _logger.Verify(logger => logger.Log(
+        _logger.Verify(
+            logger => logger.Log(
             LogLevel.Information,
             It.IsAny<EventId>(),
             It.Is<It.IsAnyType>((o, t) =>
                 o.ToString().Contains($"DATA WAS NOT CACHED WITH KEY: {testEntity.UserId}")),
             It.IsAny<Exception>(),
-            It.IsAny<Func<It.IsAnyType, Exception, string>>()
-        ), Times.Once);
+            It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Once);
     }
 
     [Fact]
@@ -113,21 +110,20 @@ public class CacheServiceTest
             It.IsAny<RedisValue>(),
             It.IsAny<TimeSpan?>(),
             It.IsAny<When>(),
-            It.IsAny<CommandFlags>())
-        ).ReturnsAsync(false);
+            It.IsAny<CommandFlags>())).ReturnsAsync(false);
 
         // act
         await _cacheService.AddOrUpdateAsync(testEntity.UserId, testEntity.Data);
 
         // assert
-        _logger.Verify(logger => logger.Log(
+        _logger.Verify(
+            logger => logger.Log(
             LogLevel.Information,
             It.IsAny<EventId>(),
             It.Is<It.IsAnyType>((o, t) =>
                 o.ToString().Contains($"DATA WAS CACHED WITH KEY: {testEntity.UserId}")),
             It.IsAny<Exception>(),
-            It.IsAny<Func<It.IsAnyType, Exception, string>>()
-        ), Times.Never);
+            It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Never);
     }
 
     [Fact]

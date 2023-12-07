@@ -71,11 +71,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 		LICENSE = LICENSE
 		README.md = README.md
+		settings.ruleset = settings.ruleset
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "Services\Identity\IdentityServer\IdentityServer.csproj", "{8947BCC1-4384-4D4A-8AD0-8AC3623A8B1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp", "Web\ClientApp\ClientApp.csproj", "{07868CC0-30C6-4DC2-80C4-CBD0181B4931}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApp", "Web\ClientApp\ClientApp.csproj", "{07868CC0-30C6-4DC2-80C4-CBD0181B4931}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

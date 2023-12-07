@@ -19,9 +19,7 @@ public sealed class CatalogTypeController : ControllerBase
     private readonly ILogger<CatalogTypeController> _logger;
     private readonly ICatalogTypeService _catalogTypeService;
 
-    public CatalogTypeController(
-        ILogger<CatalogTypeController> logger, 
-        ICatalogTypeService catalogTypeService)
+    public CatalogTypeController(ILogger<CatalogTypeController> logger, ICatalogTypeService catalogTypeService)
     {
         _logger = logger;
         _catalogTypeService = catalogTypeService;
@@ -58,7 +56,7 @@ public sealed class CatalogTypeController : ControllerBase
         {
             _logger.LogInformation("[CatalogTypeController: Update] ==> TYPE WITH PROVIDED ID NOT FOUND\n");
 
-             return NotFound(new BusinessException("Item with provided id not found"));
+            return NotFound(new BusinessException("Item with provided id not found"));
         }
 
         var result = await _catalogTypeService.UpdateCatalogTypeAsync(request, item);
@@ -86,7 +84,7 @@ public sealed class CatalogTypeController : ControllerBase
         {
             _logger.LogInformation("[CatalogTypeController: Delete] ==> TYPE WITH PROVIDED ID NOT FOUND\n");
 
-             return NotFound(new BusinessException("Item with provided id not found"));
+            return NotFound(new BusinessException("Item with provided id not found"));
         }
 
         var result = await _catalogTypeService.DeleteCatalogTypeAsync(item);

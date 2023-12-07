@@ -22,8 +22,6 @@ public sealed class CacheService : ICacheService
         _redisCacheConnectionService = redisCacheConnectionService;
     }
 
-    private IDatabase GetRedisDatabase() => _redisCacheConnectionService.Connection.GetDatabase();
-
     public async Task<T> GetAsync<T>(string key)
     {
         _logger.LogInformation($"[CacheService: GetAsync] ==> KEY FOR GETTING CACHE DATA: {key}\n");
@@ -59,4 +57,6 @@ public sealed class CacheService : ICacheService
 
         return isDataCached;
     }
+
+    private IDatabase GetRedisDatabase() => _redisCacheConnectionService.Connection.GetDatabase();
 }

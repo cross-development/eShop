@@ -7,8 +7,8 @@ namespace Basket.Host.Services;
 
 public sealed class RedisCacheConnectionService : IRedisCacheConnectionService, IDisposable
 {
-    private bool _disposed;
     private readonly Lazy<ConnectionMultiplexer> _connectionLazy;
+    private bool _disposed;
 
     public RedisCacheConnectionService(IOptions<RedisConfiguration> config)
     {

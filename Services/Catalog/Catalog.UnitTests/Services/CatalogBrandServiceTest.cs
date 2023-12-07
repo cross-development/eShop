@@ -50,8 +50,7 @@ public class CatalogBrandServiceTest
             .ReturnsAsync(catalogBrandsSuccess);
 
         _mapper.Setup(mapper => mapper.Map<CatalogBrandDto>(
-                It.Is<CatalogBrand>(brand => brand.Equals(catalogBrand)))
-        ).Returns(catalogBrandDto);
+                It.Is<CatalogBrand>(brand => brand.Equals(catalogBrand)))).Returns(catalogBrandDto);
 
         // act
         var result = await _catalogBrandService.GetCatalogBrandsAsync();
@@ -65,8 +64,8 @@ public class CatalogBrandServiceTest
     public async Task GetCatalogBrandsAsync_Failed()
     {
         // arrange
-        _catalogBrandRepository.Setup(repository => repository.GetAllAsync()
-        ).Returns((Func<PaginatedResponse<CatalogBrandDto>>)null!);
+        _catalogBrandRepository.Setup(repository => repository.GetAllAsync())
+            .Returns((Func<PaginatedResponse<CatalogBrandDto>>)null!);
 
         // act
         var result = await _catalogBrandService.GetCatalogBrandsAsync();
@@ -95,12 +94,10 @@ public class CatalogBrandServiceTest
         };
 
         _catalogBrandRepository.Setup(repository => repository.GetByIdAsync(
-            It.Is<int>(brandId => brandId == testBrandId))
-        ).ReturnsAsync(catalogBrand);
+            It.Is<int>(brandId => brandId == testBrandId))).ReturnsAsync(catalogBrand);
 
         _mapper.Setup(mapper => mapper.Map<CatalogBrandDto>(
-            It.Is<CatalogBrand>(brand => brand.Equals(catalogBrand)))
-        ).Returns(catalogBrandDto);
+            It.Is<CatalogBrand>(brand => brand.Equals(catalogBrand)))).Returns(catalogBrandDto);
 
         // act
         var result = await _catalogBrandService.GetCatalogBrandByIdAsync(testBrandId);
@@ -118,8 +115,7 @@ public class CatalogBrandServiceTest
         var testBrandId = 1;
 
         _catalogBrandRepository.Setup(repository => repository.GetByIdAsync(
-            It.Is<int>(brandId => brandId == testBrandId))
-        ).ReturnsAsync((Func<CatalogBrand>)null!);
+            It.Is<int>(brandId => brandId == testBrandId))).ReturnsAsync((Func<CatalogBrand>)null!);
 
         // act
         var result = await _catalogBrandService.GetCatalogBrandByIdAsync(testBrandId);
@@ -142,8 +138,7 @@ public class CatalogBrandServiceTest
         };
 
         _catalogBrandRepository.Setup(repository => repository.FindOneAsync(
-            It.Is<int>(brandId => brandId == testBrandId))
-        ).ReturnsAsync(catalogBrand);
+            It.Is<int>(brandId => brandId == testBrandId))).ReturnsAsync(catalogBrand);
 
         // act
         var result = await _catalogBrandService.FindCatalogBrandAsync(testBrandId);
@@ -161,8 +156,7 @@ public class CatalogBrandServiceTest
         var testBrandId = 1;
 
         _catalogBrandRepository.Setup(repository => repository.FindOneAsync(
-            It.Is<int>(brandId => brandId == testBrandId))
-        ).ReturnsAsync((Func<CatalogBrand>)null!);
+            It.Is<int>(brandId => brandId == testBrandId))).ReturnsAsync((Func<CatalogBrand>)null!);
 
         // act
         var result = await _catalogBrandService.FindCatalogBrandAsync(testBrandId);
@@ -187,12 +181,10 @@ public class CatalogBrandServiceTest
         };
 
         _catalogBrandRepository.Setup(repository => repository.AddAsync(
-                It.Is<CatalogBrand>(brand => brand.Equals(catalogBrand)))
-        ).ReturnsAsync(catalogBrand);
+                It.Is<CatalogBrand>(brand => brand.Equals(catalogBrand)))).ReturnsAsync(catalogBrand);
 
         _mapper.Setup(mapper => mapper.Map<CatalogBrand>(
-            It.Is<AddBrandRequest>(brand => brand.Equals(addBrandRequest)))
-        ).Returns(catalogBrand);
+            It.Is<AddBrandRequest>(brand => brand.Equals(addBrandRequest)))).Returns(catalogBrand);
 
         // act
         var result = await _catalogBrandService.AddCatalogBrandAsync(addBrandRequest);
@@ -213,8 +205,7 @@ public class CatalogBrandServiceTest
         };
 
         _catalogBrandRepository.Setup(repository => repository.AddAsync(
-                It.Is<CatalogBrand>(brand => brand.Equals(addBrandRequest)))
-        ).ReturnsAsync(testResult);
+                It.Is<CatalogBrand>(brand => brand.Equals(addBrandRequest)))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogBrandService.AddCatalogBrandAsync(addBrandRequest);
@@ -222,7 +213,6 @@ public class CatalogBrandServiceTest
         // assert
         result.Should().Be(testResult);
     }
-
 
     [Fact]
     public async Task UpdateCatalogBrandAsync_Success()
@@ -242,8 +232,7 @@ public class CatalogBrandServiceTest
         catalogBrand.Brand = updateBrandRequest.Brand ?? catalogBrand.Brand;
 
         _catalogBrandRepository.Setup(repository => repository.UpdateAsync(
-            It.Is<CatalogBrand>(brand => brand == catalogBrand))
-        ).ReturnsAsync(catalogBrand);
+            It.Is<CatalogBrand>(brand => brand == catalogBrand))).ReturnsAsync(catalogBrand);
 
         // act
         var result = await _catalogBrandService.UpdateCatalogBrandAsync(updateBrandRequest, catalogBrand);
@@ -273,8 +262,7 @@ public class CatalogBrandServiceTest
         catalogBrand.Brand = updateBrandRequest.Brand ?? catalogBrand.Brand;
 
         _catalogBrandRepository.Setup(repository => repository.UpdateAsync(
-            It.Is<CatalogBrand>(brand => brand == catalogBrand))
-        ).ReturnsAsync(testResult);
+            It.Is<CatalogBrand>(brand => brand == catalogBrand))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogBrandService.UpdateCatalogBrandAsync(updateBrandRequest, catalogBrand);
@@ -298,8 +286,7 @@ public class CatalogBrandServiceTest
         catalogBrand.Brand = updateBrandRequest.Brand ?? catalogBrand.Brand;
 
         _catalogBrandRepository.Setup(repository => repository.UpdateAsync(
-            It.Is<CatalogBrand>(brand => brand == catalogBrand))
-        ).ReturnsAsync(catalogBrand);
+            It.Is<CatalogBrand>(brand => brand == catalogBrand))).ReturnsAsync(catalogBrand);
 
         // act
         var result = await _catalogBrandService.UpdateCatalogBrandAsync(updateBrandRequest, catalogBrand);
@@ -322,8 +309,7 @@ public class CatalogBrandServiceTest
         };
 
         _catalogBrandRepository.Setup(repository => repository.DeleteAsync(
-            It.Is<CatalogBrand>(brand => brand == catalogBrand))
-        ).ReturnsAsync(testResult);
+            It.Is<CatalogBrand>(brand => brand == catalogBrand))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogBrandService.DeleteCatalogBrandAsync(catalogBrand);
@@ -345,8 +331,7 @@ public class CatalogBrandServiceTest
         };
 
         _catalogBrandRepository.Setup(repository => repository.DeleteAsync(
-            It.Is<CatalogBrand>(brand => brand == catalogBrand))
-        ).ReturnsAsync(testResult);
+            It.Is<CatalogBrand>(brand => brand == catalogBrand))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogBrandService.DeleteCatalogBrandAsync(catalogBrand);

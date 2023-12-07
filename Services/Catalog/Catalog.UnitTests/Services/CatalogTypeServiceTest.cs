@@ -50,8 +50,7 @@ public class CatalogTypeServiceTest
             .ReturnsAsync(catalogTypesSuccess);
 
         _mapper.Setup(mapper => mapper.Map<CatalogTypeDto>(
-            It.Is<CatalogType>(type => type.Equals(catalogType)))
-        ).Returns(catalogTypeDto);
+            It.Is<CatalogType>(type => type.Equals(catalogType)))).Returns(catalogTypeDto);
 
         // act
         var result = await _catalogTypeService.GetCatalogTypesAsync();
@@ -95,12 +94,10 @@ public class CatalogTypeServiceTest
         };
 
         _catalogTypeRepository.Setup(repository => repository.GetByIdAsync(
-            It.Is<int>(typeId => typeId == testTypeId))
-        ).ReturnsAsync(catalogType);
+            It.Is<int>(typeId => typeId == testTypeId))).ReturnsAsync(catalogType);
 
         _mapper.Setup(mapper => mapper.Map<CatalogTypeDto>(
-            It.Is<CatalogType>(type => type.Equals(catalogType)))
-        ).Returns(catalogTypeDto);
+            It.Is<CatalogType>(type => type.Equals(catalogType)))).Returns(catalogTypeDto);
 
         // act
         var result = await _catalogTypeService.GetCatalogTypeByIdAsync(testTypeId);
@@ -118,8 +115,7 @@ public class CatalogTypeServiceTest
         var testTypeId = 1;
 
         _catalogTypeRepository.Setup(repository => repository.GetByIdAsync(
-            It.Is<int>(typeId => typeId == testTypeId))
-        ).ReturnsAsync((Func<CatalogType>)null!);
+            It.Is<int>(typeId => typeId == testTypeId))).ReturnsAsync((Func<CatalogType>)null!);
 
         // act
         var result = await _catalogTypeService.GetCatalogTypeByIdAsync(testTypeId);
@@ -142,8 +138,7 @@ public class CatalogTypeServiceTest
         };
 
         _catalogTypeRepository.Setup(repository => repository.FindOneAsync(
-            It.Is<int>(typeId => typeId == testTypeId))
-        ).ReturnsAsync(catalogType);
+            It.Is<int>(typeId => typeId == testTypeId))).ReturnsAsync(catalogType);
 
         // act
         var result = await _catalogTypeService.FindCatalogTypeAsync(testTypeId);
@@ -161,8 +156,7 @@ public class CatalogTypeServiceTest
         var testTypeId = 1;
 
         _catalogTypeRepository.Setup(repository => repository.FindOneAsync(
-            It.Is<int>(typeId => typeId == testTypeId))
-        ).ReturnsAsync((Func<CatalogType>)null!);
+            It.Is<int>(typeId => typeId == testTypeId))).ReturnsAsync((Func<CatalogType>)null!);
 
         // act
         var result = await _catalogTypeService.FindCatalogTypeAsync(testTypeId);
@@ -186,12 +180,10 @@ public class CatalogTypeServiceTest
         };
 
         _catalogTypeRepository.Setup(repository => repository.AddAsync(
-            It.Is<CatalogType>(type => type.Equals(catalogType)))
-        ).ReturnsAsync(catalogType);
+            It.Is<CatalogType>(type => type.Equals(catalogType)))).ReturnsAsync(catalogType);
 
         _mapper.Setup(mapper => mapper.Map<CatalogType>(
-            It.Is<AddTypeRequest>(type => type.Equals(addTypeRequest)))
-        ).Returns(catalogType);
+            It.Is<AddTypeRequest>(type => type.Equals(addTypeRequest)))).Returns(catalogType);
 
         // act
         var result = await _catalogTypeService.AddCatalogTypeAsync(addTypeRequest);
@@ -212,8 +204,7 @@ public class CatalogTypeServiceTest
         };
 
         _catalogTypeRepository.Setup(repository => repository.AddAsync(
-            It.Is<CatalogType>(type => type.Equals(addTypeRequest)))
-        ).ReturnsAsync(testResult);
+            It.Is<CatalogType>(type => type.Equals(addTypeRequest)))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogTypeService.AddCatalogTypeAsync(addTypeRequest);
@@ -240,8 +231,7 @@ public class CatalogTypeServiceTest
         catalogType.Type = updateTypeRequest.Type ?? catalogType.Type;
 
         _catalogTypeRepository.Setup(repository => repository.UpdateAsync(
-            It.Is<CatalogType>(type => type == catalogType))
-        ).ReturnsAsync(catalogType);
+            It.Is<CatalogType>(type => type == catalogType))).ReturnsAsync(catalogType);
 
         // act
         var result = await _catalogTypeService.UpdateCatalogTypeAsync(updateTypeRequest, catalogType);
@@ -271,8 +261,7 @@ public class CatalogTypeServiceTest
         catalogType.Type = updateTypeRequest.Type ?? catalogType.Type;
 
         _catalogTypeRepository.Setup(repository => repository.UpdateAsync(
-            It.Is<CatalogType>(type => type == catalogType))
-        ).ReturnsAsync(testResult);
+            It.Is<CatalogType>(type => type == catalogType))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogTypeService.UpdateCatalogTypeAsync(updateTypeRequest, catalogType);
@@ -296,8 +285,7 @@ public class CatalogTypeServiceTest
         catalogType.Type = updateTypeRequest.Type ?? catalogType.Type;
 
         _catalogTypeRepository.Setup(repository => repository.UpdateAsync(
-            It.Is<CatalogType>(type => type == catalogType))
-        ).ReturnsAsync(catalogType);
+            It.Is<CatalogType>(type => type == catalogType))).ReturnsAsync(catalogType);
 
         // act
         var result = await _catalogTypeService.UpdateCatalogTypeAsync(updateTypeRequest, catalogType);
@@ -320,8 +308,7 @@ public class CatalogTypeServiceTest
         };
 
         _catalogTypeRepository.Setup(repository => repository.DeleteAsync(
-            It.Is<CatalogType>(type => type == catalogType))
-        ).ReturnsAsync(testResult);
+            It.Is<CatalogType>(type => type == catalogType))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogTypeService.DeleteCatalogTypeAsync(catalogType);
@@ -343,8 +330,7 @@ public class CatalogTypeServiceTest
         };
 
         _catalogTypeRepository.Setup(repository => repository.DeleteAsync(
-            It.Is<CatalogType>(type => type == catalogType))
-        ).ReturnsAsync(testResult);
+            It.Is<CatalogType>(type => type == catalogType))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogTypeService.DeleteCatalogTypeAsync(catalogType);

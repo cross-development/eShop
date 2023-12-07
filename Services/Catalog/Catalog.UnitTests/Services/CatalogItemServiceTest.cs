@@ -64,15 +64,13 @@ public class CatalogItemServiceTest
         };
 
         _catalogItemRepository.Setup(repository => repository.GetAllAsync(
-            It.Is<PaginatedItemRequest>(item => item.Equals(paginatedFilterRequest)))
-        ).ReturnsAsync(itemsListSuccess);
+            It.Is<PaginatedItemRequest>(item => item.Equals(paginatedFilterRequest))))
+            .ReturnsAsync(itemsListSuccess);
 
-        _catalogItemRepository.Setup(repository => repository.GetCountAsync()
-        ).ReturnsAsync(testTotalCount);
+        _catalogItemRepository.Setup(repository => repository.GetCountAsync()).ReturnsAsync(testTotalCount);
 
         _mapper.Setup(mapper => mapper.Map<CatalogItemDto>(
-            It.Is<CatalogItem>(item => item.Equals(catalogItem)))
-        ).Returns(catalogItemDto);
+            It.Is<CatalogItem>(item => item.Equals(catalogItem)))).Returns(catalogItemDto);
 
         // act
         var result = await _catalogItemService.GetCatalogItemsAsync(paginatedFilterRequest);
@@ -103,8 +101,8 @@ public class CatalogItemServiceTest
         };
 
         _catalogItemRepository.Setup(repository => repository.GetAllAsync(
-            It.Is<PaginatedItemRequest>(item => item.Equals(paginatedFilterRequest)))
-        ).Returns((Func<PaginatedResponse<CatalogItemDto>>)null!);
+            It.Is<PaginatedItemRequest>(item => item.Equals(paginatedFilterRequest))))
+            .Returns((Func<PaginatedResponse<CatalogItemDto>>)null!);
 
         // act
         var result = await _catalogItemService.GetCatalogItemsAsync(paginatedFilterRequest);
@@ -135,12 +133,10 @@ public class CatalogItemServiceTest
         };
 
         _catalogItemRepository.Setup(repository => repository.GetByIdAsync(
-            It.Is<int>(itemId => itemId == testItemId))
-        ).ReturnsAsync(catalogItem);
+            It.Is<int>(itemId => itemId == testItemId))).ReturnsAsync(catalogItem);
 
         _mapper.Setup(mapper => mapper.Map<CatalogItemDto>(
-            It.Is<CatalogItem>(item => item.Equals(catalogItem)))
-        ).Returns(catalogItemDto);
+            It.Is<CatalogItem>(item => item.Equals(catalogItem)))).Returns(catalogItemDto);
 
         // act
         var result = await _catalogItemService.GetCatalogItemByIdAsync(testItemId);
@@ -158,8 +154,7 @@ public class CatalogItemServiceTest
         var testItemId = 1;
 
         _catalogItemRepository.Setup(repository => repository.GetByIdAsync(
-            It.Is<int>(itemId => itemId == testItemId))
-        ).ReturnsAsync((Func<CatalogItem>)null!);
+            It.Is<int>(itemId => itemId == testItemId))).ReturnsAsync((Func<CatalogItem>)null!);
 
         // act
         var result = await _catalogItemService.GetCatalogItemByIdAsync(testItemId);
@@ -182,8 +177,7 @@ public class CatalogItemServiceTest
         };
 
         _catalogItemRepository.Setup(repository => repository.FindOneAsync(
-            It.Is<int>(itemId => itemId == testItemId))
-        ).ReturnsAsync(catalogItem);
+            It.Is<int>(itemId => itemId == testItemId))).ReturnsAsync(catalogItem);
 
         // act
         var result = await _catalogItemService.FindCatalogItemAsync(testItemId);
@@ -201,8 +195,7 @@ public class CatalogItemServiceTest
         var testItemId = 1;
 
         _catalogItemRepository.Setup(repository => repository.FindOneAsync(
-            It.Is<int>(itemId => itemId == testItemId))
-        ).ReturnsAsync((Func<CatalogItem>)null!);
+            It.Is<int>(itemId => itemId == testItemId))).ReturnsAsync((Func<CatalogItem>)null!);
 
         // act
         var result = await _catalogItemService.FindCatalogItemAsync(testItemId);
@@ -227,12 +220,10 @@ public class CatalogItemServiceTest
         };
 
         _catalogItemRepository.Setup(repository => repository.AddAsync(
-            It.Is<CatalogItem>(item => item.Equals(_testItem)))
-        ).ReturnsAsync(_testItem);
+            It.Is<CatalogItem>(item => item.Equals(_testItem)))).ReturnsAsync(_testItem);
 
         _mapper.Setup(mapper => mapper.Map<CatalogItem>(
-            It.Is<AddItemRequest>(item => item.Equals(addItemRequest)))
-        ).Returns(_testItem);
+            It.Is<AddItemRequest>(item => item.Equals(addItemRequest)))).Returns(_testItem);
 
         // act
         var result = await _catalogItemService.AddCatalogItemAsync(addItemRequest);
@@ -259,8 +250,7 @@ public class CatalogItemServiceTest
         };
 
         _catalogItemRepository.Setup(repository => repository.AddAsync(
-           It.Is<CatalogItem>(item => item.Equals(addItemRequest)))
-        ).ReturnsAsync(testResult);
+           It.Is<CatalogItem>(item => item.Equals(addItemRequest)))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogItemService.AddCatalogItemAsync(addItemRequest);
@@ -305,8 +295,7 @@ public class CatalogItemServiceTest
         catalogItem.CatalogTypeId = updateItemRequest.CatalogTypeId ?? catalogItem.CatalogTypeId;
 
         _catalogItemRepository.Setup(repository => repository.UpdateAsync(
-            It.Is<CatalogItem>(brand => brand == catalogItem))
-        ).ReturnsAsync(catalogItem);
+            It.Is<CatalogItem>(brand => brand == catalogItem))).ReturnsAsync(catalogItem);
 
         // act
         var result = await _catalogItemService.UpdateCatalogItemAsync(updateItemRequest, catalogItem);
@@ -354,8 +343,7 @@ public class CatalogItemServiceTest
         catalogItem.CatalogTypeId = updateItemRequest.CatalogTypeId ?? catalogItem.CatalogTypeId;
 
         _catalogItemRepository.Setup(repository => repository.UpdateAsync(
-            It.Is<CatalogItem>(item => item == catalogItem))
-        ).ReturnsAsync(testResult);
+            It.Is<CatalogItem>(item => item == catalogItem))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogItemService.UpdateCatalogItemAsync(updateItemRequest, catalogItem);
@@ -391,8 +379,7 @@ public class CatalogItemServiceTest
         catalogItem.CatalogTypeId = updateItemRequest.CatalogTypeId ?? catalogItem.CatalogTypeId;
 
         _catalogItemRepository.Setup(repository => repository.UpdateAsync(
-            It.Is<CatalogItem>(brand => brand == catalogItem))
-        ).ReturnsAsync(catalogItem);
+            It.Is<CatalogItem>(brand => brand == catalogItem))).ReturnsAsync(catalogItem);
 
         // act
         var result = await _catalogItemService.UpdateCatalogItemAsync(updateItemRequest, catalogItem);
@@ -415,8 +402,7 @@ public class CatalogItemServiceTest
         };
 
         _catalogItemRepository.Setup(repository => repository.DeleteAsync(
-            It.Is<CatalogItem>(item => item == catalogItem))
-        ).ReturnsAsync(testResult);
+            It.Is<CatalogItem>(item => item == catalogItem))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogItemService.DeleteCatalogItemAsync(catalogItem);
@@ -438,8 +424,7 @@ public class CatalogItemServiceTest
         };
 
         _catalogItemRepository.Setup(repository => repository.DeleteAsync(
-            It.Is<CatalogItem>(item => item == catalogItem))
-        ).ReturnsAsync(testResult);
+            It.Is<CatalogItem>(item => item == catalogItem))).ReturnsAsync(testResult);
 
         // act
         var result = await _catalogItemService.DeleteCatalogItemAsync(catalogItem);
