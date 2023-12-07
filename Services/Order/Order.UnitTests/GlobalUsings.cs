@@ -1,1 +1,15 @@
+global using Moq;
 global using Xunit;
+global using FluentAssertions;
+global using AutoMapper;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.EntityFrameworkCore.Storage;
+global using Infrastructure.Data.Interfaces;
+global using Order.Host.Data;
+global using Order.Host.Data.Entities;
+global using Order.Host.Models.DTOs;
+global using Order.Host.Models.Requests;
+global using Order.Host.Models.Responses;
+global using Order.Host.Repositories.Interfaces;
+global using Order.Host.Services;
+global using Order.Host.Services.Interfaces;

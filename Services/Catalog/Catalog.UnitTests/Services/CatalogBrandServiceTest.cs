@@ -71,7 +71,7 @@ public class CatalogBrandServiceTest
         // act
         var result = await _catalogBrandService.GetCatalogBrandsAsync();
 
-        // result
+        // assert
         result.Should().BeNull();
     }
 

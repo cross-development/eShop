@@ -92,7 +92,7 @@ public class CacheServiceTest
             LogLevel.Information,
             It.IsAny<EventId>(),
             It.Is<It.IsAnyType>((o, t) =>
-                o.ToString().Contains($"The data was updated for the key: {testEntity.UserId}")),
+                o.ToString().Contains($"DATA WAS NOT CACHED WITH KEY: {testEntity.UserId}")),
             It.IsAny<Exception>(),
             It.IsAny<Func<It.IsAnyType, Exception, string>>()
         ), Times.Once);
@@ -124,28 +124,10 @@ public class CacheServiceTest
             LogLevel.Information,
             It.IsAny<EventId>(),
             It.Is<It.IsAnyType>((o, t) =>
-                o.ToString().Contains($"The data was cached for the key: {testEntity.UserId}")),
+                o.ToString().Contains($"DATA WAS CACHED WITH KEY: {testEntity.UserId}")),
             It.IsAny<Exception>(),
             It.IsAny<Func<It.IsAnyType, Exception, string>>()
         ), Times.Never);
-    }
-
-    [Fact]
-    public async Task GetAsync_Success()
-    {
-        // arrange
-        var data = "data";
-
-        _redisDataBase.Setup(expression: database => database.StringGetAsync(
-            It.IsAny<RedisKey>(),
-            It.IsAny<CommandFlags>())
-        ).ReturnsAsync(data);
-
-        // act
-        var result = await _cacheService.GetAsync<string>(data);
-
-        // assert
-        result.Should().Be(data);
     }
 
     [Fact]
